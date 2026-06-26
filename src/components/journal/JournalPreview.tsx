@@ -20,21 +20,21 @@ const ARTICLES = [
     title:    "What the Vedas Knew About the Nervous System",
     excerpt:  "Ancient contemplative traditions mapped states of consciousness that neuroscience is only now beginning to verify. A conversation between a Vedic scholar and a clinical researcher — and the surprising ground they share.",
     href:     "/journal/vedas-nervous-system", /* FUTURE PAGE */
-    image:    "/images/hero-a.jpg",
+    image:    "/images/Four Pillars/Wisdom & Modern Science.png",
   },
   {
     category: "Longevity",
     title:    "Biological Age Is Not Your Destiny",
     excerpt:  "The emerging science of epigenetic clocks suggests that how we age is more choice than genetics. Three longevity practitioners on the interventions changing how their clients think about time.",
     href:     "/journal/biological-age", /* FUTURE PAGE */
-    image:    "/images/hero-b.jpg",
+    image:    "/images/Four Pillars/Personal Mastery & Longevity.png",
   },
   {
     category: "Workplace Wellbeing",
     title:    "The Boardroom Has a Body",
     excerpt:  "When a CHRO introduced somatic practices into leadership development, the results were not what anyone expected. On the quiet revolution happening inside organisations that lead with presence.",
     href:     "/journal/boardroom-body", /* FUTURE PAGE */
-    image:    "/images/hero-a.jpg",
+    image:    "/images/Four Pillars/Workplace Wellness.png",
   },
 ] as const;
 
