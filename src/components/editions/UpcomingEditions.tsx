@@ -46,7 +46,7 @@ export default function UpcomingEditions() {
               Minimum 1400px wide, 3:2 or taller crop preferred.
             */}
             <Image
-              src="/images/hero-b.jpg"
+              src="/images/hero section  /Conscious Luxury.png"
               alt="Dubai — editorial placeholder; final photography to reflect the MysticVerse Global 2026 venue"
               fill
               sizes="(min-width: 768px) 55vw, 100vw"
