@@ -1,0 +1,289 @@
+/* ═══════════════════════════════════════════════════════════
+   HeroSection — MysticVerse Global 2026
+   Left-aligned, bottom-anchored. All content visible above the
+   fold — no scroll-reveal on sub-copy or CTAs.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Hero container ─────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #10141C;
+}
+
+/* ── Hero image ──────────────────────────────────────────── */
+.heroImage {
+  object-fit: cover;
+  object-position: center 25%;
+}
+
+/* ── Multi-layer gradient overlay ───────────────────────── */
+/*
+  Left-aligned layout demands left-weighted protection.
+  Layer 1 — top strip: microcopy over any bright sky content.
+  Layer 2 — bottom bulk: anchors the full text block.
+  Layer 3 — left-to-right fade: dark on the left (text zone),
+             tapers to near-transparent on the right so the
+             Dubai skyline reads through the glass panels.
+*/
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at center, transparent 35%, rgba(16, 20, 28, 0.72) 100%),
+    linear-gradient(to bottom,  rgba(16, 20, 28, 0.72)  0%, transparent 30%),
+    linear-gradient(to top,     rgba(16, 20, 28, 0.97)  0%, rgba(16, 20, 28, 0.80) 28%, rgba(16, 20, 28, 0.24) 58%, transparent 75%),
+    linear-gradient(to right,   rgba(16, 20, 28, 0.86)  0%, rgba(16, 20, 28, 0.58) 38%, rgba(16, 20, 28, 0.14) 64%, transparent 82%);
+}
+
+/* ── Above-fold ─────────────────────────────────────────── */
+/*
+  All content visible on first load.
+  Left-aligned, anchored to the lower third of the viewport.
+*/
+.aboveFold {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 100svh;
+  padding:
+    clamp(6rem, 14svh, 10rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(3rem, 7svh, 5.5rem);
+}
+
+/* ── Text block ─────────────────────────────────────────── */
+/*
+  On desktop: limits the text column to ~52vw so the image
+  (delegates, skyline) remains visible in the right portion.
+  On mobile: fills the available width — the overlay covers
+  most of the image anyway at narrow viewports.
+*/
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.125rem;
+  max-width: clamp(500px, 62vw, 900px);
+  width: 100%;
+}
+
+/* ── Microcopy — event slug ──────────────────────────────── */
+.microcopy {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #C4A46E;
+  line-height: 1;
+  opacity: 0;
+  animation: fadeRise 700ms cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards;
+}
+
+.microcopyInitial {
+  font-size: 1.9em;
+  line-height: 0;
+  display: inline-block;
+  vertical-align: -0.18em;
+  font-weight: 700;
+}
+
+/* ── Headline ────────────────────────────────────────────── */
+.headline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F0EAE0; /* 15.82:1 on Ground ✅ */
+  opacity: 0;
+  animation: fadeRise 800ms cubic-bezier(0.16, 1, 0.3, 1) 560ms forwards;
+}
+
+/* ── Sub-headline ────────────────────────────────────────── */
+/*
+  Previously in the scroll-reveal below-fold zone.
+  Now part of the above-fold text block — visible immediately.
+*/
+.subHeadline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.875rem, 1.15vw, 1rem);
+  font-weight: 400;
+  line-height: 1.72;
+  color: rgba(240, 234, 224, 0.65);
+  max-width: 52ch;
+  opacity: 0;
+  animation: fadeRise 700ms cubic-bezier(0.16, 1, 0.3, 1) 720ms forwards;
+}
+
+/* ── CTA row ─────────────────────────────────────────────── */
+.ctaRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  flex-wrap: wrap;
+  margin-top: 0.375rem;
+  opacity: 0;
+  animation: fadeRise 600ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+}
+
+/* ── Primary CTA — filled brass ─────────────────────────── */
+/*
+  Solid brass background is the highest visual priority.
+  Ground (#10141C) on Brass (#AD8F5C): 6.19:1 ✅ WCAG AA text.
+  Hover inverts: transparent fill, brass border, canvas text.
+*/
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.9375rem 2.125rem;
+  background-color: #AD8F5C;
+  border: 1px solid #AD8F5C;
+  color: #10141C;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color     250ms cubic-bezier(0.16, 1, 0.3, 1),
+    color            250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaPrimary:hover {
+  background-color: transparent;
+  border-color: rgba(173, 143, 92, 0.7);
+  color: #F0EAE0;
+}
+
+.ctaPrimary:focus-visible {
+  outline: 2px solid #AD8F5C;
+  outline-offset: 4px;
+}
+
+.ctaArrow {
+  display: inline-block;
+  font-style: normal;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(5px);
+}
+
+/* ── Secondary CTA — text link ──────────────────────────── */
+.ctaSecondary {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F0EAE0; /* 15.82:1 ✅ */
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+  white-space: nowrap;
+}
+
+.ctaSecondary::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #AD8F5C;
+  opacity: 0.3;
+  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaSecondary:hover::after {
+  opacity: 1;
+}
+
+.ctaSecondary:focus-visible {
+  outline: 2px solid #AD8F5C;
+  outline-offset: 4px;
+}
+
+/* ── Scroll cue ──────────────────────────────────────────── */
+.scrollCue {
+  position: absolute;
+  bottom: 2.25rem;
+  right: clamp(1.5rem, 4vw, 4rem);
+  z-index: 10;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(to bottom, transparent, rgba(173, 143, 92, 0.65));
+  opacity: 0;
+  animation:
+    fadeIn     500ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards,
+    scrollDrop 2.4s  cubic-bezier(0.16, 1, 0.3, 1) 2000ms infinite;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0.05); transform-origin: top;    opacity: 0.8; }
+  55%  { transform: scaleY(1);    transform-origin: top;    opacity: 1;   }
+  56%  { transform: scaleY(1);    transform-origin: bottom; opacity: 1;   }
+  100% { transform: scaleY(0.05); transform-origin: bottom; opacity: 0;   }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .microcopy,
+  .headline,
+  .subHeadline,
+  .ctaRow {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .ctaArrow {
+    transition: none;
+  }
+
+  .ctaSecondary::after {
+    transition: none;
+  }
+
+  .scrollLine {
+    animation: none;
+    opacity: 0.45;
+  }
+}

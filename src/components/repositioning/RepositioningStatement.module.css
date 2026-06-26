@@ -1,0 +1,174 @@
+/* ══════════════════════════════════════════════════════════════
+   RepositioningStatement — Section 2 / "The Premise"
+   MysticVerse Global 2026
+
+   Two-column editorial split: left display statement | right body.
+   Brass vertical hairline divides the columns.
+   Canvas A (#F0EAE0) background — light between dark S1 and S3 bands.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Section ────────────────────────────────────────────── */
+.section {
+  background-color: #F0EAE0;
+  border-top: 1px solid rgba(173, 143, 92, 0.18);
+  padding:
+    clamp(4.5rem, 7vw, 7rem)
+    0
+    clamp(5rem, 8vw, 8rem);
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Inner ───────────────────────────────────────────────── */
+.inner {
+  padding-left:  clamp(1.5rem, 6vw, 6rem);
+  padding-right: clamp(1.5rem, 6vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5rem);
+}
+
+@media (min-width: 860px) {
+  .inner {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+}
+
+/* ── Left column ─────────────────────────────────────────── */
+.left {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 40%;
+  padding-right: clamp(2rem, 4vw, 5rem);
+}
+
+/* ── Eyebrow wrap — brass vertical accent ────────────────── */
+.eyebrowWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+}
+
+.eyebrowWrap::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 2.25rem;
+  background-color: #AD8F5C;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────── */
+.eyebrow {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6B5E52;
+  line-height: 1;
+}
+
+/* ── Pull quote — large display statement ────────────────── */
+/*
+  The manifesto line at display scale. DM Sans 300 — light weight
+  reads as editorial confidence rather than advertising loudness.
+  Color: full body for maximum authority.
+*/
+.pullQuote {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.625rem, 2.5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #1C1510;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* ── Brass vertical divider ──────────────────────────────── */
+/*
+  Hairline between the two columns. Hidden on mobile (stacked).
+  flex-shrink: 0 prevents the line from collapsing.
+*/
+.divider {
+  display: none;
+}
+
+@media (min-width: 860px) {
+  .divider {
+    display: block;
+    flex-shrink: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(173, 143, 92, 0.35) 12%,
+      rgba(173, 143, 92, 0.35) 88%,
+      transparent 100%
+    );
+  }
+}
+
+/* ── Right column ────────────────────────────────────────── */
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: clamp(2rem, 4vw, 5rem);
+}
+
+/* ── Statement ───────────────────────────────────────────── */
+.statement {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.85;
+  letter-spacing: 0.004em;
+  color: #1C1510;
+  max-width: 54ch;
+}
+
+/* ── Brass rule ──────────────────────────────────────────── */
+.rule {
+  display: block;
+  width: 2.75rem;
+  height: 1px;
+  background-color: #AD8F5C;
+  opacity: 0.5;
+  margin: 2rem 0 1.75rem;
+}
+
+/* ── Roll-call ───────────────────────────────────────────── */
+.rollCall {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.82;
+  letter-spacing: 0.005em;
+  color: #6B5E52;
+  max-width: 52ch;
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

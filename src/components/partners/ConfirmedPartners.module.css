@@ -1,0 +1,280 @@
+/* ══════════════════════════════════════════════════════════════
+   ConfirmedPartners — Section 7
+   MysticVerse Global 2026
+
+   Canvas B (#FAF9F6) — logos render in original colour.
+   Grayscale at rest → full colour on hover (WEF / Milken pattern).
+   Anchor partner isolated above grid. No borders on cells.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  background-color: #FAF9F6;
+  padding:
+    clamp(2.5rem, 4vw, 4rem)
+    0
+    clamp(2.5rem, 4vw, 4rem);
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.inner {
+  padding-left:  clamp(1.5rem, 6vw, 6rem);
+  padding-right: clamp(1.5rem, 6vw, 6rem);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+}
+
+.eyebrowWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.eyebrowWrap::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 1.75rem;
+  background-color: #AD8F5C;
+  opacity: 0.5;
+  margin-bottom: 0.875rem;
+}
+
+.eyebrow {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6B5E52;
+  line-height: 1;
+}
+
+.headline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.875rem, 3.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: #1C1510;
+}
+
+.subText {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: #6B5E52;
+  max-width: 40ch;
+  padding-bottom: 0.25rem;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(173, 143, 92, 0.35),
+    rgba(173, 143, 92, 0.08) 70%,
+    transparent
+  );
+  margin-bottom: clamp(1.75rem, 3vw, 3rem);
+}
+
+/* ── Anchor tier ─────────────────────────────────────────── */
+.anchorTier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  border-top: 1px solid rgba(28, 21, 16, 0.08);
+  margin-bottom: 1px;
+}
+
+.tierLabel {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(107, 94, 82, 0.50);
+  line-height: 1;
+}
+
+.anchorLogoWrap {
+  position: relative;              /* required for next/image fill */
+  width: clamp(140px, 18vw, 240px);
+  height: clamp(70px, 9vw, 120px);
+}
+
+.anchorLogoWrap .logoImage {
+  filter: grayscale(100%);
+  transition: filter 350ms ease;
+}
+
+.anchorLogoWrap:hover .logoImage {
+  filter: grayscale(0%);
+}
+
+/* ── Partner tier ────────────────────────────────────────── */
+.partnerTier {
+  border-top: 1px solid rgba(28, 21, 16, 0.08);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: clamp(2rem, 3vw, 3rem);
+}
+
+.partnerTierLabel {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(107, 94, 82, 0.40);
+  text-align: center;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+/* ── Logo grid ───────────────────────────────────────────── */
+.logoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .logoGrid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+}
+
+/* ── Logo item ───────────────────────────────────────────── */
+.logoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.logoWrap {
+  position: relative;             /* required for next/image fill */
+  width: clamp(80px, 10vw, 140px);
+  height: clamp(40px, 5vw, 65px);
+}
+
+.logoImage {
+  object-fit: contain;
+  object-position: center;
+  filter: grayscale(100%);
+  transition: filter 350ms ease;
+}
+
+.logoItem:hover .logoImage {
+  filter: grayscale(0%);
+}
+
+.logoLabel {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.4375rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(107, 94, 82, 0.45);
+  text-align: center;
+  line-height: 1;
+}
+
+/* ── CTAs ────────────────────────────────────────────────── */
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(0.875rem, 1.5vw, 1.25rem);
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+  border-top: 1px solid rgba(28, 21, 16, 0.08);
+}
+
+.ctaFilled,
+.ctaOutlined {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  transition:
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color     200ms cubic-bezier(0.16, 1, 0.3, 1),
+    color            200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaFilled {
+  background-color: #AD8F5C;
+  border: 1px solid #AD8F5C;
+  color: #10141C;
+}
+
+.ctaFilled:hover {
+  background-color: #10141C;
+  border-color: #10141C;
+  color: #F0EAE0;
+}
+
+.ctaOutlined {
+  background-color: transparent;
+  border: 1px solid rgba(28, 21, 16, 0.25);
+  color: #1C1510;
+}
+
+.ctaOutlined:hover {
+  border-color: #1C1510;
+  background-color: #1C1510;
+  color: #F0EAE0;
+}
+
+.ctaFilled:focus-visible,
+.ctaOutlined:focus-visible {
+  outline: 2px solid #AD8F5C;
+  outline-offset: 3px;
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaFilled:hover .ctaArrow,
+.ctaOutlined:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .section { opacity: 1; transform: none; transition: none; }
+  .logoImage, .ctaFilled, .ctaOutlined, .ctaArrow { transition: none; }
+}

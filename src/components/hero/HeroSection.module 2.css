@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════════════════════
+   HeroSection — MysticVerse Global 2026
+   All values derive from locked token system in globals.css.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Hero container ─────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--color-ground);
+}
+
+/* ── Background image placeholder ──────────────────────── */
+.imagePlaceholder {
+  position: absolute;
+  inset: 0;
+  /*
+    IMAGERY DIRECTION (replace with real photography before launch):
+    Full-bleed editorial/cinematic photography of a Dubai venue.
+    Human presence — real ages, real diversity, unposed.
+    NOT: yoga-on-rooftop, starburst overlays, generic wellness stock.
+    Candidate: grand architectural interior at dusk, guests in
+    conversation — warmly lit, depth in the frame.
+  */
+  background-color: #2a1e14; /* warm placeholder; final image takes this space */
+}
+
+/* ── Directional gradient overlay ───────────────────────── */
+/*
+  Heavier toward bottom-left where text anchors.
+  Top-right stays lighter so the image breathes.
+*/
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(20, 16, 12, 0.15)  0%,
+      rgba(20, 16, 12, 0.52) 42%,
+      rgba(20, 16, 12, 0.90) 100%
+    );
+}
+
+/* ── Above-fold content ─────────────────────────────────── */
+/*
+  Visible on first load: microcopy + headline + primary CTA only.
+  Anchored to bottom-left — editorial register (boardroom-credible,
+  not centred-generic). Minimum 100svh so nothing below bleeds up.
+*/
+.aboveFold {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 100svh;
+  padding: clamp(2.5rem, 5svh, 4.5rem) clamp(1.5rem, 6vw, 6rem);
+  gap: 1.625rem;
+}
+
+/* ── Microcopy — event slug above headline ──────────────── */
+.microcopy {
+  font-family: var(--font-body);
+  font-size: clamp(0.5625rem, 0.9vw, 0.6875rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent); /* on dark ground: 6.19:1 ✅ */
+  line-height: 1;
+
+  opacity: 0;
+  animation: fadeRise var(--duration-reveal) var(--ease-out-cubic) 350ms forwards;
+}
+
+/* ── Headline ────────────────────────────────────────────── */
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6.5vw, 5.75rem);
+  font-weight: 300; /* Cormorant light — high contrast, fragile, elegant */
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--color-canvas); /* on dark ground: 15.82:1 ✅ */
+  max-width: 14ch;
+
+  opacity: 0;
+  animation: fadeRise var(--duration-reveal) var(--ease-out-cubic) 600ms forwards;
+}
+
+/* ── Primary CTA ─────────────────────────────────────────── */
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border: 1px solid rgba(173, 143, 92, 0.65);
+  background: transparent;
+  color: var(--color-canvas); /* on dark ground: 15.82:1 ✅ */
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out-cubic),
+    border-color     var(--duration-base) var(--ease-out-cubic),
+    color            var(--duration-base) var(--ease-out-cubic);
+
+  opacity: 0;
+  animation: fadeRise 600ms var(--ease-out-cubic) 880ms forwards;
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-ground); /* #14100C on #AD8F5C: 6.19:1 ✅ */
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-out-cubic);
+  font-style: normal;
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(5px);
+}
+
+/* ── Below-fold reveal ───────────────────────────────────── */
+/*
+  Sub-headline and secondary CTA: not visible on first load.
+  Fades in on scroll via IntersectionObserver (JS class toggle).
+*/
+.belowFold {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2.75rem clamp(1.5rem, 6vw, 6rem) clamp(3.5rem, 7svh, 5.5rem);
+  border-top: 1px solid rgba(173, 143, 92, 0.15); /* accent, decorative ✅ */
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   var(--duration-reveal) var(--ease-out-cubic),
+    transform var(--duration-reveal) var(--ease-out-cubic);
+}
+
+.belowFold.belowVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Sub-headline ────────────────────────────────────────── */
+.subHeadline {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.72;
+  color: rgba(240, 234, 224, 0.68); /* canvas at 68% → ~7:1 effective contrast ✅ */
+  max-width: 52ch;
+}
+
+/* ── Secondary CTA ───────────────────────────────────────── */
+.ctaSecondary {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-canvas);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.ctaSecondary::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent); /* decorative — not text ✅ */
+  transition: width var(--duration-fast) var(--ease-out-cubic);
+}
+
+.ctaSecondary:hover::after {
+  width: 100%;
+}
+
+/* ── Scroll cue — animated vertical line ─────────────────── */
+.scrollCue {
+  position: absolute;
+  bottom: 2.25rem;
+  right: clamp(1.5rem, 4vw, 4rem);
+  z-index: 10;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(to bottom, transparent, rgba(173, 143, 92, 0.65));
+  opacity: 0;
+  animation:
+    fadeIn  500ms var(--ease-out-cubic) 1500ms forwards,
+    scrollDrop 2.4s var(--ease-out-cubic) 2100ms infinite;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0.05); transform-origin: top;    opacity: 0.8; }
+  55%  { transform: scaleY(1);    transform-origin: top;    opacity: 1;   }
+  56%  { transform: scaleY(1);    transform-origin: bottom; opacity: 1;   }
+  100% { transform: scaleY(0.05); transform-origin: bottom; opacity: 0;   }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .microcopy,
+  .headline,
+  .ctaPrimary {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .belowFold {
+    transition: none;
+  }
+
+  .scrollLine {
+    animation: none;
+    opacity: 0.45;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (min-width: 768px) {
+  .aboveFold {
+    max-width: 72%;
+  }
+
+  .belowFold {
+    max-width: 72%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .aboveFold {
+    max-width: 58%;
+  }
+
+  .belowFold {
+    max-width: 58%;
+  }
+}

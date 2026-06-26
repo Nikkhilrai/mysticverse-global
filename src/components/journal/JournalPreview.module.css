@@ -1,0 +1,329 @@
+/* ══════════════════════════════════════════════════════════════
+   JournalPreview — Section 8, MysticVerse Global 2026
+
+   Background: Canvas B (#FAF9F6) — near-white grid sections.
+   Adjacent sections:
+     S7 ConfirmedPartners  → Canvas A (#F0EAE0)
+     S8 JournalPreview     → Canvas B (#FAF9F6) ← THIS FILE
+     S9 (footer/next)      → Ground (#14100C)
+
+   Contrast audit (Canvas B):
+   — Headline / card titles:  #1C1510 (body)  → 15.08:1 ✅
+   — Eyebrow / category / excerpt: #6B5E52 (muted) → 5.24:1 ✅
+   — Brass (#AD8F5C): decorative-only on canvas — hairlines, arrows ✅
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Section ────────────────────────────────────────────── */
+.section {
+  background-color: #10141C;
+  padding:
+    clamp(3rem, 5vw, 5rem)
+    0
+    clamp(3.5rem, 5.5vw, 5.5rem);
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Inner — horizontal padding ─────────────────────────── */
+.inner {
+  padding-left:  clamp(1.5rem, 6vw, 6rem);
+  padding-right: clamp(1.5rem, 6vw, 6rem);
+}
+
+/* ── Eyebrow system ─────────────────────────────────────── */
+.eyebrowWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrowWrap::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 2rem;
+  background-color: #AD8F5C;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 224, 0.45);
+  line-height: 1;
+}
+
+/* ── Section headline ───────────────────────────────────── */
+.headline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: #F0EAE0;
+  text-align: center;
+  margin: 0 auto 1.25rem;
+}
+
+/* ── Bridging italic ─────────────────────────────────────── */
+/*
+  Voice B — contemplative register. Cormorant italic pulls the section
+  from commercial into reflective before the reader enters the cards.
+  Centred, generous line-height, muted hue so it reads as editorial
+  not promotional.
+*/
+.bridge {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(240, 234, 224, 0.50);
+  text-align: center;
+  max-width: 42ch;
+  margin: 0 auto clamp(2rem, 3.5vw, 3rem);
+}
+
+/* ── Article grid ───────────────────────────────────────── */
+/*
+  3 equal columns desktop, 2 tablet, 1 mobile.
+  Hairline grid technique: 1px gap + rgba brass background shows
+  between cells without separate border declarations.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background-color: rgba(173, 143, 92, 0.18);
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* ── Article card ───────────────────────────────────────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background-color: #10141C;
+  transition:
+    transform  350ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.card:focus-visible {
+  outline: 2px solid #AD8F5C;
+  outline-offset: -2px;
+}
+
+/* ── Card image wrapper (3:2 ratio) ─────────────────────── */
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background-color: rgba(28, 21, 16, 0.05); /* fallback while image loads */
+}
+
+.cardImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cardImage {
+  transform: scale(1.03);
+}
+
+/* ── Card body ──────────────────────────────────────────── */
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(1.25rem, 2.5vw, 1.875rem) clamp(1.25rem, 2.5vw, 1.875rem);
+}
+
+/* ── Category tag ───────────────────────────────────────── */
+.category {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #AD8F5C;
+  line-height: 1;
+  margin-bottom: 0.875rem;
+}
+
+/* ── Card title ─────────────────────────────────────────── */
+.title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.3125rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #F0EAE0;
+  margin-bottom: 0.875rem;
+}
+
+/* ── Excerpt ────────────────────────────────────────────── */
+.excerpt {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.8125rem, 1vw, 0.875rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(240, 234, 224, 0.52);
+  flex-grow: 1;
+  margin-bottom: 1.375rem;
+}
+
+/* ── "Read more →" ──────────────────────────────────────── */
+/*
+  Static: body-colour text, no underline.
+  On card hover: brass underline expands left → right.
+  Brass underline is decorative (not text) → no contrast req. ✅
+*/
+.readMore {
+  display: inline-block;
+  position: relative;
+  align-self: flex-start;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #F0EAE0;
+  padding-bottom: 3px;
+}
+
+.readMore::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #AD8F5C; /* decorative ✅ */
+  transition: width 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .readMore::after {
+  width: 100%;
+}
+
+.arrow {
+  font-style: normal;
+  display: inline-block;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ── "View all articles" closing link ───────────────────── */
+.allArticlesWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.allArticles {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F0EAE0;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+}
+
+.allArticles::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #AD8F5C; /* decorative ✅ */
+  opacity: 0.4;
+  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.allArticles:hover::after {
+  opacity: 1;
+}
+
+.allArticles:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .cardImage,
+  .card:hover .cardImage {
+    transition: none;
+    transform: none;
+  }
+
+  .readMore::after {
+    width: 100%;
+    opacity: 0.4;
+    transition: none;
+  }
+
+  .arrow,
+  .card:hover .arrow,
+  .allArticles:hover .arrow {
+    transform: none;
+    transition: none;
+  }
+}

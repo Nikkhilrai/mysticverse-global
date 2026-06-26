@@ -1,0 +1,361 @@
+/* ══════════════════════════════════════════════════════════════
+   FourPillars — Section 3 / "The Programme"
+   MysticVerse Global 2026
+
+   Ground (#10141C) dark background. Diagonal brass hatching +
+   "03" watermark for depth. Header text canvas on dark.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Section ────────────────────────────────────────────── */
+.section {
+  background-color: #10141C;
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(4.5rem, 7vw, 7rem);
+  padding-bottom: clamp(4.5rem, 7vw, 7rem);
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ── Section header ──────────────────────────────────────── */
+.headerWrap {
+  position: relative;
+  z-index: 1;
+  padding: 0 clamp(1.5rem, 6vw, 6rem);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.eyebrowWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrowWrap::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 2rem;
+  background-color: #AD8F5C;
+  opacity: 0.45;
+  margin-bottom: 0.875rem;
+}
+
+.eyebrow {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 224, 0.45);
+  line-height: 1;
+}
+
+.headline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F0EAE0;
+  margin-bottom: 1.25rem;
+}
+
+.subCopy {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(240, 234, 224, 0.48);
+  max-width: 52ch;
+}
+
+/* ── Header / featured divider ───────────────────────────── */
+.headerDivider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(173, 143, 92, 0.25) 20%,
+    rgba(173, 143, 92, 0.25) 80%,
+    transparent
+  );
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURED — PILLAR 01
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Featured card — full-bleed background image ─────────── */
+.featured {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(380px, 48vw, 580px);
+  text-decoration: none;
+  margin: 0 clamp(1.5rem, 6vw, 6rem);
+}
+
+/* Dark overlay: very heavy on left (text zone), fades right */
+.featuredOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top,   rgba(16,20,28,0.97) 0%, rgba(16,20,28,0.60) 45%, transparent 75%),
+    linear-gradient(to right, rgba(16,20,28,0.80) 0%, rgba(16,20,28,0.30) 55%, transparent 80%);
+}
+
+/* Text block — sits in the lower-left over the overlay */
+.featuredText {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 4vw, 4rem);
+  max-width: clamp(420px, 58vw, 720px);
+}
+
+.featuredIndexRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.625rem;
+}
+
+.featuredIndex {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #AD8F5C;
+  line-height: 1;
+}
+
+.indexRule {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background-color: rgba(173, 143, 92, 0.45);
+  flex-shrink: 0;
+}
+
+.featuredTag {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 224, 0.42);
+  line-height: 1;
+  margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+.featuredTitle {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4.5vw, 5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F0EAE0;
+  margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+.featuredBody {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.78;
+  color: rgba(240, 234, 224, 0.55);
+  max-width: 52ch;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DIVIDER
+   ══════════════════════════════════════════════════════════════ */
+
+.subDivider {
+  height: 1px;
+  background-color: rgba(173, 143, 92, 0.22);
+  margin: 0 clamp(1.5rem, 6vw, 6rem);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SUB-GRID — PILLARS 02–04
+   ══════════════════════════════════════════════════════════════ */
+
+.subGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: clamp(2rem, 3vw, 3rem) clamp(1.5rem, 6vw, 6rem) 0;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+@media (min-width: 640px) {
+  .subGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.75rem, 1.2vw, 1.25rem);
+  }
+}
+
+/* ── Sub-card — full-bleed image with overlaid text ─────── */
+.subCard {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(320px, 36vw, 460px);
+  text-decoration: none;
+}
+
+.subCard img {
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.subCard:hover img {
+  transform: scale(1.04);
+}
+
+/* Bottom-heavy overlay for text legibility */
+.subOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(16,20,28,0.95) 0%, rgba(16,20,28,0.55) 45%, transparent 72%),
+    linear-gradient(to right, rgba(16,20,28,0.30) 0%, transparent 70%);
+}
+
+/* ── Sub card content ────────────────────────────────────── */
+.subCardContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
+  width: 100%;
+}
+
+.subIndexRow {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 0.875rem;
+}
+
+.subIndex {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #AD8F5C;
+  line-height: 1;
+}
+
+.subTitle {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #F0EAE0;
+  margin-bottom: clamp(0.75rem, 1.2vw, 1rem);
+}
+
+.subBody {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.8125rem, 0.95vw, 0.875rem);
+  font-weight: 400;
+  line-height: 1.72;
+  color: rgba(240, 234, 224, 0.48);
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+  flex: 1;
+}
+
+/* ── CTA — shared ────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #AD8F5C;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  width: fit-content;
+}
+
+.cta::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #AD8F5C;
+  transition: width 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured:hover .cta::after,
+.subCard:hover .cta::after {
+  width: 100%;
+}
+
+.ctaArrow {
+  display: inline-block;
+  font-style: normal;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured:hover .ctaArrow,
+.subCard:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .subImage img,
+  .subCard:hover .subImage img,
+  .cta::after,
+  .ctaArrow {
+    transition: none;
+    transform: none;
+  }
+
+  .cta::after {
+    width: 100%;
+    opacity: 0.4;
+  }
+}

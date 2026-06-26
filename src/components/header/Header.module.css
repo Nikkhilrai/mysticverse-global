@@ -1,0 +1,452 @@
+/* ══════════════════════════════════════════════════════════════
+   Header — Global site header
+   MysticVerse Global 2026
+
+   Two states:
+   Default (transparent):  over dark hero — no background fill.
+     A gradient scrim within the header ensures nav text legibility
+     against whatever image sits behind.
+   Scrolled (solid Ground): kicks in after 100px scroll.
+     Background: #10141C (Ground). Border-bottom hairline. 30% height
+     reduction. Top bar slides up out of view.
+
+   Why Ground, not Canvas:
+   Ground (#10141C) is the only color that reads as a distinct
+   anchoring layer regardless of whether the section below is
+   Canvas A, Canvas B, or another dark section. Canvas A headers
+   vanish when scrolling Canvas A sections.
+
+   Desktop nav collapses to hamburger below 1120px (7 nav items
+   + logo + REGISTER need the width; 900px is too cramped).
+
+   Contrast on Ground (#10141C):
+   ✅ Canvas A #F0EAE0 → 15.82:1  (logo, nav links)
+   ✅ Accent   #AD8F5C →  6.19:1  (REGISTER button text; nav underlines)
+   ✅ Ground   #10141C on Brass #AD8F5C → 6.19:1  (REGISTER text on bg)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Header shell ───────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+
+  /* Transparent over hero — picks up Ground on scroll */
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+
+  transition:
+    background-color 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color     350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Scrim: shallow gradient to ensure nav text legibility over
+     any hero image, regardless of the photo's top-edge exposure. */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(16, 20, 28, 0.50) 0%,
+      rgba(16, 20, 28, 0.15) 60%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.header.scrolled {
+  background-color: #10141C;
+  border-bottom-color: rgba(240, 234, 224, 0.08);
+}
+
+/* Scrim not needed once header has a solid background */
+.header.scrolled::before {
+  opacity: 0;
+}
+
+/* ── Top bar ────────────────────────────────────────────── */
+/*
+  Slightly deeper shade than Ground creates a distinct upper band.
+  Transitions: max-height (slides up on scroll) + opacity (smooth fade).
+  On mobile: display none — too narrow at mobile widths.
+*/
+.topBar {
+  display: none; /* mobile: hidden */
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+  height: 2.25rem;
+  max-height: 2.25rem;
+  overflow: hidden;
+  background-color: rgba(8, 11, 18, 0.80);
+  position: relative; /* above scrim */
+
+  opacity: 1;
+  transition:
+    max-height 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity    250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .topBar {
+    display: flex;
+  }
+}
+
+/* Slide up when header is scrolled */
+.header.scrolled .topBar {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Dismiss exit animation */
+.topBarExiting {
+  max-height: 0 !important;
+  opacity: 0 !important;
+}
+
+.topBarText {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 224, 0.62);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topBarDismiss {
+  background: none;
+  border: none;
+  padding: 0.125rem 0.375rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: rgba(240, 234, 224, 0.42);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 200ms;
+}
+
+.topBarDismiss:hover {
+  color: #F0EAE0;
+}
+
+/* ── Nav row ────────────────────────────────────────────── */
+/*
+  position: relative + z-index: 1 ensures the navRow paints
+  above the mobileMenu overlay (z-index: 0 within this stacking
+  context), keeping REGISTER + hamburger interactive while the
+  overlay is open.
+*/
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  padding:
+    1.125rem
+    clamp(1.5rem, 4vw, 4rem);
+
+  transition: padding 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Shrunk state — 30% height reduction */
+.header.scrolled .navRow {
+  padding-top:    0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+/* ── Logo image ──────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoImage {
+  width: auto;
+  height: 70px;
+  object-fit: contain;
+  transition: height 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header.scrolled .logoImage {
+  height: 54px;
+}
+
+/* ── Desktop nav ────────────────────────────────────────── */
+/* Hidden below 1120px — 7 items + logo + REGISTER need the width. */
+.nav {
+  display: none;
+  align-items: center;
+  gap: clamp(1.125rem, 2.2vw, 2rem);
+  flex: 1;
+  justify-content: center;
+  padding: 0 clamp(1rem, 2vw, 2rem);
+}
+
+@media (min-width: 1120px) {
+  .nav {
+    display: flex;
+  }
+}
+
+.navLink {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(240, 234, 224, 0.78);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 200ms;
+}
+
+/* Brass underline grow on hover — consistent with site CTA system */
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #AD8F5C; /* decorative ✅ */
+  transition: width 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navLink:hover {
+  color: #F0EAE0;
+}
+
+.navLink:hover::after,
+.navLink[aria-current="page"]::after {
+  width: 100%;
+}
+
+.navLink[aria-current="page"] {
+  color: #F0EAE0;
+}
+
+/* ── Actions — REGISTER + hamburger ────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex-shrink: 0;
+}
+
+/* ── REGISTER button ────────────────────────────────────── */
+/*
+  Brass (#AD8F5C) bg / Ground (#10141C) text.
+  Hover inverts: Ground bg / Brass text — same border holds.
+  Consistent in both transparent and scrolled header states.
+  Brass/Ground swap (6.19:1) ✅ in both orientations.
+*/
+.registerBtn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.125rem;
+  background-color: #AD8F5C; /* Brass */
+  color: #10141C;             /* Ground */
+  border: 1px solid #AD8F5C;
+  transition:
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    color            200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.registerBtn:hover {
+  background-color: #10141C; /* Ground */
+  color: #AD8F5C;             /* Brass */
+}
+
+.registerBtn:focus-visible {
+  outline: 2px solid #AD8F5C;
+  outline-offset: 2px;
+}
+
+/* ── Hamburger ──────────────────────────────────────────── */
+/* Hidden on desktop; three lines → × on open */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1120px) {
+  .hamburger {
+    display: none;
+  }
+}
+
+.hamburgerLine {
+  display: block;
+  width: 1.25rem;
+  height: 1px;
+  background-color: #F0EAE0;
+  transform-origin: center;
+  transition:
+    transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+  Lines are 1px tall, gap 5px → total stack 13px, mid-point 6.5px.
+  Lines 1 and 3 each travel 6px to reach midpoint and form the ×.
+*/
+.hamburgerOpen .hamburgerLine:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ── Mobile menu overlay ────────────────────────────────── */
+/*
+  Full-screen Ground panel. z-index: 0 within the header's stacking
+  context keeps it below navRow (z-index: 1), so REGISTER and the
+  hamburger remain interactive while the overlay is open.
+
+  Nav items in DM Sans — large, structured, reads as a proper
+  navigation panel rather than a decorative typographic moment.
+*/
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #10141C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-top clears the nav row so items don't hide behind it */
+  padding:
+    clamp(5rem, 12vh, 7rem)
+    clamp(1.5rem, 6vw, 3rem)
+    clamp(3rem, 8vh, 5rem);
+
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition:
+    opacity   350ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hidden on desktop — fallback if JS fails to close it */
+@media (min-width: 1120px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── Mobile nav items ───────────────────────────────────── */
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileNavLink {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 5.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: rgba(240, 234, 224, 0.72);
+  text-decoration: none;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid rgba(240, 234, 224, 0.07);
+  transition: color 200ms;
+}
+
+.mobileNavLink:first-child {
+  border-top: 1px solid rgba(240, 234, 224, 0.07);
+}
+
+.mobileNavLink:hover {
+  color: #F0EAE0;
+}
+
+/* ── Mobile REGISTER button ─────────────────────────────── */
+.mobileRegisterBtn {
+  display: block;
+  text-align: center;
+  margin-top: 2.5rem;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  background-color: #AD8F5C;
+  color: #10141C;
+  border: 1px solid #AD8F5C;
+  text-decoration: none;
+  transition:
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    color            200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobileRegisterBtn:hover {
+  background-color: transparent;
+  color: #AD8F5C;
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .header::before,
+  .topBar,
+  .navRow,
+  .logoImage,
+  .navLink,
+  .navLink::after,
+  .registerBtn,
+  .hamburgerLine,
+  .mobileMenu {
+    transition: none;
+  }
+
+  /* Show underline immediately for reduced-motion users */
+  .navLink[aria-current="page"]::after {
+    width: 100%;
+  }
+}

@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   MYSTICVERSE GLOBAL 2026 — LOCKED DESIGN TOKEN SYSTEM
+   Approved 2026-06-22. No ad hoc values added beyond this file.
+   ═══════════════════════════════════════════════════════════════════
+
+   TWO-TONE LIGHT SYSTEM (approved 2026-06-22):
+   Canvas A (#F0EAE0) — warm stone. Editorial/statement/narrative sections.
+   Canvas B (#FAF9F6) — near-white. Grid/structured/card-layout sections.
+   These two light tones alternate across the page. Dark Ground reserved
+   for Hero + Stats only (2 sections max). Footer uses Ground structurally.
+
+   CONTRAST AUDIT (WCAG AA, computed 2026-06-22):
+   ✅ Body   #1C1510 on Canvas A #F0EAE0  → 15.08:1  (need 4.5:1)
+   ✅ Body   #1C1510 on Canvas B #FAF9F6  → 16.90:1  (need 4.5:1)
+   ✅ Canvas A #F0EAE0 on ground #14100C  → 15.82:1  (need 4.5:1)
+   ✅ Muted  #6B5E52 on Canvas A #F0EAE0  →  5.24:1  (need 4.5:1)
+   ✅ Muted  #6B5E52 on Canvas B #FAF9F6  →  5.96:1  (need 4.5:1)
+   ✅ Accent #AD8F5C on ground #14100C    →  6.19:1  (need 4.5:1)
+   ✅ Canvas A #F0EAE0 on HR ground #1E2C38→ 11.92:1 (need 4.5:1)
+   ✅ Accent #AD8F5C on HR ground #1E2C38 →  4.66:1  (need 4.5:1)
+
+   ⚠️  Accent #AD8F5C on Canvas A #F0EAE0 → 2.56:1  FAILS text use.
+   ⚠️  Accent #AD8F5C on Canvas B #FAF9F6 → 2.90:1  FAILS text use.
+       Rule: accent used as TEXT only on dark grounds (#14100C, #1E2C38).
+       On either canvas tone: accent is decorative only (borders, underlines, dividers).
+   ═══════════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* — Color tokens — */
+  --color-ground:    #14100C;   /* Espresso midnight — Hero + Stats + Footer only */
+  --color-canvas:    #F0EAE0;   /* Canvas A — warm stone, editorial/statement sections */
+  --color-canvas-b:  #FAF9F6;   /* Canvas B — near-white, grid/card/structured sections */
+  --color-accent:    #AD8F5C;   /* Antique brass — text on dark grounds only */
+  --color-body:      #1C1510;   /* Deep warm brown-black body text on canvas */
+  --color-muted:     #6B5E52;   /* Warm mid-tone for captions/labels on canvas */
+  --color-hr-ground: #1E2C38;   /* Cool slate — Corporate HR Pavilion ground only */
+  --color-hr-canvas: #EFF2F4;   /* Cool near-white — HR Pavilion canvas only */
+
+  /* — Type tokens — */
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body:    var(--font-dm-sans), system-ui, sans-serif;
+
+  /* — Motion tokens — */
+  --ease-out-cubic:   cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast:    200ms;
+  --duration-base:    250ms;
+  --duration-slow:    350ms;
+  --duration-reveal:  700ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base reset ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Shared focus style — keyboard accessibility ──────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
 }
