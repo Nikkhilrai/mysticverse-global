@@ -6,17 +6,17 @@ import styles from "./ConfirmedPartners.module.css";
 
 const ANCHOR = {
   name:      "Evrenroo",
-  src:       "/images/confirmed partners/Evrenroo.avif",
+  src:       "/images/Confirmed Partners/Evrenroo.avif",
   tierLabel: "Anchor Partner",
 };
 
 const REST = [
-  { name: "Manoyaa Alchemy",     src: "/images/confirmed partners/Manoyaa-Alchemy.avif",          tierLabel: "Prominent Exhibitor"  },
-  { name: "Cosmicx Healing Art", src: "/images/confirmed partners/Cosmicx-healing-Art-Logo.avif", tierLabel: "Prominent Exhibitor"  },
-  { name: "Ouna Cosmetics",      src: "/images/confirmed partners/Ouna Cosmetics.avif",           tierLabel: "Luxury Skincare"      },
-  { name: "Renophase",           src: "/images/confirmed partners/Renophase.png",                 tierLabel: "Luxury Skincare"      },
-  { name: "StackBerry Media",    src: "/images/confirmed partners/stackberry-media.avif",          tierLabel: "Media Partner"        },
-  { name: "KNeer",               src: "/images/confirmed partners/KNeer_Logo.avif",               tierLabel: "Supporting Partner"   },
+  { name: "Manoyaa Alchemy",     src: "/images/Confirmed Partners/Manoyaa-Alchemy.avif",          tierLabel: "Prominent Exhibitor"  },
+  { name: "Cosmicx Healing Art", src: "/images/Confirmed Partners/Cosmicx-healing-Art-Logo.avif", tierLabel: "Prominent Exhibitor"  },
+  { name: "Ouna Cosmetics",      src: "/images/Confirmed Partners/Ouna Cosmetics.avif",           tierLabel: "Luxury Skincare"      },
+  { name: "Renophase",           src: "/images/Confirmed Partners/Renophase.png",                 tierLabel: "Luxury Skincare"      },
+  { name: "StackBerry Media",    src: "/images/Confirmed Partners/stackberry-media.avif",          tierLabel: "Media Partner"        },
+  { name: "KNeer",               src: "/images/Confirmed Partners/KNeer_Logo.avif",               tierLabel: "Supporting Partner"   },
 ] as const;
 
 export default function ConfirmedPartners() {
