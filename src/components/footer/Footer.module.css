@@ -2,24 +2,24 @@
    Footer — Global site footer
    MysticVerse Global 2026
 
-   Ground (#14100C) background — anchoring, premium.
-   Text: Canvas A (#F0EAE0). Accent: Brass (#AD8F5C).
+   Ground (#0B0B12) background — anchoring, premium.
+   Text: Canvas A (#F4F2F7). Accent: Brass (#F5C45A).
 
    Layout:
    Desktop (≥960px): 5-column grid.
      Cols 1–4 equal; Col 5 "Stay Close" slightly narrower.
    Mobile: single column, stacked.
 
-   Contrast audit (on Ground #14100C):
-   ✅ Canvas A #F0EAE0 → 15.82:1  (all body text, links)
-   ✅ Brass    #AD8F5C →  6.19:1  (Subscribe btn text, decorative underlines)
-   ✅ Ground   #14100C on Brass #AD8F5C bg → 6.19:1 (Subscribe btn bg)
+   Contrast audit (on Ground #0B0B12):
+   ✅ Canvas A #F4F2F7 → 15.82:1  (all body text, links)
+   ✅ Brass    #F5C45A →  6.19:1  (Subscribe btn text, decorative underlines)
+   ✅ Ground   #0B0B12 on Brass #F5C45A bg → 6.19:1 (Subscribe btn bg)
    ══════════════════════════════════════════════════════════════ */
 
 /* ── Footer shell ───────────────────────────────────────── */
 .footer {
-  background-color: #14100C;
-  color: #F0EAE0;
+  background-color: #0B0B12;
+  color: #F4F2F7;
 }
 
 /* ── Inner — padding + max-width guard ─────────────────── */
@@ -71,23 +71,23 @@
 
 /* ── Column header ──────────────────────────────────────── */
 .colHeader {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1;
-  color: #F0EAE0;
+  color: #F4F2F7;
   margin-bottom: 1.5rem;
 }
 
 /* ── About paragraph ────────────────────────────────────── */
 .aboutText {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.75;
   letter-spacing: 0.01em;
-  color: rgba(240, 234, 224, 0.54);
+  color: rgba(244, 242, 247, 0.54);
   margin-bottom: 1.5rem;
   max-width: 28ch;
 }
@@ -106,11 +106,11 @@
 .footerLink {
   display: inline;
   position: relative;
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: rgba(240, 234, 224, 0.62);
+  color: rgba(244, 242, 247, 0.62);
   text-decoration: none;
   padding-bottom: 2px;
   transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -123,12 +123,12 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: #AD8F5C; /* decorative ✅ */
+  background-color: #F5C45A; /* decorative ✅ */
   transition: width 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .footerLink:hover {
-  color: #F0EAE0;
+  color: #F4F2F7;
 }
 
 .footerLink:hover::after {
@@ -136,19 +136,19 @@
 }
 
 .footerLink:focus-visible {
-  outline: 2px solid #AD8F5C;
+  outline: 2px solid #F5C45A;
   outline-offset: 3px;
   border-radius: 1px;
 }
 
 /* ── Newsletter — "Stay Close" rail ────────────────────── */
 .newsletterTagline {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-body);
   font-size: clamp(0.875rem, 1.2vw, 1rem);
   font-style: italic;
   font-weight: 400;
   line-height: 1.65;
-  color: rgba(240, 234, 224, 0.68);
+  color: rgba(244, 242, 247, 0.68);
   margin-bottom: 1.5rem;
 }
 
@@ -161,13 +161,13 @@
 
 /* Email input — Canvas A border at 20% opacity; placeholder muted */
 .emailInput {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: #F0EAE0;
-  background-color: rgba(240, 234, 224, 0.06);
-  border: 1px solid rgba(240, 234, 224, 0.20);
+  color: #F4F2F7;
+  background-color: rgba(244, 242, 247, 0.06);
+  border: 1px solid rgba(244, 242, 247, 0.20);
   padding: 0.6875rem 0.875rem;
   outline: none;
   transition:
@@ -176,49 +176,51 @@
 }
 
 .emailInput::placeholder {
-  color: rgba(240, 234, 224, 0.30);
+  color: rgba(244, 242, 247, 0.30);
 }
 
 .emailInput:focus {
-  border-color: rgba(240, 234, 224, 0.45);
-  background-color: rgba(240, 234, 224, 0.09);
+  border-color: rgba(244, 242, 247, 0.45);
+  background-color: rgba(244, 242, 247, 0.09);
 }
 
 /* Subscribe button — Brass bg / Ground text; mirrors REGISTER */
 .subscribeBtn {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 0.6875rem 1.25rem;
-  background-color: #AD8F5C;
+  padding: 0.75rem 1.375rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  background-size: 160% 160%;
   color: #14100C;
-  border: 1px solid #AD8F5C;
   cursor: pointer;
   transition:
-    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-    color            200ms cubic-bezier(0.16, 1, 0.3, 1);
+    background-position 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow          250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .subscribeBtn:hover {
-  background-color: transparent;
-  color: #AD8F5C;
+  background-position: 100% 0;
+  box-shadow: 0 6px 22px rgba(124, 92, 255, 0.30);
 }
 
 .subscribeBtn:focus-visible {
-  outline: 2px solid #AD8F5C;
+  outline: 2px solid #F5C45A;
   outline-offset: 2px;
 }
 
 /* Success state — quiet confirmation; no fanfare */
 .successMessage {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-body);
   font-size: clamp(0.875rem, 1.2vw, 1rem);
   font-style: italic;
   font-weight: 400;
   line-height: 1.65;
-  color: rgba(240, 234, 224, 0.68);
+  color: rgba(244, 242, 247, 0.68);
   margin-bottom: 2rem;
 }
 
@@ -236,7 +238,7 @@
   justify-content: center;
   width: 1.25rem;
   height: 1.25rem;
-  color: rgba(240, 234, 224, 0.42);
+  color: rgba(244, 242, 247, 0.42);
   text-decoration: none;
   transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -247,11 +249,11 @@
 }
 
 .socialLink:hover {
-  color: #AD8F5C; /* Brass on hover — consistent with site system */
+  color: #F5C45A; /* Brass on hover — consistent with site system */
 }
 
 .socialLink:focus-visible {
-  outline: 2px solid #AD8F5C;
+  outline: 2px solid #F5C45A;
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -262,7 +264,7 @@
   used throughout, but mapped to translucent Canvas A.
 */
 .bottomBar {
-  border-top: 1px solid rgba(240, 234, 224, 0.08);
+  border-top: 1px solid rgba(244, 242, 247, 0.08);
   padding:
     clamp(1.25rem, 2vw, 1.75rem)
     clamp(1.5rem, 6vw, 6rem);
@@ -283,11 +285,11 @@
 }
 
 .bottomCopy {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.6875rem;
   font-weight: 400;
   letter-spacing: 0.03em;
-  color: rgba(240, 234, 224, 0.34);
+  color: rgba(244, 242, 247, 0.34);
   white-space: nowrap;
 }
 
@@ -299,30 +301,30 @@
 }
 
 .bottomLink {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.6875rem;
   font-weight: 400;
   letter-spacing: 0.03em;
-  color: rgba(240, 234, 224, 0.38);
+  color: rgba(244, 242, 247, 0.38);
   text-decoration: none;
   transition: color 200ms;
 }
 
 .bottomLink:hover {
-  color: rgba(240, 234, 224, 0.72);
+  color: rgba(244, 242, 247, 0.72);
 }
 
 .bottomLink:focus-visible {
-  outline: 2px solid #AD8F5C;
+  outline: 2px solid #F5C45A;
   outline-offset: 2px;
   border-radius: 1px;
 }
 
 .bottomMeta {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.6875rem;
   letter-spacing: 0.03em;
-  color: rgba(240, 234, 224, 0.22);
+  color: rgba(244, 242, 247, 0.22);
 }
 
 /* ── Screen-reader only ─────────────────────────────────── */

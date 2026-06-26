@@ -122,7 +122,7 @@ export default function Header() {
           aria-label="MysticVerse Global — return to homepage"
         >
           <Image
-            src="/images/nav bar logo/mysticverse_global.png"
+            src="/images/logo/mysticverse_global.png"
             alt="MysticVerse Global"
             width={160}
             height={48}

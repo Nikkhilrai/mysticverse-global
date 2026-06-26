@@ -1,47 +1,50 @@
 /* ══════════════════════════════════════════════════════════════
-   UpcomingEditions — Section 9, MysticVerse Global 2026
+   UpcomingEditions — Section 9 / "The Global Series"
+   MysticVerse Global 2026 — "OBSIDIAN & GOLD".
 
-   Background: Canvas A (#F0EAE0) — warm editorial sections.
-   Adjacent sections:
-     S8 JournalPreview    → Canvas B (#FAF9F6)
-     S9 UpcomingEditions  → Canvas A (#F0EAE0) ← THIS FILE ✅
-
-   Hierarchy principle (mirroring S3 Pillar 1, S7 Anchor Partner):
-   Dubai block is tall, full-width, image-led. Bangkok ribbon is
-   deliberately narrow — the height ratio (~4:1) is the only
-   hierarchy signal. No "Featured" label needed.
-
-   Contrast audit (Canvas A):
-   — Body / headings:   #1C1510 (body)  → 13.94:1 ✅
-   — Muted text:        #6B5E52 (muted) → 4.56:1 ✅
-   — Brass (#AD8F5C): decorative-only on canvas ✅
-   — CTA text (reversed, on brass fill): #14100C → 6.19:1 ✅
+   Roadmap / timeline of editions. Dubai 2026 live (image + CTA),
+   Bangkok 2027 coming, 2028 on the horizon. Connecting rail with
+   nodes; staggered reveal.
    ══════════════════════════════════════════════════════════════ */
 
-/* ── Section ────────────────────────────────────────────── */
+/* ── Section ─────────────────────────────────────────────── */
 .section {
-  background-color: #F0EAE0; /* Canvas A */
-  padding-top: clamp(5rem, 8vw, 8rem);
-
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4rem, 7vw, 7rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 9rem);
 }
 
-.section.visible {
-  opacity: 1;
-  transform: translateY(0);
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 45% at 12% 8%,  rgba(245, 196, 90, 0.07) 0%, transparent 60%),
+    radial-gradient(50% 50% at 95% 100%, rgba(124, 92, 255, 0.12) 0%, transparent 62%);
 }
 
-/* ── Inner — horizontal padding only ───────────────────── */
 .inner {
-  padding-left:  clamp(1.5rem, 6vw, 6rem);
-  padding-right: clamp(1.5rem, 6vw, 6rem);
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-/* ── Section eyebrow ────────────────────────────────────── */
+/* ── Header (centered) ───────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
 .eyebrowWrap {
   display: flex;
   flex-direction: column;
@@ -54,281 +57,363 @@
   display: block;
   width: 1px;
   height: 2rem;
-  background-color: #AD8F5C;
-  opacity: 0.5;
+  background: linear-gradient(to bottom, #F5C45A, rgba(245, 196, 90, 0));
   margin-bottom: 1rem;
 }
 
 .eyebrow {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #6B5E52; /* muted: 4.56:1 on canvas-a ✅ */
-  line-height: 1;
-}
-
-/* ── Section headline ───────────────────────────────────── */
-.headline {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(2.25rem, 4vw, 4rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  color: #1C1510;
-  text-align: center;
-  margin: 0 auto clamp(2.5rem, 4vw, 4rem);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   DUBAI 2026 — FLAGSHIP EDITORIAL BLOCK
-   ═══════════════════════════════════════════════════════════ */
-
-/* ── Dubai grid — image | copy ──────────────────────────── */
-.dubaiBlock {
-  display: grid;
-  grid-template-columns: 1fr;
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .dubaiBlock {
-    grid-template-columns: 55fr 45fr;
-  }
-}
-
-/* ── Image column ───────────────────────────────────────── */
-.dubaiImageWrap {
-  position: relative;
-  min-height: clamp(280px, 45vw, 560px); /* mobile: fixed height; desktop: inherits row height */
-  overflow: hidden;
-}
-
-.dubaiImage {
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-/* Bottom-left vignette so the copy column edge is never harsh */
-.dubaiOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    transparent 55%,
-    rgba(240, 234, 224, 0.15) 100%
-  );
-}
-
-/* ── Copy column ────────────────────────────────────────── */
-.dubaiCopy {
-  background-color: #F0EAE0; /* Canvas A — unifies with section */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4rem);
-
-  /* Left hairline — brass, decorative */
-  border-left: 1px solid rgba(173, 143, 92, 0.30);
-}
-
-/* Mobile: top border replaces left border */
-@media (max-width: 767px) {
-  .dubaiCopy {
-    border-left: none;
-    border-top: 1px solid rgba(173, 143, 92, 0.30);
-  }
-}
-
-/* ── Edition eyebrow (inside Dubai block) ───────────────── */
-.editionEyebrow {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.5625rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #6B5E52; /* muted: 4.56:1 ✅ */
-  line-height: 1;
-  margin-bottom: 1rem;
-}
-
-/* ── Dubai heading ──────────────────────────────────────── */
-.dubaiHeading {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(2rem, 3.5vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  color: #1C1510;
-  margin-bottom: 0.875rem;
-}
-
-/* ── Date / venue meta ──────────────────────────────────── */
-.dubaiMeta {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.75rem, 1vw, 0.875rem);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #6B5E52; /* muted ✅ */
-  margin-bottom: 1.5rem;
-}
-
-/* ── Body copy ──────────────────────────────────────────── */
-.dubaiBody {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
-  font-weight: 400;
-  line-height: 1.75;
-  color: #6B5E52; /* muted ✅ */
-  max-width: 42ch;
-  margin-bottom: clamp(2rem, 3vw, 2.75rem);
-}
-
-/* ── Primary CTA — filled brass ─────────────────────────── */
-.ctaFilled {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  padding: 0.9375rem 2.125rem;
-  background-color: #AD8F5C;
-  border: 1px solid #AD8F5C;
-  color: #14100C; /* ground on brass: 6.19:1 ✅ */
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition:
-    background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color     250ms cubic-bezier(0.16, 1, 0.3, 1),
-    color            250ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ctaFilled:hover {
-  background-color: transparent;
-  border-color: #AD8F5C;
-  color: #AD8F5C; /* swap-state hover — matches ConfirmedPartners system */
-}
-
-.ctaArrow {
-  display: inline-block;
-  font-style: normal;
-  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ctaFilled:hover .ctaArrow {
-  transform: translateX(4px);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   BANGKOK 2027 — THIN RIBBON TEASER
-   Intentionally narrow (~1/4 Dubai block height).
-   The height contrast alone signals the hierarchy.
-   Do not expand until Bangkok dates + venue are confirmed.
-   ═══════════════════════════════════════════════════════════ */
-
-.bangkokRibbon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.625rem;
-  padding: clamp(1.75rem, 2.5vw, 2.25rem) 0 clamp(3.5rem, 6vw, 5rem);
-  border-top: 1px solid rgba(173, 143, 92, 0.30); /* brass hairline — decorative ✅ */
-  margin-top: 1px; /* closes the hairline gap to Dubai block bottom */
-}
-
-@media (min-width: 640px) {
-  .bangkokRibbon {
-    flex-direction: row;
-    justify-content: center;
-    gap: clamp(1.5rem, 3vw, 3rem);
-    text-align: left;
-    align-items: baseline;
-  }
-}
-
-/* ── Coming Next label ──────────────────────────────────── */
-.bangkokLabel {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.625rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #1C1510; /* body ✅ */
+  color: #F5C45A;
   line-height: 1;
 }
 
-/* ── Tagline ────────────────────────────────────────────── */
-.bangkokTagline {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.875rem, 1.2vw, 1rem);
-  font-style: italic;
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4vw, 4rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #F4F2F7;
+  margin-bottom: 1.125rem;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
   font-weight: 400;
-  color: #6B5E52;
-  line-height: 1;
+  line-height: 1.7;
+  color: #A8A6B4;
+  max-width: 52ch;
 }
 
-/* ── Notify Me link ─────────────────────────────────────── */
-.notifyLink {
+/* ── Track ───────────────────────────────────────────────── */
+.track {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+@media (min-width: 900px) {
+  .track {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+/* ── Edition card ────────────────────────────────────────── */
+.edition {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-radius: 18px;
+  border: 1px solid var(--hairline);
+  background-color: #14141F;
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    border-color 300ms var(--ease-out-cubic),
+    box-shadow   320ms var(--ease-out-cubic),
+    transform    320ms var(--ease-out-cubic);
+}
+
+.section.visible .edition {
+  animation: editionRise 720ms var(--ease-out-cubic) both;
+}
+
+.section.visible .edition:nth-child(1) { animation-delay: 80ms; }
+.section.visible .edition:nth-child(2) { animation-delay: 220ms; }
+.section.visible .edition:nth-child(3) { animation-delay: 360ms; }
+
+@keyframes editionRise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section.visible .edition:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.45);
+}
+
+.live { border-color: rgba(245, 196, 90, 0.28); }
+.section.visible .live:hover { border-color: rgba(245, 196, 90, 0.5); }
+.future { opacity: 0; }
+.section.visible .future { /* still reveals; just slightly muted content */ }
+
+/* ── Timeline rail ───────────────────────────────────────── */
+.rail {
+  position: relative;
+  height: 14px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: #2A2A38;
+  border: 2px solid #3A3A4A;
+}
+
+.live .node {
+  background: var(--gradient-signature);
+  border: none;
+  box-shadow: 0 0 0 4px rgba(245, 196, 90, 0.15);
+}
+
+.live .node::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 196, 90, 0.6);
+  animation: nodePulse 2.4s var(--ease-out-cubic) infinite;
+}
+
+@keyframes nodePulse {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.next .node { background: #F5C45A; border-color: #F5C45A; }
+
+.railLine {
+  flex: 1;
+  height: 1px;
+  margin-left: 0.5rem;
+  background: linear-gradient(to right, rgba(245, 196, 90, 0.4), rgba(245, 196, 90, 0.05));
+}
+
+.next .railLine { background: linear-gradient(to right, rgba(245, 196, 90, 0.25), rgba(245, 196, 90, 0.03)); }
+.future .railLine { background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent); }
+
+/* ── Head ────────────────────────────────────────────────── */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+.year {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #F4F2F7;
+}
+
+.live .year {
+  background: var(--gradient-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.future .year { color: #6B6978; }
+
+.statusPill {
   display: inline-flex;
   align-items: center;
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.5625rem;
-  font-weight: 500;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #1C1510; /* body ✅ */
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 2px;
+  line-height: 1;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
-.notifyLink::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.live .statusPill {
+  color: #14100C;
+  background: var(--gradient-signature);
+}
+
+.next .statusPill {
+  color: #F5C45A;
+  border: 1px solid rgba(245, 196, 90, 0.4);
+}
+
+.future .statusPill {
+  color: #8B8997;
+  border: 1px solid var(--hairline);
+}
+
+.statusDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #14100C;
+}
+
+/* ── Banner image (live only) ────────────────────────────── */
+.banner {
+  position: relative;
   width: 100%;
-  height: 1px;
-  background-color: #AD8F5C; /* decorative ✅ */
-  opacity: 0.35;
-  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: clamp(1.25rem, 2vw, 1.5rem);
+  border: 1px solid var(--hairline);
 }
 
-.notifyLink:hover::after {
-  opacity: 1;
+.bannerImg {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms var(--ease-out-cubic);
 }
 
-.notifyArrow {
-  font-style: normal;
+.edition:hover .bannerImg { transform: scale(1.05); }
+
+.bannerGrad {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(20, 20, 31, 0.7) 0%, transparent 50%);
+}
+
+/* ── Content ─────────────────────────────────────────────── */
+.tag {
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 0.625rem;
+}
+
+.future .tag { color: #8B8997; }
+
+.city {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: #F4F2F7;
+  margin-bottom: 0.5rem;
+}
+
+.future .city { color: #A8A6B4; }
+
+.meta {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8B8997;
+  margin-bottom: 1rem;
+}
+
+.copy {
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: #A8A6B4;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+  flex: 1;
+}
+
+/* ── Actions ─────────────────────────────────────────────── */
+.actionPrimary,
+.actionGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.actionPrimary {
+  color: #14100C;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  background-size: 160% 160%;
+  box-shadow: 0 6px 22px rgba(245, 196, 90, 0.22);
+  transition:
+    background-position 300ms var(--ease-out-cubic),
+    box-shadow          250ms var(--ease-out-cubic),
+    transform           250ms var(--ease-out-cubic);
+}
+
+.actionPrimary:hover {
+  background-position: 100% 0;
+  box-shadow: 0 10px 30px rgba(124, 92, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+.actionGhost {
+  color: #F5C45A;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 196, 90, 0.4);
+  transition: border-color 220ms var(--ease-out-cubic), background-color 220ms var(--ease-out-cubic);
+}
+
+.actionGhost:hover {
+  border-color: #F5C45A;
+  background-color: rgba(245, 196, 90, 0.08);
+}
+
+.actionFuture {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6B6978;
+}
+
+.arrow {
   display: inline-block;
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--duration-base) var(--ease-out-cubic);
 }
 
-.notifyLink:hover .notifyArrow {
+.actionPrimary:hover .arrow,
+.actionGhost:hover .arrow {
   transform: translateX(4px);
 }
 
 /* ── Reduced motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .section {
+  .edition,
+  .future {
     opacity: 1;
     transform: none;
-    transition: none;
+    animation: none;
   }
 
-  .ctaFilled,
-  .notifyLink {
-    transition: none;
-  }
+  .live .node::after { animation: none; }
 
-  .ctaFilled:hover .ctaArrow,
-  .notifyLink:hover .notifyArrow {
-    transform: none;
+  .bannerImg,
+  .actionPrimary,
+  .actionGhost,
+  .arrow {
+    transition: none;
   }
 }

@@ -9,8 +9,8 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({
-  imageSrc = "/images/hero section  /Conscious Luxury.png",
-  imageAlt = "Conscious Luxury — MysticVerse Global 2026 hero.",
+  imageSrc = "/images/hero/dubai-night-1.jpg",
+  imageAlt = "Dubai skyline at night with the Burj Khalifa — MysticVerse Global 2026.",
 }: HeroSectionProps) {
   return (
     <section className={styles.hero} aria-label="MysticVerse Global 2026 hero">
@@ -25,6 +25,7 @@ export default function HeroSection({
       />
 
       <div className={styles.overlay} aria-hidden="true" />
+      <div className={`${styles.grain} noise`} aria-hidden="true" />
 
       {/* All content visible above the fold — left-aligned, bottom-anchored */}
       <div className={styles.aboveFold}>
@@ -35,7 +36,7 @@ export default function HeroSection({
           </p>
 
           <h1 className={styles.headline}>
-            Where Conscious Luxury Meets<br />Inner Mastery.
+            Where <span className="gradientText">Conscious&nbsp;Luxury</span> Meets<br />Inner Mastery.
           </h1>
 
           <p className={styles.subHeadline}>

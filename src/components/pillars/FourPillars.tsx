@@ -9,32 +9,32 @@ const PILLARS = [
     index: "01",
     tag: "Flagship Pillar",
     name: "Conscious Luxury Living",
-    body: "Wellness residences, branded communities, biophilic architecture, luxury retreats, and premium branded retail at the intersection of design and conscious living. The headline commercial pillar. Home of the Conscious Living Pavilion.",
-    image: "/images/Four%20Pillars/Conscious%20Luxury%20Living.png",
+    body: "Wellness residences, branded communities, biophilic architecture, and premium retail at the intersection of design and conscious living. The headline commercial vertical.",
+    image: "/images/four-pillars/pillar-living.jpg",
     href: "/pillars/conscious-luxury-living",
   },
   {
     index: "02",
-    tag: null,
+    tag: "Human Capital",
     name: "Workplace Wellness & Human Capital",
-    body: "Burnout as enterprise risk. Wellbeing as a board-level concern. The pillar built for CHROs, CPOs, and senior HR leaders — with CPE-aligned programming and a dedicated HR Leaders Hub.",
-    image: "/images/Four%20Pillars/Workplace%20Wellness.png",
+    body: "Burnout as enterprise risk. Wellbeing as a board-level concern — built for CHROs, CPOs, and senior HR leaders steering human capital strategy.",
+    image: "/images/four-pillars/pillar-workplace.jpg",
     href: "/pillars/workplace-wellness",
   },
   {
     index: "03",
-    tag: null,
+    tag: "Longevity",
     name: "Personal Mastery & Longevity",
-    body: "Where longevity science, contemplative practice, and human optimisation converge. For high-performers, HNIs, and the new generation of biological-age investors.",
-    image: "/images/Four%20Pillars/Personal%20Mastery%20%26%20Longevity.png",
+    body: "Where longevity science, contemplative practice, and human optimisation converge — for high-performers, HNIs, and biological-age investors.",
+    image: "/images/four-pillars/pillar-longevity.jpg",
     href: "/pillars/personal-mastery-longevity",
   },
   {
     index: "04",
-    tag: null,
+    tag: "Wisdom & Science",
     name: "Wisdom & Modern Science",
-    body: "Ancient wisdom held to modern intellectual standards. Vedic sciences, contemplative traditions, neuroscience of practice, and the dialogues between them.",
-    image: "/images/Four%20Pillars/Wisdom%20%26%20Modern%20Science.png",
+    body: "Ancient wisdom held to modern intellectual standards — Vedic sciences, contemplative traditions, and the neuroscience of practice in dialogue.",
+    image: "/images/four-pillars/pillar-wisdom.jpg",
     href: "/pillars/wisdom-modern-science",
   },
 ] as const;
@@ -42,6 +42,7 @@ const PILLARS = [
 export default function FourPillars() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
@@ -50,13 +51,11 @@ export default function FourPillars() {
       ([entry]) => {
         if (entry.isIntersecting) { setVisible(true); io.disconnect(); }
       },
-      { threshold: 0.06 },
+      { threshold: 0.12 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
-
-  const [featured, ...rest] = PILLARS;
 
   return (
     <section
@@ -64,94 +63,80 @@ export default function FourPillars() {
       className={`${styles.section}${visible ? ` ${styles.visible}` : ""}`}
       aria-label="MysticVerse Global — The Four Pillars"
     >
+      <div className={styles.inner}>
 
-      {/* ── Section header ──────────────────────────────────── */}
-      <div className={styles.headerWrap}>
-        <div className={styles.eyebrowWrap}>
-          <p className={styles.eyebrow}>The Programme</p>
-        </div>
-        <h2 className={styles.headline}>
-          Four Pillars.<br />One Curated Audience.
-        </h2>
-        <p className={styles.subCopy}>
-          Each pillar speaks to a distinct audience and unlocks a distinct
-          commercial vertical. All four converge on the main stage.
-        </p>
-      </div>
-
-      {/* ── Header / featured divider ────────────────────────── */}
-      <div className={styles.headerDivider} aria-hidden="true" />
-
-      {/* ── Featured Pillar 01 ──────────────────────────────── */}
-      <a href={featured.href} className={styles.featured}>
-
-        {/* Full-bleed background image */}
-        <Image
-          src={featured.image}
-          alt={featured.name}
-          fill
-          style={{ objectFit: "cover", objectPosition: "center" }}
-          sizes="100vw"
-        />
-
-        {/* Left-weighted dark overlay — text legibility */}
-        <div className={styles.featuredOverlay} aria-hidden="true" />
-
-        {/* Text floats on top */}
-        <div className={styles.featuredText}>
-          <div className={styles.featuredIndexRow}>
-            <span className={styles.featuredIndex}>{featured.index}</span>
-            <span className={styles.indexRule} aria-hidden="true" />
-          </div>
-          <span className={styles.featuredTag}>{featured.tag}</span>
-          <h2 className={styles.featuredTitle}>{featured.name}</h2>
-          <p className={styles.featuredBody}>{featured.body}</p>
-          <span className={styles.cta}>
-            Explore the Pillar
-            <span className={styles.ctaArrow} aria-hidden="true">&ensp;→</span>
-          </span>
-        </div>
-
-      </a>
-
-      {/* ── Divider ─────────────────────────────────────────── */}
-      <div className={styles.subDivider} aria-hidden="true" />
-
-      {/* ── Sub-pillars 02–04 ───────────────────────────────── */}
-      <div className={styles.subGrid}>
-        {rest.map((pillar) => (
-          <a key={pillar.index} href={pillar.href} className={styles.subCard}>
-
-            {/* Full-bleed background image */}
-            <Image
-              src={pillar.image}
-              alt={pillar.name}
-              fill
-              style={{ objectFit: "cover", objectPosition: "center" }}
-              sizes="(max-width: 640px) 100vw, 33vw"
-            />
-
-            {/* Overlay */}
-            <div className={styles.subOverlay} aria-hidden="true" />
-
-            {/* Text over image */}
-            <div className={styles.subCardContent}>
-              <div className={styles.subIndexRow}>
-                <span className={styles.subIndex}>{pillar.index}</span>
-                <span className={styles.indexRule} aria-hidden="true" />
-              </div>
-              <h3 className={styles.subTitle}>{pillar.name}</h3>
-              <p className={styles.subBody}>{pillar.body}</p>
-              <span className={styles.cta}>
-                Explore the Pillar
-                <span className={styles.ctaArrow} aria-hidden="true">&ensp;→</span>
-              </span>
+        {/* ── Header ────────────────────────────────────────── */}
+        <div className={styles.header}>
+          <div className={styles.headerText}>
+            <div className={styles.eyebrowWrap}>
+              <p className={styles.eyebrow}>The Programme</p>
             </div>
+            <h2 className={styles.headline}>
+              Four Pillars.<br />
+              <span className="gradientText">One Curated Audience.</span>
+            </h2>
+          </div>
+          <p className={styles.subCopy}>
+            Each pillar speaks to a distinct audience and unlocks a distinct
+            commercial vertical. All four converge on the main stage.
+          </p>
+        </div>
 
-          </a>
-        ))}
+        <div className={styles.headerDivider} aria-hidden="true" />
+
+        {/* ── Interactive split showcase ────────────────────── */}
+        <div className={styles.showcase}>
+
+          {/* Visual — single image that swaps with the active pillar */}
+          <div className={styles.visual}>
+            {PILLARS.map((p, i) => (
+              <div
+                key={p.index}
+                className={`${styles.visualLayer}${i === active ? ` ${styles.visualActive}` : ""}`}
+                aria-hidden={i !== active}
+              >
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  className={styles.visualImg}
+                />
+                <div className={styles.visualGrad} aria-hidden="true" />
+                <div className={styles.visualMeta}>
+                  <span className={styles.visualIndex}>{p.index} / 04</span>
+                  <span className={styles.visualTag}>{p.tag}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* List — numbered rows; active one expands with detail */}
+          <div className={styles.list}>
+            {PILLARS.map((p, i) => (
+              <div
+                key={p.index}
+                className={`${styles.row}${i === active ? ` ${styles.rowActive}` : ""}`}
+                onMouseEnter={() => setActive(i)}
+                onClick={() => setActive(i)}
+              >
+                <div className={styles.rowHead}>
+                  <span className={styles.rowIndex}>{p.index}</span>
+                  <h3 className={styles.rowTitle}>{p.name}</h3>
+                </div>
+                <div className={styles.rowDetail}>
+                  <p className={styles.rowBody}>{p.body}</p>
+                  <a href={p.href} className={styles.rowLink}>
+                    Explore the Pillar
+                    <span className={styles.arrow} aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
-
     </section>
   );
 }

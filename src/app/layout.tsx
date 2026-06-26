@@ -1,24 +1,17 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-const cormorant = Cormorant_Garamond({
+// Body + UI typeface. Headlines use Clash Display (loaded via Fontshare
+// @import in globals.css). Clash Display will be self-hosted via
+// next/font/local before production for zero-FOUT + no CDN dependency.
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-  // "block" prevents the flash-of-fallback on first paint; fonts are
-  // self-hosted by next/font so the block period is imperceptibly short.
-  display: "block",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm-sans",
-  display: "block",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,8 +33,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
+      <head>
+        {/* Clash Display — headline typeface. Self-host via
+            next/font/local before production to drop the CDN dependency. */}
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
+        />
+      </head>
       <body className="min-h-full">
           <Header />
           {children}

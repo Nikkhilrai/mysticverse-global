@@ -1,53 +1,61 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════
-   MYSTICVERSE GLOBAL 2026 — LOCKED DESIGN TOKEN SYSTEM
-   Approved 2026-06-22. No ad hoc values added beyond this file.
-   ═══════════════════════════════════════════════════════════════════
+   MYSTICVERSE GLOBAL 2026 — "OBSIDIAN & GOLD" DESIGN SYSTEM
+   Redesign approved 2026-06-26 (supersedes the beige/brass system).
 
-   TWO-TONE LIGHT SYSTEM (approved 2026-06-22):
-   Canvas A (#F0EAE0) — warm stone. Editorial/statement/narrative sections.
-   Canvas B (#FAF9F6) — near-white. Grid/structured/card-layout sections.
-   These two light tones alternate across the page. Dark Ground reserved
-   for Hero + Stats only (2 sections max). Footer uses Ground structurally.
+   Direction: dark-cinematic, conscious-luxury. Bold modern type.
+   Vivid gold + conscious violet. Zero beige.
 
-   CONTRAST AUDIT (WCAG AA, computed 2026-06-22):
-   ✅ Body   #1C1510 on Canvas A #F0EAE0  → 15.08:1  (need 4.5:1)
-   ✅ Body   #1C1510 on Canvas B #FAF9F6  → 16.90:1  (need 4.5:1)
-   ✅ Canvas A #F0EAE0 on ground #14100C  → 15.82:1  (need 4.5:1)
-   ✅ Muted  #6B5E52 on Canvas A #F0EAE0  →  5.24:1  (need 4.5:1)
-   ✅ Muted  #6B5E52 on Canvas B #FAF9F6  →  5.96:1  (need 4.5:1)
-   ✅ Accent #AD8F5C on ground #14100C    →  6.19:1  (need 4.5:1)
-   ✅ Canvas A #F0EAE0 on HR ground #1E2C38→ 11.92:1 (need 4.5:1)
-   ✅ Accent #AD8F5C on HR ground #1E2C38 →  4.66:1  (need 4.5:1)
+   Signature device — gold → violet gradient = "Conscious Luxury":
+     gold   = luxury / capital
+     violet = conscious / spiritual
 
-   ⚠️  Accent #AD8F5C on Canvas A #F0EAE0 → 2.56:1  FAILS text use.
-   ⚠️  Accent #AD8F5C on Canvas B #FAF9F6 → 2.90:1  FAILS text use.
-       Rule: accent used as TEXT only on dark grounds (#14100C, #1E2C38).
-       On either canvas tone: accent is decorative only (borders, underlines, dividers).
+   CONTRAST (WCAG, on Obsidian #0B0B12):
+   ✅ Pearl  #F4F2F7 → ~17.5:1   (headlines, body)
+   ✅ Muted  #A8A6B4 → ~8.4:1    (secondary text)
+   ✅ Gold   #F5C45A → ~11.6:1   (accent text — passes as text on dark ✅)
+   ✅ Violet #7C5CFF → ~4.7:1    (large text / decorative)
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  /* — Color tokens — */
-  --color-ground:    #14100C;   /* Espresso midnight — Hero + Stats + Footer only */
-  --color-canvas:    #F0EAE0;   /* Canvas A — warm stone, editorial/statement sections */
-  --color-canvas-b:  #FAF9F6;   /* Canvas B — near-white, grid/card/structured sections */
-  --color-accent:    #AD8F5C;   /* Antique brass — text on dark grounds only */
-  --color-body:      #1C1510;   /* Deep warm brown-black body text on canvas */
-  --color-muted:     #6B5E52;   /* Warm mid-tone for captions/labels on canvas */
-  --color-hr-ground: #1E2C38;   /* Cool slate — Corporate HR Pavilion ground only */
-  --color-hr-canvas: #EFF2F4;   /* Cool near-white — HR Pavilion canvas only */
+  /* — Surfaces — */
+  --color-obsidian:  #0B0B12;   /* base / ground */
+  --color-ink:       #14141F;   /* raised panels, cards */
+  --color-elevated:  #1C1B2A;   /* hover / lifted surface */
+  --color-plum:      #2A1B3D;   /* deep violet wash / glow base */
+  --color-gallery:   #F6F5F2;   /* gallery white — AT MOST one section */
 
-  /* — Type tokens — */
-  --font-display: var(--font-cormorant), Georgia, serif;
-  --font-body:    var(--font-dm-sans), system-ui, sans-serif;
+  /* — Accents — */
+  --color-gold:      #F5C45A;   /* primary accent — vivid luxury */
+  --color-gold-deep: #E0A23C;   /* gradient leg / pressed */
+  --color-violet:    #7C5CFF;   /* conscious accent */
+  --color-fuchsia:   #C77DFF;   /* gradient midpoint */
 
-  /* — Motion tokens — */
-  --ease-out-cubic:   cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast:    200ms;
-  --duration-base:    250ms;
-  --duration-slow:    350ms;
-  --duration-reveal:  700ms;
+  /* — Text — */
+  --color-pearl:     #F4F2F7;   /* primary text on dark */
+  --color-muted:     #A8A6B4;   /* secondary text on dark */
+  --color-ink-text:  #14141F;   /* text on gallery white */
+  --color-ink-muted: #5A5866;   /* muted text on gallery white */
+
+  /* — Hairlines — */
+  --hairline:        rgba(255, 255, 255, 0.08);
+  --hairline-gold:   rgba(245, 196, 90, 0.22);
+
+  /* — Signature gradient — */
+  --gradient-signature: linear-gradient(120deg, #F5C45A 0%, #C77DFF 50%, #7C5CFF 100%);
+  --gradient-signature-soft: linear-gradient(120deg, rgba(245,196,90,0.18) 0%, rgba(124,92,255,0.18) 100%);
+
+  /* — Type — */
+  --font-display: 'Clash Display', var(--font-inter), system-ui, sans-serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
+
+  /* — Motion — */
+  --ease-out-cubic:  cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast:   200ms;
+  --duration-base:   250ms;
+  --duration-slow:   350ms;
+  --duration-reveal: 700ms;
 }
 
 /* ── Base reset ───────────────────────────────────────────────────── */
@@ -68,8 +76,8 @@ html {
 }
 
 body {
-  background-color: var(--color-canvas);
-  color: var(--color-body);
+  background-color: var(--color-obsidian);
+  color: var(--color-pearl);
   font-family: var(--font-body);
   font-size: 1.0625rem; /* 17px */
   line-height: 1.65;
@@ -77,8 +85,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Shared focus style — keyboard accessibility ──────────────────── */
+/* ── Gradient text utility — the signature device ─────────────────── */
+.gradientText {
+  background: var(--gradient-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Noise grain overlay — premium dark depth (2–3%) ──────────────── */
+/* Apply to a position:absolute child with inset:0, pointer-events:none */
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+}
+
+/* ── Shared focus style ───────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-gold);
   outline-offset: 4px;
 }

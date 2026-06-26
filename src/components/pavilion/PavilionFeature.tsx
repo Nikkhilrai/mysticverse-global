@@ -4,103 +4,183 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./PavilionFeature.module.css";
 
-const STATS = [
-  { value: "500 sqm", label: "Zone Footprint" },
-  { value: "20+",     label: "Curated Brands" },
-  { value: "HNI-First", label: "Audience Profile" },
+type Stat =
+  | { kind: "num"; to: number; suffix: string; label: string }
+  | { kind: "text"; text: string; label: string };
+
+const STATS: Stat[] = [
+  { kind: "num", to: 500, suffix: " sqm", label: "Zone Footprint" },
+  { kind: "num", to: 20, suffix: "+", label: "Curated Brands" },
+  { kind: "text", text: "HNI-First", label: "Audience Profile" },
+];
+
+const HOTSPOTS = [
+  {
+    top: "20%", left: "30%",
+    tag: "Installations",
+    title: "Biophilic Installations",
+    desc: "Circadian-lit, plant-integrated environments co-built with developers and design houses.",
+  },
+  {
+    top: "31%", left: "60%",
+    tag: "Real Estate",
+    title: "Branded Wellness Residences",
+    desc: "Walkthrough mock-ups of branded residences from the developers defining the category.",
+  },
+  {
+    top: "22%", left: "83%",
+    tag: "Longevity",
+    title: "Longevity Clinics",
+    desc: "Biological-age testing, regenerative protocols, and performance-medicine partners.",
+  },
+  {
+    top: "60%", left: "80%",
+    tag: "Luxury Retail",
+    title: "Crystal & Jewellery Houses",
+    desc: "Rare crystal and ceremonial jewellery houses beside the architects of conscious living.",
+  },
 ] as const;
+
+/* Count-up numeral — animates once the section is in view. */
+function CountUp({ to, suffix, start }: { to: number; suffix: string; start: boolean }) {
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setN(to);
+      return;
+    }
+    const DURATION = 1100;
+    const DELAY = 720; // start after the stats row has animated in
+    let raf = 0;
+    let startT: number | null = null;
+
+    const tick = (t: number) => {
+      if (startT === null) startT = t;
+      const elapsed = t - startT - DELAY;
+      if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
+      const p = Math.min(elapsed / DURATION, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setN(Math.floor(to * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setN(to);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [start, to]);
+
+  return <>{`${n}${suffix}`}</>;
+}
 
 export default function PavilionFeature() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const [pinned, setPinned] = useState<number | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
+        if (entry.isIntersecting) { setVisible(true); io.disconnect(); }
       },
-      { threshold: 0.06 },
+      { threshold: 0.18 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
+
 
   return (
     <section
       ref={ref}
       className={`${styles.section}${visible ? ` ${styles.visible}` : ""}`}
       aria-label="The Conscious Living Pavilion"
+      onClick={() => setPinned(null)}
     >
+      {/* Full-bleed cinematic image */}
+      <Image
+        src="/images/pavilion/pavilion-a.jpg"
+        alt="Biophilic architectural interior — the Conscious Living Pavilion."
+        fill
+        sizes="100vw"
+        className={styles.bg}
+      />
+      <div className={styles.overlay} aria-hidden="true" />
+      <div className={`${styles.grain} noise`} aria-hidden="true" />
+
+      {/* Interactive hotspots — hover/focus to reveal what's in the zone */}
+      <div className={styles.hotspots}>
+        {HOTSPOTS.map((h, i) => (
+          <button
+            key={h.title}
+            type="button"
+            className={`${styles.hotspot}${pinned === i ? ` ${styles.pinned}` : ""}`}
+            style={{ top: h.top, left: h.left }}
+            aria-label={`${h.title} — ${h.desc}`}
+            aria-pressed={pinned === i}
+            onClick={(e) => {
+              e.stopPropagation();
+              setPinned((p) => (p === i ? null : i));
+            }}
+          >
+            <span className={styles.hotspotStem} aria-hidden="true" />
+            <span className={styles.hotspotDot} aria-hidden="true" />
+            <span className={styles.hotspotCard}>
+              <span className={styles.hotspotTag}>{h.tag}</span>
+              <span className={styles.hotspotTitle}>{h.title}</span>
+              <span className={styles.hotspotDesc}>{h.desc}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Floating frosted-glass panel */}
       <div className={styles.inner}>
-
-        {/* ── Image panel (left, full-bleed) ───────────────── */}
-        <div className={styles.imageColumn}>
-          <Image
-            src="/images/sections/Conscious Living Pavilion.png"
-            alt="The Conscious Living Pavilion — biophilic interior at MysticVerse Global 2026."
-            fill
-            style={{ objectFit: "cover", objectPosition: "center" }}
-            sizes="(max-width: 900px) 100vw, 58vw"
-          />
-          <div className={styles.imageOverlay} aria-hidden="true" />
-        </div>
-
-        {/* ── Text panel (right) ───────────────────────────── */}
-        <div className={styles.textColumn}>
+        <div className={styles.panel}>
 
           <div className={styles.eyebrowWrap}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
             <p className={styles.eyebrow}>The Flagship Zone</p>
           </div>
 
           <h2 className={styles.headline}>
-            The Conscious<br />Living Pavilion.
+            The Conscious<br />
+            <span className="gradientText">Living Pavilion.</span>
           </h2>
 
           <p className={styles.subCopy}>
-            Where wellness real estate and luxury retail share the same
-            room — because they speak to the same buyer.
+            Where wellness real estate and luxury retail share the same room —
+            because they speak to the same buyer.
           </p>
-
-          <span className={styles.dividerRule} aria-hidden="true" />
 
           <p className={styles.body}>
-            Five hundred square metres at the heart of the venue. Walkthrough
-            mock-ups of branded wellness residences. Biophilic and
-            circadian-lighting installations co-built with developers and design
-            houses. Rare crystal and ceremonial jewellery houses placed beside
-            the architects shaping the next decade of conscious communities. The
-            Pavilion is not a booth row. It is a curated experience designed for
-            the discerning eye of an HNI who will spend USD&nbsp;12&nbsp;million
-            on a wellness villa and USD&nbsp;12,000 on a Himalayan crystal in the
-            same week — and considers neither extravagant.
+            Five hundred square metres at the heart of the venue: walkthrough
+            mock-ups of branded wellness residences, biophilic installations, and
+            rare crystal houses placed beside the architects shaping the next
+            decade of conscious communities.
           </p>
 
-          {/* Stats row */}
           <div className={styles.stats} aria-label="Pavilion at a glance">
-            {STATS.map((s, i) => (
-              <div key={s.label} className={styles.statBlock}>
-                {i > 0 && <span className={styles.statDivider} aria-hidden="true" />}
-                <div className={styles.stat}>
-                  <span className={styles.statValue}>{s.value}</span>
-                  <span className={styles.statLabel}>{s.label}</span>
-                </div>
+            {STATS.map((s) => (
+              <div key={s.label} className={styles.stat}>
+                <span className={styles.statValue}>
+                  {s.kind === "num"
+                    ? <CountUp to={s.to} suffix={s.suffix} start={visible} />
+                    : s.text}
+                </span>
+                <span className={styles.statLabel}>{s.label}</span>
               </div>
             ))}
           </div>
 
           <a href="/pavilion" className={styles.cta}>
             Step Inside the Pavilion
-            <span className={styles.ctaArrow} aria-hidden="true">&ensp;→</span>
+            <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>
 
         </div>
-
-
       </div>
     </section>
   );

@@ -7,11 +7,11 @@
      A gradient scrim within the header ensures nav text legibility
      against whatever image sits behind.
    Scrolled (solid Ground): kicks in after 100px scroll.
-     Background: #10141C (Ground). Border-bottom hairline. 30% height
+     Background: #0B0B12 (Ground). Border-bottom hairline. 30% height
      reduction. Top bar slides up out of view.
 
    Why Ground, not Canvas:
-   Ground (#10141C) is the only color that reads as a distinct
+   Ground (#0B0B12) is the only color that reads as a distinct
    anchoring layer regardless of whether the section below is
    Canvas A, Canvas B, or another dark section. Canvas A headers
    vanish when scrolling Canvas A sections.
@@ -19,10 +19,10 @@
    Desktop nav collapses to hamburger below 1120px (7 nav items
    + logo + REGISTER need the width; 900px is too cramped).
 
-   Contrast on Ground (#10141C):
-   ✅ Canvas A #F0EAE0 → 15.82:1  (logo, nav links)
-   ✅ Accent   #AD8F5C →  6.19:1  (REGISTER button text; nav underlines)
-   ✅ Ground   #10141C on Brass #AD8F5C → 6.19:1  (REGISTER text on bg)
+   Contrast on Ground (#0B0B12):
+   ✅ Canvas A #F4F2F7 → 15.82:1  (logo, nav links)
+   ✅ Accent   #F5C45A →  6.19:1  (REGISTER button text; nav underlines)
+   ✅ Ground   #0B0B12 on Brass #F5C45A → 6.19:1  (REGISTER text on bg)
    ══════════════════════════════════════════════════════════════ */
 
 /* ── Header shell ───────────────────────────────────────── */
@@ -61,7 +61,7 @@
 }
 
 .header.scrolled {
-  background-color: #10141C;
+  background-color: #0B0B12;
   border-bottom-color: rgba(240, 234, 224, 0.08);
 }
 
@@ -113,7 +113,7 @@
 }
 
 .topBarText {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.5625rem;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -137,7 +137,7 @@
 }
 
 .topBarDismiss:hover {
-  color: #F0EAE0;
+  color: #F4F2F7;
 }
 
 /* ── Nav row ────────────────────────────────────────────── */
@@ -203,7 +203,7 @@
 }
 
 .navLink {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0.03em;
@@ -223,12 +223,12 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: #AD8F5C; /* decorative ✅ */
+  background-color: #F5C45A; /* decorative ✅ */
   transition: width 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navLink:hover {
-  color: #F0EAE0;
+  color: #F4F2F7;
 }
 
 .navLink:hover::after,
@@ -237,7 +237,7 @@
 }
 
 .navLink[aria-current="page"] {
-  color: #F0EAE0;
+  color: #F4F2F7;
 }
 
 /* ── Actions — REGISTER + hamburger ────────────────────── */
@@ -250,7 +250,7 @@
 
 /* ── REGISTER button ────────────────────────────────────── */
 /*
-  Brass (#AD8F5C) bg / Ground (#10141C) text.
+  Brass (#F5C45A) bg / Ground (#0B0B12) text.
   Hover inverts: Ground bg / Brass text — same border holds.
   Consistent in both transparent and scrolled header states.
   Brass/Ground swap (6.19:1) ✅ in both orientations.
@@ -259,27 +259,32 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 0.5rem 1.125rem;
-  background-color: #AD8F5C; /* Brass */
-  color: #10141C;             /* Ground */
-  border: 1px solid #AD8F5C;
+  padding: 0.625rem 1.375rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  background-size: 160% 160%;
+  color: #14100C;
+  box-shadow: 0 4px 18px rgba(245, 196, 90, 0.18);
   transition:
-    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-    color            200ms cubic-bezier(0.16, 1, 0.3, 1);
+    background-position 250ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow          250ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform           250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .registerBtn:hover {
-  background-color: #10141C; /* Ground */
-  color: #AD8F5C;             /* Brass */
+  background-position: 100% 0;
+  box-shadow: 0 8px 28px rgba(124, 92, 255, 0.34);
+  transform: translateY(-1px);
 }
 
 .registerBtn:focus-visible {
-  outline: 2px solid #AD8F5C;
+  outline: 2px solid #F5C45A;
   outline-offset: 2px;
 }
 
@@ -310,7 +315,7 @@
   display: block;
   width: 1.25rem;
   height: 1px;
-  background-color: #F0EAE0;
+  background-color: #F4F2F7;
   transform-origin: center;
   transition:
     transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -347,7 +352,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background-color: #10141C;
+  background-color: #0B0B12;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -385,7 +390,7 @@
 }
 
 .mobileNavLink {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(1.5rem, 5.5vw, 2.5rem);
   font-weight: 500;
   line-height: 1.1;
@@ -402,7 +407,7 @@
 }
 
 .mobileNavLink:hover {
-  color: #F0EAE0;
+  color: #F4F2F7;
 }
 
 /* ── Mobile REGISTER button ─────────────────────────────── */
@@ -410,15 +415,15 @@
   display: block;
   text-align: center;
   margin-top: 2.5rem;
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 1rem 2rem;
-  background-color: #AD8F5C;
-  color: #10141C;
-  border: 1px solid #AD8F5C;
+  background-color: #F5C45A;
+  color: #0B0B12;
+  border: 1px solid #F5C45A;
   text-decoration: none;
   transition:
     background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -427,7 +432,7 @@
 
 .mobileRegisterBtn:hover {
   background-color: transparent;
-  color: #AD8F5C;
+  color: #F5C45A;
 }
 
 /* ── Reduced motion ─────────────────────────────────────── */

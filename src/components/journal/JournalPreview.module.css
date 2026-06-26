@@ -1,329 +1,394 @@
 /* ══════════════════════════════════════════════════════════════
-   JournalPreview — Section 8, MysticVerse Global 2026
+   JournalPreview — Section 8 / "From The Journal"
+   MysticVerse Global 2026 — "OBSIDIAN & GOLD".
 
-   Background: Canvas B (#FAF9F6) — near-white grid sections.
-   Adjacent sections:
-     S7 ConfirmedPartners  → Canvas A (#F0EAE0)
-     S8 JournalPreview     → Canvas B (#FAF9F6) ← THIS FILE
-     S9 (footer/next)      → Ground (#14100C)
-
-   Contrast audit (Canvas B):
-   — Headline / card titles:  #1C1510 (body)  → 15.08:1 ✅
-   — Eyebrow / category / excerpt: #6B5E52 (muted) → 5.24:1 ✅
-   — Brass (#AD8F5C): decorative-only on canvas — hairlines, arrows ✅
+   Editorial featured + list layout. Typographic (no images until
+   real articles exist). Staggered reveal, gradient accents.
    ══════════════════════════════════════════════════════════════ */
 
-/* ── Section ────────────────────────────────────────────── */
+/* ── Section ─────────────────────────────────────────────── */
 .section {
-  background-color: #10141C;
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
   padding:
-    clamp(3rem, 5vw, 5rem)
-    0
-    clamp(3.5rem, 5.5vw, 5.5rem);
-
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity   700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    clamp(4rem, 7vw, 7rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(4.5rem, 8vw, 8rem);
 }
 
-.section.visible {
-  opacity: 1;
-  transform: translateY(0);
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 45% at 100% 0%, rgba(124, 92, 255, 0.10) 0%, transparent 60%),
+    radial-gradient(40% 40% at 0% 100%, rgba(245, 196, 90, 0.05) 0%, transparent 60%);
 }
 
-/* ── Inner — horizontal padding ─────────────────────────── */
 .inner {
-  padding-left:  clamp(1.5rem, 6vw, 6rem);
-  padding-right: clamp(1.5rem, 6vw, 6rem);
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
-/* ── Eyebrow system ─────────────────────────────────────── */
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+@media (min-width: 860px) {
+  .header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+}
+
 .eyebrowWrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
 }
 
 .eyebrowWrap::before {
   content: '';
   display: block;
   width: 1px;
-  height: 2rem;
-  background-color: #AD8F5C;
-  opacity: 0.5;
-  margin-bottom: 1rem;
+  height: 1.75rem;
+  background: linear-gradient(to bottom, #F5C45A, rgba(245, 196, 90, 0));
+  margin-bottom: 0.875rem;
 }
 
 .eyebrow {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-weight: 600;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(240, 234, 224, 0.45);
+  color: #F5C45A;
   line-height: 1;
 }
 
-/* ── Section headline ───────────────────────────────────── */
 .headline {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(2.25rem, 4vw, 4rem);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.04;
-  letter-spacing: -0.03em;
-  color: #F0EAE0;
-  text-align: center;
-  margin: 0 auto 1.25rem;
+  letter-spacing: -0.025em;
+  color: #F4F2F7;
+  margin-bottom: 0.875rem;
 }
 
-/* ── Bridging italic ─────────────────────────────────────── */
-/*
-  Voice B — contemplative register. Cormorant italic pulls the section
-  from commercial into reflective before the reader enters the cards.
-  Centred, generous line-height, muted hue so it reads as editorial
-  not promotional.
-*/
 .bridge {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.15vw, 1.0625rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 1.75;
-  color: rgba(240, 234, 224, 0.50);
-  text-align: center;
+  line-height: 1.6;
+  color: #A8A6B4;
   max-width: 42ch;
-  margin: 0 auto clamp(2rem, 3.5vw, 3rem);
 }
 
-/* ── Article grid ───────────────────────────────────────── */
-/*
-  3 equal columns desktop, 2 tablet, 1 mobile.
-  Hairline grid technique: 1px gap + rgba brass background shows
-  between cells without separate border declarations.
-*/
-.grid {
+/* ── View all (header, desktop) ──────────────────────────── */
+.viewAllTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F4F2F7;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  transition: border-color 220ms var(--ease-out-cubic), color 220ms var(--ease-out-cubic);
+}
+
+.viewAllTop:hover {
+  border-color: rgba(245, 196, 90, 0.5);
+  color: #F5C45A;
+}
+
+/* ── Layout — featured + list ────────────────────────────── */
+.layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1px;
-  background-color: rgba(173, 143, 92, 0.18);
-  margin-bottom: clamp(2.5rem, 4vw, 4rem);
-}
-
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 @media (min-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr 1fr 1fr;
+  .layout {
+    grid-template-columns: 1.25fr 1fr;
+    align-items: stretch;
   }
 }
 
-/* ── Article card ───────────────────────────────────────── */
-.card {
+/* ── Featured ────────────────────────────────────────────── */
+.featured {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  background-color: #10141C;
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+  border-radius: 18px;
+  border: 1px solid var(--hairline);
+  background-color: #14141F;
+
+  opacity: 0;
+  transform: translateY(28px);
   transition:
-    transform  350ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-color 300ms var(--ease-out-cubic),
+    box-shadow   320ms var(--ease-out-cubic),
+    transform    320ms var(--ease-out-cubic);
 }
 
-.card:hover {
+.section.visible .featured {
+  animation: journalRise 700ms var(--ease-out-cubic) 80ms both;
+}
+
+.featuredGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(90% 70% at 100% 0%, rgba(245, 196, 90, 0.1) 0%, rgba(124, 92, 255, 0.08) 38%, transparent 68%);
+  opacity: 0.7;
+  transition: opacity 360ms var(--ease-out-cubic);
+}
+
+.section.visible .featured:hover {
+  border-color: rgba(245, 196, 90, 0.4);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
   transform: translateY(-4px);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+}
+
+.featured:hover .featuredGlow { opacity: 1; }
+
+.featuredBadge {
+  position: relative;
   z-index: 1;
-}
-
-.card:focus-visible {
-  outline: 2px solid #AD8F5C;
-  outline-offset: -2px;
-}
-
-/* ── Card image wrapper (3:2 ratio) ─────────────────────── */
-.imageWrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  background-color: rgba(28, 21, 16, 0.05); /* fallback while image loads */
-}
-
-.cardImage {
-  object-fit: cover;
-  object-position: center;
-  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card:hover .cardImage {
-  transform: scale(1.03);
-}
-
-/* ── Card body ──────────────────────────────────────────── */
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: clamp(1.25rem, 2.5vw, 1.875rem) clamp(1.25rem, 2.5vw, 1.875rem);
-}
-
-/* ── Category tag ───────────────────────────────────────── */
-.category {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.5625rem;
-  font-weight: 500;
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  color: #AD8F5C;
-  line-height: 1;
-  margin-bottom: 0.875rem;
-}
-
-/* ── Card title ─────────────────────────────────────────── */
-.title {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.3125rem);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #F0EAE0;
-  margin-bottom: 0.875rem;
-}
-
-/* ── Excerpt ────────────────────────────────────────────── */
-.excerpt {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.8125rem, 1vw, 0.875rem);
-  font-weight: 400;
-  line-height: 1.75;
-  color: rgba(240, 234, 224, 0.52);
-  flex-grow: 1;
-  margin-bottom: 1.375rem;
-}
-
-/* ── "Read more →" ──────────────────────────────────────── */
-/*
-  Static: body-colour text, no underline.
-  On card hover: brass underline expands left → right.
-  Brass underline is decorative (not text) → no contrast req. ✅
-*/
-.readMore {
-  display: inline-block;
-  position: relative;
   align-self: flex-start;
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.6875rem;
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #14100C;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.cat {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 1rem;
+}
+
+.featuredTitle {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #F4F2F7;
+  margin-bottom: 1rem;
+}
+
+.featuredExcerpt {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.05vw, 1rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: #A8A6B4;
+  max-width: 52ch;
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  flex: 1;
+}
+
+.featuredFoot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.readTime {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #F0EAE0;
-  padding-bottom: 3px;
+  color: #8B8997;
 }
 
-.readMore::after {
+.readMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+/* ── List ────────────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--hairline);
+}
+
+.row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: clamp(1.25rem, 2vw, 1.75rem) 0 clamp(1.25rem, 2vw, 1.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
+  border-bottom: 1px solid var(--hairline);
+  flex: 1;
+  justify-content: center;
+  transition:
+    background-color 260ms var(--ease-out-cubic),
+    padding-left     260ms var(--ease-out-cubic);
+
+  opacity: 0;
+}
+
+.section.visible .row {
+  animation: journalRise 600ms var(--ease-out-cubic) both;
+}
+
+.section.visible .row:nth-child(1) { animation-delay: 220ms; }
+.section.visible .row:nth-child(2) { animation-delay: 320ms; }
+
+/* Active gold bar */
+.row::before {
   content: '';
   position: absolute;
-  bottom: 0;
   left: 0;
-  width: 0;
-  height: 1px;
-  background-color: #AD8F5C; /* decorative ✅ */
-  transition: width 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--gradient-signature);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 300ms var(--ease-out-cubic);
 }
 
-.card:hover .readMore::after {
-  width: 100%;
+.row:hover {
+  background-color: rgba(245, 196, 90, 0.04);
+  padding-left: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.row:hover::before { transform: scaleY(1); }
+
+.rowCat {
+  font-family: var(--font-body);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 0.625rem;
+}
+
+.rowTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: 0.5rem;
+  transition: color 220ms var(--ease-out-cubic);
+}
+
+.rowExcerpt {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #8B8997;
+  margin-bottom: 0.875rem;
+}
+
+.rowFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rowTime {
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8B8997;
 }
 
 .arrow {
-  font-style: normal;
   display: inline-block;
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--duration-base) var(--ease-out-cubic);
 }
 
-.card:hover .arrow {
-  transform: translateX(4px);
+.featured:hover .arrow,
+.row:hover .arrow,
+.viewAllTop:hover .arrow {
+  transform: translateX(5px);
 }
 
-/* ── "View all articles" closing link ───────────────────── */
-.allArticlesWrap {
-  display: flex;
-  justify-content: center;
-}
-
-.allArticles {
-  display: inline-flex;
-  align-items: center;
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #F0EAE0;
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 3px;
-}
-
-.allArticles::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: #AD8F5C; /* decorative ✅ */
-  opacity: 0.4;
-  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.allArticles:hover::after {
-  opacity: 1;
-}
-
-.allArticles:hover .arrow {
-  transform: translateX(4px);
-}
+.row:hover .arrow { color: #F5C45A; }
 
 /* ── Reduced motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .section {
+  .featured,
+  .row {
     opacity: 1;
     transform: none;
-    transition: none;
+    animation: none;
   }
 
-  .card {
-    transition: none;
-  }
-
-  .card:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
-  .cardImage,
-  .card:hover .cardImage {
-    transition: none;
-    transform: none;
-  }
-
-  .readMore::after {
-    width: 100%;
-    opacity: 0.4;
-    transition: none;
-  }
-
+  .featuredGlow,
+  .row::before,
   .arrow,
-  .card:hover .arrow,
-  .allArticles:hover .arrow {
-    transform: none;
+  .rowTitle {
     transition: none;
   }
+}
+
+@keyframes journalRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
