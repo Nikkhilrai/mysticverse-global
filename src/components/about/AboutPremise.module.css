@@ -1,0 +1,180 @@
+/* ══════════════════════════════════════════════════════════════
+   AboutPremise — Section 2 of the About page
+   Editorial narrative (left) + pulled-out market figures (right).
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4.5rem, 8vw, 8rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(40% 50% at 90% 10%, rgba(124, 92, 255, 0.08) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 920px) {
+  .inner {
+    grid-template-columns: 1.5fr 0.85fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────── */
+.eyebrowWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.eyebrowRule {
+  display: block;
+  width: clamp(1.5rem, 4vw, 2.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+}
+
+/* ── Narrative ───────────────────────────────────────────── */
+.lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.4vw, 2.125rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.15vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.78;
+  color: #A8A6B4;
+}
+
+.body + .body {
+  margin-top: 1.25rem;
+}
+
+/* ── Figure strip ────────────────────────────────────────── */
+.figures {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--hairline-gold);
+}
+
+@media (min-width: 920px) {
+  .figures {
+    position: sticky;
+    top: clamp(6rem, 12vh, 9rem);
+  }
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: clamp(1.25rem, 2.2vw, 1.75rem) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.figure:last-child {
+  border-bottom: none;
+}
+
+.figureValue {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+
+  background: var(--gradient-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.figureLabel {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #F4F2F7;
+}
+
+.figureNote {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(168, 166, 180, 0.7);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ENTRANCE
+   ══════════════════════════════════════════════════════════════ */
+.eyebrowWrap,
+.lead,
+.body,
+.figure {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   680ms var(--ease-out-cubic),
+    transform 680ms var(--ease-out-cubic);
+}
+
+.section.visible .eyebrowWrap { opacity: 1; transform: none; transition-delay: 0ms; }
+.section.visible .lead        { opacity: 1; transform: none; transition-delay: 120ms; }
+.section.visible .body        { opacity: 1; transform: none; transition-delay: 230ms; }
+.section.visible .body + .body{ transition-delay: 320ms; }
+.section.visible .figure      { opacity: 1; transform: none; }
+.section.visible .figure:nth-child(1) { transition-delay: 360ms; }
+.section.visible .figure:nth-child(2) { transition-delay: 450ms; }
+.section.visible .figure:nth-child(3) { transition-delay: 540ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrowWrap,
+  .lead,
+  .body,
+  .figure {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -365,9 +365,14 @@
   opacity: 0;
   transform: translateY(-12px);
   pointer-events: none;
+  /* visibility: hidden removes the closed menu's links from the focus
+     order (and satisfies aria-hidden), preventing a keyboard trap on
+     invisible nav items. Hiding is delayed until the fade-out finishes. */
+  visibility: hidden;
   transition:
-    opacity   350ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity    350ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform  350ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s    linear 350ms;
 }
 
 /* Hidden on desktop — fallback if JS fails to close it */
@@ -381,6 +386,12 @@
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  visibility: visible;
+  /* Show immediately on open so the fade-in is visible */
+  transition:
+    opacity    350ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform  350ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s    linear 0s;
 }
 
 /* ── Mobile nav items ───────────────────────────────────── */

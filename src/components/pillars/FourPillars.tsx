@@ -73,12 +73,13 @@ export default function FourPillars() {
             </div>
             <h2 className={styles.headline}>
               Four Pillars.<br />
-              <span className="gradientText">One Curated Audience.</span>
+              <span className="gradientText">One Shared Vision.</span>
             </h2>
           </div>
           <p className={styles.subCopy}>
-            Each pillar speaks to a distinct audience and unlocks a distinct
-            commercial vertical. All four converge on the main stage.
+            Bringing together the worlds of Wellness, Wellness Real Estate,
+            Human Capital, and Longevity to inspire meaningful conversations,
+            global collaboration and lasting impact.
           </p>
         </div>
 
@@ -123,6 +124,12 @@ export default function FourPillars() {
                 <div className={styles.rowHead}>
                   <span className={styles.rowIndex}>{p.index}</span>
                   <h3 className={styles.rowTitle}>{p.name}</h3>
+                  <span className={styles.rowTag}>{p.tag}</span>
+                  <span className={styles.rowChevron} aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
+                      <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
                 </div>
                 <div className={styles.rowDetail}>
                   <p className={styles.rowBody}>{p.body}</p>

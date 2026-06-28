@@ -1,0 +1,145 @@
+/* ══════════════════════════════════════════════════════════════
+   AboutVisionMission — Section 3 of the About page
+   Two glass panels (Vision / Mission) with a gradient top accent.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4rem, 7vw, 7rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 60% at 0% 50%,  rgba(245, 196, 90, 0.06) 0%, transparent 60%),
+    radial-gradient(45% 60% at 100% 50%, rgba(124, 92, 255, 0.10) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+@media (min-width: 820px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 2.5vw, 2rem);
+  }
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 3.5vw, 3.25rem);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 22px;
+  background-color: rgba(20, 20, 31, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  backdrop-filter: blur(18px) saturate(1.1);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    transform   var(--duration-slow) var(--ease-out-cubic),
+    border-color var(--duration-slow) var(--ease-out-cubic);
+}
+
+/* Gradient top accent line */
+.accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 720ms var(--ease-out-cubic);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 196, 90, 0.28);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.cardDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  box-shadow: 0 0 12px rgba(245, 196, 90, 0.6);
+}
+
+.cardLabel {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+}
+
+.cardBody {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.9vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.42;
+  letter-spacing: -0.018em;
+  color: #F4F2F7;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ENTRANCE
+   ══════════════════════════════════════════════════════════════ */
+.card {
+  opacity: 0;
+  transform: translateY(34px);
+}
+
+.section.visible .card {
+  animation: vmRise 760ms var(--ease-out-cubic) both;
+}
+
+.section.visible .card:nth-child(1) { animation-delay: 80ms; }
+.section.visible .card:nth-child(2) { animation-delay: 220ms; }
+
+.section.visible .accent {
+  transform: scaleX(1);
+  transition-delay: 520ms;
+}
+
+@keyframes vmRise {
+  from { opacity: 0; transform: translateY(34px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { opacity: 1; transform: none; animation: none; }
+  .accent { transform: scaleX(1); transition: none; }
+  .card:hover { transform: none; }
+}

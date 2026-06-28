@@ -32,7 +32,7 @@ export default function HeroSection({
         <div className={styles.textBlock}>
 
           <p className={styles.microcopy}>
-            <span className={styles.microcopyInitial}>M</span>ysticVerse Global 2026&ensp;&middot;&ensp;10 &amp; 11 September&ensp;&middot;&ensp;Dubai
+            <span className={styles.microcopyInitial}>M</span>ysticVerse&nbsp;Global&nbsp;2026&ensp;&middot;&ensp;10&nbsp;&amp;&nbsp;11&nbsp;September&ensp;&middot;&ensp;Dubai
           </p>
 
           <h1 className={styles.headline}>

@@ -19,6 +19,7 @@ import styles from "./Header.module.css";
   — "Partner With Us": 4 partner-tier pages (TBD in Phase 4 brief)
 */
 const NAV_ITEMS = [
+  { label: "About",           href: "/about",             futureDropdown: false },
   { label: "Why Dubai 2026",  href: "/why-dubai-2026",  futureDropdown: false },
   { label: "The 4 Pillars",   href: "/pillars",          futureDropdown: true  },
   { label: "The Pavilion",    href: "/pavilion",          futureDropdown: false },

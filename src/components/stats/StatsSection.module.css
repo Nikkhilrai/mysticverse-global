@@ -138,18 +138,6 @@
   font-weight: 400;
   line-height: 1.65;
   color: #A8A6B4;
-  margin-bottom: 1.25rem;
-}
-
-/* ── Source attribution ──────────────────────────────────── */
-.source {
-  font-family: var(--font-body);
-  font-size: 0.5625rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  line-height: 1.6;
-  color: rgba(244, 242, 247, 0.32);
-  margin-top: auto;
 }
 
 /* ── Screen-reader only ──────────────────────────────────── */

@@ -105,6 +105,18 @@
   font-weight: 700;
 }
 
+/* Narrow phones: the meta pill may wrap to two lines. Ease the
+   tracking so it fits better, and relax line-height so the wrapped
+   lines aren't cramped. Segments above stay unbreakable (nbsp), so
+   any break lands on a "·" separator. Desktop/tablet are untouched. */
+@media (max-width: 420px) {
+  .microcopy {
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
 /* ── Headline — oversized Clash Display ─────────────────── */
 .headline {
   font-family: var(--font-display);

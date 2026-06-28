@@ -20,6 +20,7 @@
 
 /* ── Staggered reveal — children rise in sequence on scroll ── */
 .eyebrowRow,
+.lead,
 .manifesto,
 .statement,
 .audienceBlock {
@@ -31,9 +32,10 @@
 }
 
 .section.visible .eyebrowRow    { opacity: 1; transform: none; transition-delay: 0ms; }
-.section.visible .manifesto     { opacity: 1; transform: none; transition-delay: 130ms; }
-.section.visible .statement     { opacity: 1; transform: none; transition-delay: 280ms; }
-.section.visible .audienceBlock { opacity: 1; transform: none; transition-delay: 430ms; }
+.section.visible .lead          { opacity: 1; transform: none; transition-delay: 120ms; }
+.section.visible .manifesto     { opacity: 1; transform: none; transition-delay: 220ms; }
+.section.visible .statement     { opacity: 1; transform: none; transition-delay: 360ms; }
+.section.visible .audienceBlock { opacity: 1; transform: none; transition-delay: 500ms; }
 
 /* Ambient glow — gold halo above, violet pool below */
 .section::before {
@@ -88,15 +90,41 @@
   white-space: nowrap;
 }
 
+/* ── Lead-in — contrarian setup line above the statement ──── */
+.lead {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: #A8A6B4;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Short gradient tick under the lead-in, joining it to the statement */
+.lead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gradient-signature);
+}
+
 /* ── Manifesto — oversized statement ─────────────────────── */
 .manifesto {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5.5vw, 5.25rem);
+  font-size: clamp(2.5rem, 6vw, 5.75rem);
   font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   color: #F4F2F7;
-  max-width: 16ch;
+  max-width: 18ch;
   margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
 }
 
@@ -204,6 +232,7 @@
 /* ── Reduced motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .eyebrowRow,
+  .lead,
   .manifesto,
   .statement,
   .audienceBlock,

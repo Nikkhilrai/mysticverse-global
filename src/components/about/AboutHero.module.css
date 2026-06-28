@@ -1,0 +1,180 @@
+/* ══════════════════════════════════════════════════════════════
+   AboutHero — Section 1 of the About page
+   MysticVerse Global — "OBSIDIAN & GOLD".
+
+   Deliberately quieter than the homepage hero: a single still image,
+   no grain, generous negative space. Editorial text (left) sits
+   beside a calm, tall photograph (right).
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  padding:
+    clamp(8rem, 16vh, 13rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 10vh, 8rem);
+}
+
+/* A single, very soft glow — restrained, not the homepage drama. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(38% 44% at 80% 30%, rgba(124, 92, 255, 0.08) 0%, transparent 64%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(3rem, 6vw, 6.5rem);
+  }
+}
+
+/* ── Text column ─────────────────────────────────────────── */
+.text {
+  max-width: 38ch;
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity   640ms var(--ease-out-cubic),
+    transform 640ms var(--ease-out-cubic);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(1.75rem, 4vw, 2.75rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 3.8vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity   760ms var(--ease-out-cubic) 110ms,
+    transform 760ms var(--ease-out-cubic) 110ms;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.2vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.72;
+  color: #A8A6B4;
+  max-width: 46ch;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   760ms var(--ease-out-cubic) 240ms,
+    transform 760ms var(--ease-out-cubic) 240ms;
+}
+
+/* ── Still image ─────────────────────────────────────────── */
+.media {
+  position: relative;
+}
+
+.frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 5 / 6;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background-color: #14141F;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+
+  opacity: 0;
+  transform: translateY(22px) scale(1.01);
+  transition:
+    opacity   900ms var(--ease-out-cubic) 200ms,
+    transform 900ms var(--ease-out-cubic) 200ms;
+}
+
+@media (min-width: 900px) {
+  .frame {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.img {
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.06);
+  transition: transform 1200ms var(--ease-out-cubic);
+}
+
+/* Gentle bottom grade so the image grounds into the obsidian */
+.frameGrad {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(11, 11, 18, 0.55) 0%, transparent 42%);
+}
+
+/* ── Reveal ──────────────────────────────────────────────── */
+.section.in .overlineWrap,
+.section.in .headline,
+.section.in .sub,
+.section.in .frame {
+  opacity: 1;
+  transform: none;
+}
+
+.section.in .img {
+  transform: scale(1);
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap,
+  .headline,
+  .sub,
+  .frame,
+  .img {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -49,20 +49,21 @@ export default function RepositioningStatement() {
           <span className={styles.eyebrowRule} aria-hidden="true" />
         </div>
 
+        {/* ── Contrarian lead-in ───────────────────────────── */}
+        <p className={styles.lead}>More Than a Wellness Conference.</p>
+
         {/* ── Oversized manifesto ──────────────────────────── */}
         <h2 className={styles.manifesto}>
-          Not a wellness conference.
+          The Global Platform for
           <br />
-          <span className="gradientText">A commercial platform.</span>
+          <span className="gradientText">Conscious Living.</span>
         </h2>
 
         {/* ── Supporting statement ─────────────────────────── */}
         <p className={styles.statement}>
-          MysticVerse Global turns conscious luxury living, workplace wellbeing,
-          and human performance into a 12-month commercial conversation — anchored
-          to two days in Dubai, the geographic centre of a{" "}
-          <span className={styles.figure}>USD&nbsp;1.1&nbsp;trillion</span>{" "}
-          wellness real estate economy.
+          Connecting visionary leaders across wellness, wellness real estate,
+          workplace wellbeing, longevity, luxury lifestyle, hospitality and
+          human transformation.
         </p>
 
         {/* ── Audience chips ───────────────────────────────── */}

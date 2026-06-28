@@ -1,0 +1,220 @@
+/* ══════════════════════════════════════════════════════════════
+   AboutOrganisers — Section 5 of the About page
+   "Built by MantraNex Vista." Narrative + LinkedIn + locations/contact.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4.5rem, 8vw, 8rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(46% 60% at 10% 100%, rgba(245, 196, 90, 0.06) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 920px) {
+  .inner {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+}
+
+/* ── Lead ────────────────────────────────────────────────── */
+.eyebrowWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.eyebrowRule {
+  display: block;
+  width: clamp(1.5rem, 4vw, 2.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+}
+
+@media (min-width: 920px) {
+  .lead {
+    position: sticky;
+    top: clamp(6rem, 12vh, 9rem);
+  }
+}
+
+/* ── Copy ────────────────────────────────────────────────── */
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.15vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.78;
+  color: #A8A6B4;
+}
+
+.body + .body {
+  margin-top: 1.25rem;
+}
+
+/* ── LinkedIn link ───────────────────────────────────────── */
+.linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: clamp(1.75rem, 3vw, 2.25rem);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #F4F2F7;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(245, 196, 90, 0.32);
+  border-radius: 999px;
+  transition:
+    background-color var(--duration-base) var(--ease-out-cubic),
+    border-color     var(--duration-base) var(--ease-out-cubic);
+}
+
+.linkedinIcon {
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  color: #F5C45A;
+}
+
+.linkedinIcon svg { width: 100%; height: 100%; }
+
+.linkedinArrow {
+  display: inline-block;
+  color: #F5C45A;
+  transition: transform var(--duration-base) var(--ease-out-cubic);
+}
+
+.linkedin:hover {
+  background-color: rgba(245, 196, 90, 0.08);
+  border-color: rgba(245, 196, 90, 0.6);
+}
+
+.linkedin:hover .linkedinArrow {
+  transform: translateX(4px);
+}
+
+/* ── Meta (locations + contact) ──────────────────────────── */
+.meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  padding-top: clamp(1.75rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 560px) {
+  .meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.metaLabel {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 0.625rem;
+}
+
+.metaValue {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #DAD8E2;
+}
+
+.metaLink {
+  color: #DAD8E2;
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out-cubic);
+}
+
+.metaLink:hover {
+  color: #F5C45A;
+}
+
+.metaSep {
+  color: rgba(168, 166, 180, 0.45);
+  margin: 0 0.5rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ENTRANCE
+   ══════════════════════════════════════════════════════════════ */
+.eyebrowWrap,
+.headline,
+.body,
+.linkedin,
+.meta {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   680ms var(--ease-out-cubic),
+    transform 680ms var(--ease-out-cubic);
+}
+
+.section.visible .eyebrowWrap { opacity: 1; transform: none; transition-delay: 0ms; }
+.section.visible .headline    { opacity: 1; transform: none; transition-delay: 100ms; }
+.section.visible .body        { opacity: 1; transform: none; transition-delay: 220ms; }
+.section.visible .linkedin    { opacity: 1; transform: none; transition-delay: 340ms; }
+.section.visible .meta        { opacity: 1; transform: none; transition-delay: 440ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrowWrap,
+  .headline,
+  .body,
+  .linkedin,
+  .meta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

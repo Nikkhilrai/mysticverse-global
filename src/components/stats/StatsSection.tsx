@@ -4,89 +4,61 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./StatsSection.module.css";
 
 /* ═══════════════════════════════════════════════════════════
-   ⚠  PLACEHOLDER DATA — ALL FOUR FIGURES REQUIRE INDEPENDENT
-      SOURCE VERIFICATION BEFORE THIS GOES LIVE. NOT FINAL COPY.
-
-   $5.6T  GWI 2022 market estimate. The headline figure shifts
-          between GWI report editions depending on which sub-sectors
-          are included. Pull the exact number and year directly from
-          the 2023 Wellness Economy Monitor PDF before publishing.
-          Do not rely on secondary citations.
-
-   6×     "Average return per $1 invested" is the most widely
-          quoted workplace wellness ROI multiplier, but the
-          specific study and methodology behind this figure vary
-          across secondary sources. Harvard Business Review cites
-          several analyses, not one canonical number. Requires
-          independent primary-source verification.
-
-   16%    GWI wellness real estate CAGR. Confirm the exact
-          percentage and the precise survey period from the GWI
-          dataset. CAGR figures are projection-dependent.
-
-   500+   THIS IS A PROJECTION / TARGET — not a confirmed booking
-          figure. The source line says "MysticVerse Global 2026
-          projections" but the stat reads as a commitment to
-          external visitors. Review with the team before going live.
-          Consider rewording the stat or the source line if the
-          number is not yet secured. See also: user note on this
-          point in the session brief.
+   The $6.3T market figure reflects the Global Wellness Institute's
+   most recent economy monitor; the remaining three are MysticVerse
+   Global 2026 event figures. No source line is shown — per the
+   approved copy, the descriptors carry the context.
    ═══════════════════════════════════════════════════════════ */
 
 const DURATION_MS = 600;
 const STAGGER_MS  =  80;
 
 interface StatDef {
-  readonly accentChar:     string;  // renders in Brass
+  readonly accentChar:     string;  // gradient-clipped accent glyph
   readonly accentIsPrefix: boolean; // true = before digits, false = after
   readonly countTo:        number;
   readonly decimals:       number;
-  readonly numericSuffix:  string;  // Canvas A scale indicator, e.g. "T"
+  readonly numericSuffix:  string;  // scale indicator, e.g. "T+"
   readonly label:          string;
   readonly descriptor:     string;
-  readonly source:         string;
 }
 
 const STATS: readonly StatDef[] = [
   {
     accentChar:     "$",
     accentIsPrefix: true,
-    countTo:        5.6,
+    countTo:        6.3,
     decimals:       1,
-    numericSuffix:  "T",
+    numericSuffix:  "T+",
     label:          "Global Wellness Economy",
-    descriptor:     "Total market value, 2022 estimate",
-    source:         "Global Wellness Institute, 2023 Wellness Economy Monitor",
-  },
-  {
-    accentChar:     "×",
-    accentIsPrefix: false,
-    countTo:        6,
-    decimals:       0,
-    numericSuffix:  "",
-    label:          "ROI on Workplace Wellness",
-    descriptor:     "Average return per $1 invested",
-    source:         "Harvard Business Review / WHO meta-analysis",
-  },
-  {
-    accentChar:     "%",
-    accentIsPrefix: false,
-    countTo:        16,
-    decimals:       0,
-    numericSuffix:  "",
-    label:          "Wellness Real Estate CAGR",
-    descriptor:     "Fastest-growing real estate class globally",
-    source:         "Global Wellness Institute, Wellness Real Estate Report 2023",
+    descriptor:     "One of the world's fastest-growing industries, driving innovation across health, wellbeing, longevity and conscious living.",
   },
   {
     accentChar:     "+",
     accentIsPrefix: false,
-    countTo:        500,
+    countTo:        15,
     decimals:       0,
     numericSuffix:  "",
-    label:          "Delegates Expected",
-    descriptor:     "Senior decision-makers across 40+ countries",
-    source:         "MysticVerse Global 2026 projections",
+    label:          "Wellness Sectors",
+    descriptor:     "Bringing together wellness, longevity, wellness real estate, workplace wellbeing, luxury hospitality, holistic healing, wellness tourism, beauty, fitness and conscious leadership.",
+  },
+  {
+    accentChar:     "+",
+    accentIsPrefix: false,
+    countTo:        300,
+    decimals:       0,
+    numericSuffix:  "",
+    label:          "Curated Delegates",
+    descriptor:     "Global leaders, practitioners, researchers, investors, HR professionals and wellness innovators.",
+  },
+  {
+    accentChar:     "+",
+    accentIsPrefix: false,
+    countTo:        20,
+    decimals:       0,
+    numericSuffix:  "",
+    label:          "Countries Represented",
+    descriptor:     "A diverse international community united to shape the future of wellbeing, human transformation and conscious living.",
   },
 ] as const;
 
@@ -183,7 +155,6 @@ function StatBlock({
 
       <p className={styles.label}>{stat.label}</p>
       <p className={styles.descriptor}>{stat.descriptor}</p>
-      <p className={styles.source}>{stat.source}</p>
     </div>
   );
 }
@@ -228,7 +199,7 @@ export default function StatsSection() {
 
         {/* Eyebrow — contextualises without competing with the numbers */}
         <div className={styles.eyebrowWrap}>
-          <p className={styles.eyebrow}>The Wellness Economy</p>
+          <p className={styles.eyebrow}>The Global Wellness Economy</p>
         </div>
 
         {/* 4-stat grid */}
