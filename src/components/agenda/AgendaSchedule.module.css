@@ -1,0 +1,428 @@
+/* ══════════════════════════════════════════════════════════════
+   AgendaSchedule — Day toggle + vertical timeline
+   MysticVerse Global Conference 2026.
+
+   Row kinds:
+     .feature — keynotes & awards (gradient accent, glowing node)
+     .main    — panels / sessions (ink card + bullet points)
+     .break   — meals / tea / pauses (quiet, no card)
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(2.5rem, 5vw, 4rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 8rem);
+}
+
+.inner {
+  position: relative;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* ── Day toggle (sticky) ─────────────────────────────────── */
+.toggle {
+  position: sticky;
+  top: clamp(64px, 8vh, 84px);
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.375rem;
+  padding: 0.375rem;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background-color: rgba(11, 11, 18, 0.82);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: clamp(0.75rem, 1.6vw, 1.125rem) clamp(1rem, 2vw, 1.5rem);
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--duration-base) var(--ease-out-cubic);
+}
+
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.tabActive {
+  background-color: rgba(245, 196, 90, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(245, 196, 90, 0.28);
+}
+
+.tabDay {
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(244, 242, 247, 0.6);
+  transition: color var(--duration-base) var(--ease-out-cubic);
+}
+
+.tabActive .tabDay {
+  color: #F5C45A;
+}
+
+.tabTheme {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  color: rgba(168, 166, 180, 0.75);
+}
+
+@media (max-width: 520px) {
+  .tabTheme { display: none; }
+  .tab { align-items: center; }
+}
+
+/* ── Day header ──────────────────────────────────────────── */
+.dayHead {
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  animation: dayFade 520ms var(--ease-out-cubic) both;
+}
+
+.dayDate {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.dayTheme {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 3.4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin-top: 0.6rem;
+}
+
+/* ── Timeline list ───────────────────────────────────────── */
+.list {
+  animation: dayFade 560ms var(--ease-out-cubic) both;
+}
+
+/* ── Row ─────────────────────────────────────────────────── */
+.row {
+  display: grid;
+  grid-template-columns: clamp(118px, 13vw, 168px) 30px 1fr;
+  align-items: stretch;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   620ms var(--ease-out-cubic),
+    transform 620ms var(--ease-out-cubic);
+}
+
+.rowIn {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Time column ─────────────────────────────────────────── */
+.timeCol {
+  padding-top: clamp(0.25rem, 0.6vw, 0.5rem);
+  text-align: right;
+  padding-right: 0;
+}
+
+.time {
+  font-family: var(--font-body);
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: #A8A6B4;
+  white-space: nowrap;
+}
+
+.feature .time {
+  color: #F5C45A;
+}
+
+/* ── Rail + node ─────────────────────────────────────────── */
+.rail {
+  position: relative;
+}
+
+.rail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--hairline);
+}
+
+/* Trim the rail at the very top and bottom of the list */
+.row:first-child .rail::before { top: 0.7rem; }
+.row:last-child  .rail::before { bottom: auto; height: 0.7rem; }
+
+.node {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  transform: translate(-50%, 0);
+  background: #F5C45A;
+  box-shadow: 0 0 0 4px #0B0B12;
+  z-index: 1;
+}
+
+.break .node {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border: 1px solid rgba(168, 166, 180, 0.6);
+}
+
+.feature .node {
+  width: 14px;
+  height: 14px;
+  background: var(--gradient-signature);
+  box-shadow: 0 0 0 4px #0B0B12, 0 0 16px rgba(245, 196, 90, 0.7);
+}
+
+/* ── Content ─────────────────────────────────────────────── */
+.content {
+  padding-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* Card surface for main + feature */
+.main .content,
+.feature .content {
+  padding: clamp(1.25rem, 2.2vw, 1.75rem) clamp(1.25rem, 2.4vw, 2rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  padding-bottom: clamp(1.25rem, 2.2vw, 1.75rem);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background-color: rgba(20, 20, 31, 0.5);
+  transition:
+    border-color var(--duration-base) var(--ease-out-cubic),
+    transform    var(--duration-base) var(--ease-out-cubic);
+}
+
+.main .content:hover,
+.feature .content:hover {
+  border-color: rgba(245, 196, 90, 0.28);
+  transform: translateY(-2px);
+}
+
+.feature .content {
+  background:
+    linear-gradient(rgba(20, 20, 31, 0.6), rgba(20, 20, 31, 0.6)),
+    var(--gradient-signature-soft);
+  border-color: rgba(245, 196, 90, 0.3);
+}
+
+/* Quiet treatment for breaks */
+.break .content {
+  padding-top: 0.2rem;
+}
+
+/* ── Head / tag ──────────────────────────────────────────── */
+.head {
+  margin-bottom: 0.6rem;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.main .tag {
+  color: #F5C45A;
+}
+
+.break .tag {
+  color: rgba(168, 166, 180, 0.8);
+}
+
+.feature .tag {
+  color: #14100C;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+}
+
+/* ── Title ───────────────────────────────────────────────── */
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+  color: #F4F2F7;
+}
+
+.main .title,
+.feature .title {
+  font-size: clamp(1.125rem, 1.7vw, 1.4375rem);
+}
+
+.break .title {
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  font-weight: 500;
+  color: rgba(244, 242, 247, 0.88);
+}
+
+/* ── Description ─────────────────────────────────────────── */
+.desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.05vw, 0.9375rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: #A8A6B4;
+  margin-top: 0.6rem;
+  max-width: 60ch;
+}
+
+.break .desc {
+  font-size: 0.8125rem;
+  color: rgba(168, 166, 180, 0.8);
+}
+
+/* ── Points ──────────────────────────────────────────────── */
+.points {
+  list-style: none;
+  margin: clamp(1rem, 1.6vw, 1.25rem) 0 0;
+  padding-top: clamp(1rem, 1.6vw, 1.25rem);
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .points { grid-template-columns: 1fr 1fr; }
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 1vw, 0.875rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #C9C7D4;
+}
+
+.pointMark {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE — drop the rail; time becomes a label above the content
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 680px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  /* A single continuous rail on the far left */
+  .rail { display: none; }
+
+  .row::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    bottom: -1.75rem;
+    left: 3px;
+    width: 1px;
+    background: var(--hairline);
+  }
+
+  .row:last-child::before { display: none; }
+
+  .row::after {
+    content: '';
+    position: absolute;
+    top: 0.45rem;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #F5C45A;
+  }
+
+  .feature.row::after {
+    background: var(--gradient-signature);
+    box-shadow: 0 0 12px rgba(245, 196, 90, 0.7);
+  }
+
+  .break.row::after {
+    background: transparent;
+    border: 1px solid rgba(168, 166, 180, 0.6);
+  }
+
+  .timeCol {
+    text-align: left;
+    padding-top: 0;
+    margin-bottom: 0.6rem;
+  }
+
+  .content,
+  .main .content,
+  .feature .content {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .main .content,
+  .feature .content {
+    padding: clamp(1.25rem, 4vw, 1.5rem);
+    margin-bottom: 0;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes dayFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dayHead,
+  .list { animation: none; }
+  .row { opacity: 1; transform: none; transition: none; }
+  .main .content:hover,
+  .feature .content:hover { transform: none; }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
 
@@ -23,9 +23,24 @@ const NAV_ITEMS = [
   { label: "Why Dubai 2026",  href: "/why-dubai-2026",  futureDropdown: false },
   { label: "The 4 Pillars",   href: "/pillars",          futureDropdown: true  },
   { label: "The Pavilion",    href: "/pavilion",          futureDropdown: false },
-  { label: "Conference",      href: "/conference",        futureDropdown: true  },
+  {
+    label: "Conference",
+    href: "/conference",
+    futureDropdown: true,
+    children: [
+      { label: "Speakers", href: "/conference/speakers" },
+      { label: "Agenda", href: "/agenda" },
+    ],
+  },
   { label: "Partner With Us", href: "/partner",           futureDropdown: true  },
-  { label: "Media",           href: "/media",             futureDropdown: false },
+  {
+    label: "Media",
+    href: "/media",
+    futureDropdown: false,
+    children: [
+      { label: "Magazine", href: "/media/magazine" },
+    ],
+  },
   { label: "Contact",         href: "/contact",           futureDropdown: false },
 ] as const;
 
@@ -134,11 +149,36 @@ export default function Header() {
 
         {/* Desktop nav — collapses to hamburger below 1120px */}
         <nav className={styles.nav} aria-label="Main navigation">
-          {NAV_ITEMS.map((item) => (
-            <a key={item.href} href={item.href} className={styles.navLink}>
-              {item.label}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) =>
+            "children" in item ? (
+              <div key={item.href} className={styles.navItem}>
+                <a
+                  href={item.href}
+                  className={`${styles.navLink} ${styles.navLinkParent}`}
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <span className={styles.caret} aria-hidden="true" />
+                </a>
+                <div className={styles.dropdown} role="menu">
+                  {item.children.map((c) => (
+                    <a
+                      key={c.href}
+                      href={c.href}
+                      className={styles.dropdownLink}
+                      role="menuitem"
+                    >
+                      {c.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a key={item.href} href={item.href} className={styles.navLink}>
+                {item.label}
+              </a>
+            ),
+          )}
         </nav>
 
         {/* Right cluster: REGISTER (always visible) + hamburger (mobile only) */}
@@ -176,14 +216,26 @@ export default function Header() {
       >
         <nav className={styles.mobileNav}>
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={styles.mobileNavLink}
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.label}
-            </a>
+            <Fragment key={item.href}>
+              <a
+                href={item.href}
+                className={styles.mobileNavLink}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+              {"children" in item &&
+                item.children.map((c) => (
+                  <a
+                    key={c.href}
+                    href={c.href}
+                    className={styles.mobileSubLink}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {c.label}
+                  </a>
+                ))}
+            </Fragment>
           ))}
         </nav>
 

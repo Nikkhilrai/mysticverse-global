@@ -1,0 +1,175 @@
+/* ══════════════════════════════════════════════════════════════
+   SpeakersHero — editorial header with a faculty portrait stack
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  padding:
+    clamp(8rem, 16vh, 12.5rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(3.5rem, 6vw, 5rem);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 8% 8%,  rgba(245, 196, 90, 0.08) 0%, transparent 62%),
+    radial-gradient(48% 54% at 96% 88%, rgba(124, 92, 255, 0.14) 0%, transparent 64%);
+}
+
+/* Oversized ghost word behind the content */
+.watermark {
+  position: absolute;
+  top: clamp(5rem, 11vh, 8rem);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 18vw, 18rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.8;
+  color: rgba(244, 242, 247, 0.025);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 640ms var(--ease-out-cubic), transform 640ms var(--ease-out-cubic);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(1.75rem, 4vw, 2.75rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  max-width: 18ch;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 760ms var(--ease-out-cubic) 110ms, transform 760ms var(--ease-out-cubic) 110ms;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: #A8A6B4;
+  max-width: 54ch;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 760ms var(--ease-out-cubic) 240ms, transform 760ms var(--ease-out-cubic) 240ms;
+}
+
+/* ── Faculty stack ───────────────────────────────────────── */
+.faculty {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  padding-top: clamp(1.75rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--hairline-gold);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 760ms var(--ease-out-cubic) 380ms, transform 760ms var(--ease-out-cubic) 380ms;
+}
+
+.avatars {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  position: relative;
+  width: clamp(2.5rem, 4vw, 3.25rem);
+  height: clamp(2.5rem, 4vw, 3.25rem);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-left: -0.75rem;
+  border: 2px solid #0B0B12;
+  box-shadow: 0 0 0 1px rgba(245, 196, 90, 0.4);
+}
+
+.avatar:first-child { margin-left: 0; }
+
+.avatarImg {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.facultyNote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.facultyCount {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+}
+
+.facultyMeta {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: #A8A6B4;
+}
+
+/* ── Reveal ──────────────────────────────────────────────── */
+.section.in .overlineWrap,
+.section.in .headline,
+.section.in .sub,
+.section.in .faculty {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap, .headline, .sub, .faculty { opacity: 1; transform: none; transition: none; }
+}

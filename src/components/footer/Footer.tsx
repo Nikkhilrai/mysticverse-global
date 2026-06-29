@@ -21,7 +21,7 @@ const ABOUT_LINKS = [
 const PROGRAMME_LINKS = [
   { label: "The 4 Pillars",              href: "/pillars"                     }, // FUTURE PAGE
   { label: "Conscious Living Pavilion",  href: "/pavilion"                    },
-  { label: "Agenda",                     href: "/conference/agenda"           }, // FUTURE PAGE
+  { label: "Agenda",                     href: "/agenda"                      },
   { label: "Speakers",                   href: "/conference/speakers"         }, // FUTURE PAGE
   { label: "Excellence Awards",          href: "/conference/awards"           }, // FUTURE PAGE
   { label: "Think Tank",                 href: "/conference/think-tank"       }, // FUTURE PAGE

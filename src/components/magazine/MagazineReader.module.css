@@ -1,0 +1,194 @@
+/* ══════════════════════════════════════════════════════════════
+   MagazineReader — full-screen flipbook overlay
+   pdfjs-rendered pages inside a react-pageflip book.
+   ══════════════════════════════════════════════════════════════ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(7, 7, 12, 0.96);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 280ms var(--ease-out-cubic) both;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Top bar ─────────────────────────────────────────────── */
+.bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.barTitle {
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.6vw, 1.125rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #F4F2F7;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out-cubic),
+    border-color     var(--duration-base) var(--ease-out-cubic);
+}
+
+.close:hover {
+  background-color: rgba(245, 196, 90, 0.12);
+  border-color: rgba(245, 196, 90, 0.5);
+}
+
+/* ── Stage ───────────────────────────────────────────────── */
+.stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(0.5rem, 3vw, 2.5rem);
+}
+
+.book {
+  margin: 0 auto;
+}
+
+/* ── Page + canvas ───────────────────────────────────────── */
+.page {
+  background-color: #14141F;
+  overflow: hidden;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Loading / error state ───────────────────────────────── */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #A8A6B4;
+  text-align: center;
+}
+
+.spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 2px solid rgba(245, 196, 90, 0.2);
+  border-top-color: #F5C45A;
+  animation: spin 800ms linear infinite;
+}
+
+.fallback {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  text-decoration: none;
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+.controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(245, 196, 90, 0.3);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #F5C45A;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out-cubic),
+    border-color     var(--duration-base) var(--ease-out-cubic),
+    transform        var(--duration-base) var(--ease-out-cubic);
+}
+
+.navBtn:hover {
+  background-color: rgba(245, 196, 90, 0.12);
+  border-color: rgba(245, 196, 90, 0.65);
+  transform: translateY(-2px);
+}
+
+.navBtn:active {
+  transform: translateY(0);
+}
+
+.counter {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #F4F2F7;
+  min-width: 5rem;
+  text-align: center;
+}
+
+.counterSep {
+  color: rgba(168, 166, 180, 0.6);
+  margin: 0 0.15rem;
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay { animation: none; }
+  .spinner { animation-duration: 1600ms; }
+  .navBtn:hover { transform: none; }
+}
