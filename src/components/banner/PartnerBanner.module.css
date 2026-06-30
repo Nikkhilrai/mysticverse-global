@@ -1,0 +1,75 @@
+/* ══════════════════════════════════════════════════════════════
+   PartnerBanner — featured partner banner (below The Premise)
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding: clamp(2.5rem, 4vw, 4rem) 0 0;
+}
+
+.inner {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1;
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 640ms var(--ease-out-cubic), transform 640ms var(--ease-out-cubic);
+}
+
+/* Full-bleed banner — spans the full viewport width */
+.banner {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  transition: filter var(--duration-slow) var(--ease-out-cubic);
+
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.banner:hover {
+  filter: brightness(1.04);
+}
+
+/* ── Reveal ──────────────────────────────────────────────── */
+.section.visible .label {
+  opacity: 1;
+  transform: none;
+}
+
+.section.visible .banner {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity   760ms var(--ease-out-cubic) 120ms,
+    transform 760ms var(--ease-out-cubic) 120ms,
+    filter    var(--duration-slow) var(--ease-out-cubic);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label, .banner { opacity: 1; transform: none; transition: none; }
+}

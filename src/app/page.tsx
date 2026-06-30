@@ -1,5 +1,6 @@
 import HeroSection from "@/components/hero/HeroSection";
 import RepositioningStatement from "@/components/repositioning/RepositioningStatement";
+import PartnerBanner from "@/components/banner/PartnerBanner";
 import FourPillars from "@/components/pillars/FourPillars";
 import PavilionFeature from "@/components/pavilion/PavilionFeature";
 import StatsSection from "@/components/stats/StatsSection";
@@ -13,6 +14,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <RepositioningStatement />
+      <PartnerBanner />
       <FourPillars />
       <PavilionFeature />
       <StatsSection />
