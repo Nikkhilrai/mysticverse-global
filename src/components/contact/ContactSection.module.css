@@ -467,6 +467,24 @@
 
 .submit:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; }
 
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.formError {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #ff9a8a;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 120, 100, 0.3);
+  border-radius: 10px;
+  background-color: rgba(255, 90, 70, 0.08);
+}
+
 .arrow {
   display: inline-block;
   transition: transform var(--duration-base) var(--ease-out-cubic);

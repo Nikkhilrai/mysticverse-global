@@ -1,0 +1,97 @@
+.wrap {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(20, 20, 31, 0.6);
+}
+
+.tBtn {
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.55rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #C9C7D4;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms, border-color 150ms;
+}
+
+.tBtn:hover { background-color: rgba(255, 255, 255, 0.06); color: #F4F2F7; }
+.tActive { color: #F5C45A; background-color: rgba(245, 196, 90, 0.12); border-color: rgba(245, 196, 90, 0.3); }
+
+.sep {
+  width: 1px;
+  height: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0 0.25rem;
+}
+
+.editor {
+  min-height: 320px;
+  padding: 1.25rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #E7E5EE;
+  outline: none;
+}
+
+.loading {
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A8A6B4;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+}
+
+/* Editor content typography */
+.editor :global(h2) {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #F4F2F7;
+  margin: 1.5rem 0 0.75rem;
+}
+.editor :global(h3) {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #F4F2F7;
+  margin: 1.25rem 0 0.6rem;
+}
+.editor :global(p) { margin: 0 0 0.9rem; }
+.editor :global(ul),
+.editor :global(ol) { margin: 0 0 0.9rem; padding-left: 1.4rem; }
+.editor :global(li) { margin-bottom: 0.35rem; }
+.editor :global(a) { color: #F5C45A; text-decoration: underline; }
+.editor :global(blockquote) {
+  border-left: 2px solid rgba(245, 196, 90, 0.5);
+  padding-left: 1rem;
+  margin: 0 0 0.9rem;
+  color: #C9C7D4;
+  font-style: italic;
+}
+.editor :global(img) { max-width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; }
+.editor :global(p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  float: left;
+  color: rgba(168, 166, 180, 0.5);
+  pointer-events: none;
+  height: 0;
+}

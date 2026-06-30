@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 
 // Body + UI typeface. Headlines use Clash Display (loaded via Fontshare
 // @import in globals.css). Clash Display will be self-hosted via
@@ -49,10 +47,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full">
-          <Header />
-          {children}
-          <Footer />
-        </body>
+        {children}
+      </body>
     </html>
   );
 }

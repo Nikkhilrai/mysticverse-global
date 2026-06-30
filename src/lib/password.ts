@@ -1,0 +1,14 @@
+import bcrypt from "bcryptjs";
+
+// Node-only (used in route handlers / seed). Not imported by middleware.
+
+export async function hashPassword(plain: string): Promise<string> {
+  return bcrypt.hash(plain, 10);
+}
+
+export async function verifyPassword(
+  plain: string,
+  hash: string,
+): Promise<boolean> {
+  return bcrypt.compare(plain, hash);
+}

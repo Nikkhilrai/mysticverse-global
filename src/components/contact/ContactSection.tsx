@@ -17,17 +17,46 @@ export default function ContactSection() {
   const [mounted, setMounted] = useState(false);
   const [interest, setInterest] = useState<string>("Delegate");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // NOTE: front-end only for now. Wire to a form handler / email service
-  // (Resend, Formspree, or a Next.js route handler) before launch.
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSubmitting(true);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: fd.get("name"),
+      email: fd.get("email"),
+      phone: fd.get("phone"),
+      country: fd.get("country"),
+      organisation: fd.get("org"),
+      enquiryType: interest,
+      message: fd.get("message"),
+      hp: fd.get("hp"),
+    };
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Something went wrong. Please try again.");
+        setSubmitting(false);
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please try again.");
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -116,6 +145,15 @@ export default function ContactSection() {
                 </div>
 
                 <form className={styles.form} onSubmit={handleSubmit}>
+                  {/* Honeypot — hidden from users, catches bots */}
+                  <input
+                    type="text"
+                    name="hp"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+                  />
                   <div className={styles.fieldRow}>
                     <div className={styles.field}>
                       <label className={styles.label} htmlFor="name">Name</label>
@@ -165,9 +203,13 @@ export default function ContactSection() {
                     <textarea className={styles.textarea} id="message" name="message" rows={4} required placeholder="Tell us a little about what you have in mind…" />
                   </div>
 
-                  <button type="submit" className={styles.submit}>
-                    Send Message
-                    <span className={styles.arrow} aria-hidden="true">→</span>
+                  {error && (
+                    <p className={styles.formError} role="alert">{error}</p>
+                  )}
+
+                  <button type="submit" className={styles.submit} disabled={submitting}>
+                    {submitting ? "Sending…" : "Send Message"}
+                    {!submitting && <span className={styles.arrow} aria-hidden="true">→</span>}
                   </button>
                 </form>
               </>

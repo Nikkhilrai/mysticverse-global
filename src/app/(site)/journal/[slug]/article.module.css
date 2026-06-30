@@ -1,0 +1,99 @@
+.section {
+  background-color: #0B0B12;
+  padding:
+    clamp(7.5rem, 14vh, 11rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 8rem);
+}
+
+.inner { max-width: 720px; margin: 0 auto; }
+
+.back {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  text-decoration: none;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.back:hover { text-decoration: underline; }
+
+.meta {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin: 0.75rem 0 1rem;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.tag {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C9C7D4;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--hairline-gold);
+  border-radius: 999px;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* ── Article body (Tiptap HTML) ──────────────────────────── */
+.body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #C9C7D4;
+}
+
+.body :global(h2) {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin: 2.25rem 0 1rem;
+}
+.body :global(h3) {
+  font-family: var(--font-display);
+  font-size: 1.3125rem;
+  font-weight: 600;
+  color: #F4F2F7;
+  margin: 1.75rem 0 0.75rem;
+}
+.body :global(p) { margin: 0 0 1.25rem; }
+.body :global(ul), .body :global(ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+.body :global(li) { margin-bottom: 0.5rem; }
+.body :global(a) { color: #F5C45A; text-decoration: underline; }
+.body :global(strong) { color: #F4F2F7; }
+.body :global(blockquote) {
+  border-left: 2px solid rgba(245, 196, 90, 0.5);
+  padding-left: 1.25rem;
+  margin: 0 0 1.25rem;
+  font-style: italic;
+  color: #DAD8E2;
+}
+.body :global(img) { max-width: 100%; height: auto; border-radius: 12px; margin: 1.5rem 0; }
