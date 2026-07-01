@@ -39,3 +39,16 @@ export const InterestSchema = z.object({
 });
 
 export type InterestInput = z.infer<typeof InterestSchema>;
+
+export const PavilionBriefSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(120),
+  email: z.string().trim().min(1, "Email is required").max(200).pipe(z.email()),
+  company: optionalText(160),
+  role: optionalText(120),
+  phone: optionalText(40),
+  country: optionalText(80),
+  tierInterest: optionalText(80),
+  message: optionalText(4000),
+});
+
+export type PavilionBriefInput = z.infer<typeof PavilionBriefSchema>;

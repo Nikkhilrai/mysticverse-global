@@ -1,0 +1,174 @@
+/* ══════════════════════════════════════════════════════════════
+   PavilionHero — cinematic full-bleed hero for /pavilion
+   Atmospheric, bottom-anchored content, minimal chrome.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  background-color: #0B0B12;
+}
+
+/* ── Background image ─────────────────────────────────────── */
+.bg {
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.08);
+  animation: pavHeroZoom 26s ease-out forwards;
+}
+
+@keyframes pavHeroZoom {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1); }
+}
+
+/* ── Grade overlay ───────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(60% 50% at 15% 95%, rgba(245, 196, 90, 0.14) 0%, transparent 60%),
+    radial-gradient(60% 55% at 92% 5%,  rgba(124, 92, 255, 0.16) 0%, transparent 62%),
+    linear-gradient(to top, rgba(7, 7, 12, 0.94) 0%, rgba(7, 7, 12, 0.45) 42%, rgba(7, 7, 12, 0.20) 70%, rgba(7, 7, 12, 0.4) 100%),
+    linear-gradient(to right, rgba(7, 7, 12, 0.7) 0%, rgba(7, 7, 12, 0.15) 50%, transparent 80%);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ── Content — bottom-left anchored ──────────────────────── */
+.inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding:
+    clamp(6rem, 14vh, 11rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(4.5rem, 10vh, 8rem);
+}
+
+/* ── Overline ────────────────────────────────────────────── */
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity   700ms var(--ease-out-cubic) 200ms,
+    transform 700ms var(--ease-out-cubic) 200ms;
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1.3;
+}
+
+/* ── Headline ────────────────────────────────────────────── */
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 8vw, 7rem);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 16ch;
+
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity   840ms var(--ease-out-cubic) 320ms,
+    transform 840ms var(--ease-out-cubic) 320ms;
+}
+
+/* ── Sub ─────────────────────────────────────────────────── */
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.5vw, 1.4375rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #DAD8E2;
+  max-width: 46ch;
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity   840ms var(--ease-out-cubic) 480ms,
+    transform 840ms var(--ease-out-cubic) 480ms;
+}
+
+/* ── Scroll cue ──────────────────────────────────────────── */
+.scrollCue {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(1.25rem, 3vh, 2.25rem);
+  transform: translateX(-50%);
+  width: 1px;
+  height: clamp(2.5rem, 6vh, 3.5rem);
+  overflow: hidden;
+
+  opacity: 0;
+  transition: opacity 800ms var(--ease-out-cubic) 800ms;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(245, 196, 90, 0), #F5C45A, rgba(245, 196, 90, 0));
+  transform: translateY(-100%);
+  animation: pavScroll 2.4s var(--ease-out-cubic) infinite;
+}
+
+@keyframes pavScroll {
+  0%   { transform: translateY(-100%); }
+  70%  { transform: translateY(100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* ── Reveal ──────────────────────────────────────────────── */
+.section.in .overlineWrap,
+.section.in .headline,
+.section.in .sub {
+  opacity: 1;
+  transform: none;
+}
+
+.section.in .scrollCue { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bg { animation: none; transform: none; }
+  .overlineWrap, .headline, .sub, .scrollCue {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .scrollLine { animation: none; }
+}

@@ -8,6 +8,7 @@ const NAV = [
   { label: "Dashboard", href: "/admin" },
   { label: "Contact enquiries", href: "/admin/contact" },
   { label: "Delegate interest", href: "/admin/interest" },
+  { label: "Pavilion Brief", href: "/admin/pavilion-brief" },
   { label: "Blog posts", href: "/admin/posts" },
   { label: "Settings", href: "/admin/settings" },
 ] as const;

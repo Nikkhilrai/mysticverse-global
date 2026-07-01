@@ -1,0 +1,278 @@
+/* ══════════════════════════════════════════════════════════════
+   PavilionPrivate — "Three rooms within the room."
+   The three private sub-experiences as elegant "membership keys":
+   typographic cards with roman numerals and a gradient top-edge
+   that draws in on hover. No photography — a quieter, exclusive
+   register that links out to each experience.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #08080E;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4.5rem, 9vw, 8rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 42% at 82% 4%, rgba(124, 92, 255, 0.10) 0%, transparent 60%),
+    radial-gradient(40% 40% at 6% 96%, rgba(245, 196, 90, 0.07) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.head {
+  max-width: 42rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   680ms var(--ease-out-cubic),
+    transform 680ms var(--ease-out-cubic);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(1.75rem, 4vw, 3rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity   760ms var(--ease-out-cubic) 90ms,
+    transform 760ms var(--ease-out-cubic) 90ms;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  line-height: 1.65;
+  color: #B8B6C4;
+  max-width: 38rem;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   760ms var(--ease-out-cubic) 180ms,
+    transform 760ms var(--ease-out-cubic) 180ms;
+}
+
+.section.in .overlineWrap,
+.section.in .heading,
+.section.in .sub {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Grid ─────────────────────────────────────────────────── */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+@media (min-width: 760px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.item {
+  display: flex;
+
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity   740ms var(--ease-out-cubic),
+    transform 740ms var(--ease-out-cubic);
+  transition-delay: calc(0.28s + var(--i) * 0.12s);
+}
+
+.section.in .item { opacity: 1; transform: none; }
+
+/* ── Card ─────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-radius: 16px;
+  border: 1px solid var(--hairline);
+  background: #0E0E17;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform 420ms var(--ease-out-cubic),
+    border-color 420ms var(--ease-out-cubic),
+    box-shadow 420ms var(--ease-out-cubic),
+    background 420ms var(--ease-out-cubic);
+}
+
+/* Gradient top edge that draws in on hover */
+.edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 560ms var(--ease-out-cubic);
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.kicker {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.index {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 600;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 242, 247, 0.25);
+  transition: -webkit-text-stroke 460ms var(--ease-out-cubic);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+  margin-bottom: 0.85rem;
+}
+
+.desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.6;
+  color: #A9A7B6;
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  flex: 1 1 auto;
+}
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.meta {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #7C7A88;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #F4F2F7;
+  white-space: nowrap;
+}
+
+.ctaArrow { transition: transform 360ms var(--ease-out-cubic); }
+
+/* Hover / focus */
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-5px);
+  border-color: var(--hairline-gold);
+  background: #12121D;
+  box-shadow: 0 26px 60px -34px rgba(124, 92, 255, 0.55);
+}
+
+.card:hover .edge,
+.card:focus-visible .edge { transform: scaleX(1); }
+
+.card:hover .index,
+.card:focus-visible .index {
+  -webkit-text-stroke: 1px rgba(245, 196, 90, 0.6);
+}
+
+.card:hover .ctaArrow,
+.card:focus-visible .ctaArrow { transform: translateX(4px); }
+
+.card:focus-visible {
+  outline: 2px solid #F5C45A;
+  outline-offset: 3px;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap, .heading, .sub, .item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .card, .edge, .index, .ctaArrow { transition: none; }
+}

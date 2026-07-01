@@ -18,19 +18,25 @@ export default async function DashboardHome() {
     contactNew,
     interestTotal,
     interestNew,
+    briefTotal,
+    briefNew,
     postsTotal,
     postsPublished,
     recentContacts,
     recentInterest,
+    recentBriefs,
   ] = await Promise.all([
     prisma.contactSubmission.count(),
     prisma.contactSubmission.count({ where: { status: "NEW" } }),
     prisma.interestSubmission.count(),
     prisma.interestSubmission.count({ where: { status: "NEW" } }),
+    prisma.pavilionBriefRequest.count(),
+    prisma.pavilionBriefRequest.count({ where: { status: "NEW" } }),
     prisma.post.count(),
     prisma.post.count({ where: { status: "PUBLISHED" } }),
     prisma.contactSubmission.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
     prisma.interestSubmission.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
+    prisma.pavilionBriefRequest.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
   ]);
 
   const recent = [
@@ -49,6 +55,14 @@ export default async function DashboardHome() {
       status: i.status,
       createdAt: i.createdAt,
       href: "/admin/interest",
+    })),
+    ...recentBriefs.map((b) => ({
+      kind: "Pavilion Brief" as const,
+      name: b.name,
+      detail: b.tierInterest ?? "—",
+      status: b.status,
+      createdAt: b.createdAt,
+      href: "/admin/pavilion-brief",
     })),
   ]
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
@@ -79,6 +93,14 @@ export default async function DashboardHome() {
             {interestNew > 0 && <span className={styles.newBadge}>{interestNew} new</span>}
           </div>
           <span className={styles.statLabel}>Delegate interest</span>
+        </a>
+
+        <a className={styles.statCard} href="/admin/pavilion-brief">
+          <div className={styles.statTop}>
+            <span className={styles.statValue}>{briefTotal}</span>
+            {briefNew > 0 && <span className={styles.newBadge}>{briefNew} new</span>}
+          </div>
+          <span className={styles.statLabel}>Pavilion Brief requests</span>
         </a>
 
         <a className={styles.statCard} href="/admin/posts">

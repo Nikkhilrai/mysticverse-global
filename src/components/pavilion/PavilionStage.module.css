@@ -1,0 +1,274 @@
+/* ══════════════════════════════════════════════════════════════
+   PavilionStage — "The Pavilion Stage" programme.
+   A theatre-playbill treatment: a stage-lit dark section with a
+   Day 01 / Day 02 toggle that re-bills the night's lineup. Sessions
+   are editorial rows with format chips; switching the day restages
+   them with a staggered rise.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #08080E;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4.5rem, 9vw, 8rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+/* Stage spotlight from top-centre */
+.spot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(52% 46% at 50% -6%, rgba(245, 196, 90, 0.12) 0%, transparent 62%);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 50% at 96% 100%, rgba(124, 92, 255, 0.10) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(280px, 0.82fr) 1.18fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+}
+
+/* ── Aside (context + toggle) ─────────────────────────────── */
+.aside {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   760ms var(--ease-out-cubic),
+    transform 760ms var(--ease-out-cubic);
+}
+
+@media (min-width: 900px) {
+  .aside { position: sticky; top: 6.5rem; }
+}
+
+.section.in .aside { opacity: 1; transform: none; }
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(1.75rem, 4vw, 3rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.65;
+  color: #B8B6C4;
+  max-width: 34ch;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+/* Day toggle */
+.toggle {
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.toggleBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.7rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 320ms var(--ease-out-cubic);
+}
+
+.toggleBtn:hover { background: rgba(255, 255, 255, 0.04); }
+
+.toggleOn {
+  background: rgba(245, 196, 90, 0.12);
+}
+.toggleOn:hover { background: rgba(245, 196, 90, 0.14); }
+
+.toggleLabel {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7C7A88;
+  transition: color 320ms var(--ease-out-cubic);
+}
+
+.toggleDate {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: #57555F;
+  transition: color 320ms var(--ease-out-cubic);
+}
+
+.toggleOn .toggleLabel { color: #F5C45A; }
+.toggleOn .toggleDate { color: #B8B6C4; }
+
+.toggleBtn:focus-visible {
+  outline: 2px solid #F5C45A;
+  outline-offset: 2px;
+}
+
+/* ── Bill (lineup) ────────────────────────────────────────── */
+.bill {
+  min-height: 1px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.session {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0.25rem;
+  border-bottom: 1px solid var(--hairline);
+
+  opacity: 0;
+}
+
+.section.in .session {
+  animation: stageIn 660ms var(--ease-out-cubic) forwards;
+  animation-delay: calc(var(--i) * 100ms);
+}
+
+@keyframes stageIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.no {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 242, 247, 0.28);
+  transition:
+    color 420ms var(--ease-out-cubic),
+    -webkit-text-stroke 420ms var(--ease-out-cubic);
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.1rem;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.1vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+  transition: transform 420ms var(--ease-out-cubic);
+}
+
+.tag {
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--hairline-gold);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Left gold marker that grows on hover */
+.marker {
+  position: absolute;
+  left: -0.9rem;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  background: var(--gradient-signature);
+  transform: translateY(-50%);
+  transition: height 420ms var(--ease-out-cubic);
+}
+
+@media (hover: hover) {
+  .session:hover .marker { height: 62%; }
+  .session:hover .no {
+    color: #F5C45A;
+    -webkit-text-stroke: 1px transparent;
+  }
+  .session:hover .title { transform: translateX(6px); }
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .aside { opacity: 1; transform: none; transition: none; }
+  .session { opacity: 1; }
+  .section.in .session { animation: none; }
+  .no, .title, .marker { transition: none; }
+}

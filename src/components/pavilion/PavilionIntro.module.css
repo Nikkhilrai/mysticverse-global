@@ -1,0 +1,263 @@
+/* ══════════════════════════════════════════════════════════════
+   PavilionIntro — "The Pavilion in one paragraph"
+   Architectural blueprint treatment: a technical rail (500 m² +
+   compass), a faint plan grid, and an annotated narrative where the
+   spatial landmarks are set in italic. Deliberately unlike the rest.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(4.5rem, 9vw, 8rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+/* Faint blueprint grid, faded toward the edges — fades + settles in */
+.plan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(80% 75% at 40% 45%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(80% 75% at 40% 45%, #000 0%, transparent 100%);
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1400ms var(--ease-out-cubic), transform 1400ms var(--ease-out-cubic);
+}
+
+.section.visible .plan { opacity: 1; transform: none; }
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(42% 50% at 88% 20%, rgba(124, 92, 255, 0.10) 0%, transparent 60%);
+}
+
+.watermark {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 3.5rem);
+  right: -1.5%;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(5rem, 16vw, 15rem);
+  font-weight: 600;
+  line-height: 0.8;
+  color: rgba(244, 242, 247, 0.028);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: pavDrift 22s ease-in-out infinite alternate;
+}
+
+@keyframes pavDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-2%); }
+}
+
+/* ── Layout ──────────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 820px) {
+  .inner {
+    grid-template-columns: 190px 1fr;
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: start;
+  }
+}
+
+/* ── Technical rail ──────────────────────────────────────── */
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out-cubic), transform 700ms var(--ease-out-cubic);
+}
+
+.area {
+  font-family: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, monospace;
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #F4F2F7;
+}
+
+.areaNote {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.compass {
+  position: relative;
+  display: inline-flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-top: 1.5rem;
+}
+
+.compass svg { width: 100%; height: 100%; }
+
+/* Slowly rotating instrument ticks + pulsing centre */
+.compassTicks {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pavSpin 16s linear infinite;
+}
+
+.compassDot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pavPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes pavSpin { to { transform: rotate(360deg); } }
+@keyframes pavPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.7); opacity: 0.55; }
+}
+
+.compassN {
+  position: absolute;
+  top: -0.35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: #F5C45A;
+}
+
+/* ── Narrative ───────────────────────────────────────────── */
+.copy {
+  max-width: 46rem;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.002em;
+  color: #B8B6C4;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   780ms var(--ease-out-cubic) 120ms,
+    transform 780ms var(--ease-out-cubic) 120ms;
+}
+
+/* Spatial landmarks — elegant italic emphasis + a waypoint underline
+   that sweeps in one-by-one, like the HNI walking past each. */
+.place {
+  position: relative;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: #8F8D9C;
+  transition: color 520ms var(--ease-out-cubic);
+}
+
+.place::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.12em;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(to right, rgba(245, 196, 90, 0.9), rgba(199, 125, 255, 0.7));
+  transition: width 560ms var(--ease-out-cubic);
+}
+
+.section.visible .place { color: #F4F2F7; }
+.section.visible .place::after { width: 100%; }
+
+/* Staggered "walk" — each landmark activates after the previous */
+.section.visible .place:nth-of-type(1) { transition-delay: 620ms; }
+.section.visible .place:nth-of-type(1)::after { transition-delay: 620ms; }
+.section.visible .place:nth-of-type(2) { transition-delay: 780ms; }
+.section.visible .place:nth-of-type(2)::after { transition-delay: 780ms; }
+.section.visible .place:nth-of-type(3) { transition-delay: 940ms; }
+.section.visible .place:nth-of-type(3)::after { transition-delay: 940ms; }
+.section.visible .place:nth-of-type(4) { transition-delay: 1100ms; }
+.section.visible .place:nth-of-type(4)::after { transition-delay: 1100ms; }
+.section.visible .place:nth-of-type(5) { transition-delay: 1260ms; }
+.section.visible .place:nth-of-type(5)::after { transition-delay: 1260ms; }
+.section.visible .place:nth-of-type(6) { transition-delay: 1420ms; }
+.section.visible .place:nth-of-type(6)::after { transition-delay: 1420ms; }
+
+.figure {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: #F5C45A;
+  white-space: nowrap;
+}
+
+/* ── Closer ──────────────────────────────────────────────── */
+.closer {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity   780ms var(--ease-out-cubic) 300ms,
+    transform 780ms var(--ease-out-cubic) 300ms;
+}
+
+.closerArrow {
+  display: inline-block;
+  width: clamp(2.5rem, 6vw, 4rem);
+  height: 1px;
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms var(--ease-out-cubic) 900ms;
+}
+
+.section.visible .closerArrow { transform: scaleX(1); }
+
+/* ── Reveal ──────────────────────────────────────────────── */
+.section.visible .rail,
+.section.visible .body,
+.section.visible .closer {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail, .body, .closer, .plan { opacity: 1; transform: none; transition: none; }
+  .place { color: #F4F2F7; transition: none; }
+  .place::after { width: 100%; transition: none; }
+  .closerArrow { transform: scaleX(1); transition: none; }
+  .compassTicks, .compassDot, .watermark { animation: none; }
+}

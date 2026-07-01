@@ -1,0 +1,313 @@
+/* ══════════════════════════════════════════════════════════════
+   PavilionThesis — "Why we placed real estate and luxury retail
+   together." A deliberate palette break: the one gallery-white
+   editorial "thesis" section amid the dark cinematic page. Signature
+   device is a convergence diagram — two streams resolve into one
+   buyer — that draws itself in on scroll.
+   Gold is decorative only here (contrast rule on light canvas).
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-gallery);   /* #F6F5F2 — the one light section */
+  color: var(--color-ink-text);
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(3.5rem, 7vw, 6rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+/* Faint warm vignette so the white feels considered, not flat */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 50% 0%, rgba(224, 162, 60, 0.06) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.head {
+  text-align: center;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.overlineWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity   680ms var(--ease-out-cubic),
+    transform 680ms var(--ease-out-cubic);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(1.75rem, 4vw, 2.75rem);
+  height: 1px;
+  background: linear-gradient(to right, rgba(224, 162, 60, 0), #E0A23C, rgba(224, 162, 60, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.125rem, 5vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--color-ink-text);
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity   780ms var(--ease-out-cubic) 90ms,
+    transform 780ms var(--ease-out-cubic) 90ms;
+}
+
+/* Italic emphasis + a gold underline that draws in — echoes the merge */
+.roomEm {
+  position: relative;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.roomEm::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.04em;
+  height: 2px;
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 720ms var(--ease-out-cubic) 620ms;
+}
+
+.section.in .roomEm::after { transform: scaleX(1); }
+
+.dek {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity   780ms var(--ease-out-cubic) 200ms,
+    transform 780ms var(--ease-out-cubic) 200ms;
+}
+
+.section.in .overlineWrap,
+.section.in .headline,
+.section.in .dek {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Convergence diagram ──────────────────────────────────── */
+.diagram {
+  max-width: 560px;
+  margin: clamp(1.75rem, 3.5vw, 2.75rem) auto clamp(2rem, 4vw, 3rem);
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.labelL,
+.labelR,
+.labelOne {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  opacity: 0;
+  transition: opacity 620ms var(--ease-out-cubic);
+}
+
+.labelL,
+.labelR {
+  font-size: 13px;
+  fill: var(--color-ink-muted);
+  text-anchor: middle;
+}
+
+.labelOne {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  fill: var(--color-ink-text);
+  text-anchor: middle;
+}
+
+.section.in .labelL { opacity: 1; transition-delay: 120ms; }
+.section.in .labelR { opacity: 1; transition-delay: 260ms; }
+.section.in .labelOne { opacity: 1; transition-delay: 1200ms; }
+
+.lineL,
+.lineR {
+  stroke: rgba(28, 21, 16, 0.28);
+  stroke-width: 1.5;
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  transition: stroke-dashoffset 1150ms var(--ease-out-cubic);
+}
+
+.lineMerge {
+  stroke: #E0A23C;
+  stroke-width: 2;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 520ms var(--ease-out-cubic);
+}
+
+.section.in .lineL { stroke-dashoffset: 0; transition-delay: 200ms; }
+.section.in .lineR { stroke-dashoffset: 0; transition-delay: 200ms; }
+.section.in .lineMerge { stroke-dashoffset: 0; transition-delay: 1050ms; }
+
+.node {
+  fill: #E0A23C;
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity   440ms var(--ease-out-cubic) 1000ms,
+    transform 520ms var(--ease-out-cubic) 1000ms;
+}
+
+.section.in .node { opacity: 1; transform: scale(1); }
+
+.nodeHalo {
+  stroke: #E0A23C;
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+}
+
+.section.in .nodeHalo { animation: thesisPulse 2.8s ease-out infinite 1500ms; }
+
+@keyframes thesisPulse {
+  0%   { opacity: 0.6; transform: scale(0.6); }
+  70%  { opacity: 0;   transform: scale(2.1); }
+  100% { opacity: 0;   transform: scale(2.1); }
+}
+
+/* ── Body columns ─────────────────────────────────────────── */
+.cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 60rem;
+  margin: 0 auto;
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity   820ms var(--ease-out-cubic) 380ms,
+    transform 820ms var(--ease-out-cubic) 380ms;
+}
+
+.section.in .cols { opacity: 1; transform: none; }
+
+@media (min-width: 820px) {
+  .cols {
+    grid-template-columns: 1fr 1px 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+}
+
+.seam {
+  display: none;
+}
+
+@media (min-width: 820px) {
+  .seam {
+    display: block;
+    align-self: stretch;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(28, 21, 16, 0.16), transparent);
+  }
+}
+
+.microEyebrow {
+  position: relative;
+  display: block;
+  padding-left: 2.25rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: 1.1rem;
+}
+
+.microEyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.5rem;
+  height: 1px;
+  background: #E0A23C;
+  transform: translateY(-50%);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.72;
+  color: #2B2118;
+}
+
+.figure {
+  font-weight: 600;
+  color: var(--color-ink-text);
+  white-space: nowrap;
+  box-shadow: inset 0 -0.4em 0 rgba(224, 162, 60, 0.22);
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap, .headline, .dek, .cols {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .roomEm::after { transform: scaleX(1); transition: none; }
+  .lineL, .lineR, .lineMerge { stroke-dashoffset: 0; transition: none; }
+  .node { opacity: 1; transform: none; transition: none; }
+  .labelL, .labelR, .labelOne { opacity: 1; transition: none; }
+  .nodeHalo { animation: none; }
+}
