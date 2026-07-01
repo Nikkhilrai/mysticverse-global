@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 
-// Body + UI typeface. Headlines use Clash Display (loaded via Fontshare
-// @import in globals.css). Clash Display will be self-hosted via
-// next/font/local before production for zero-FOUT + no CDN dependency.
+// Body + UI typeface.
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Headline typeface — Fraunces (elegant soft-serif), self-hosted by Next.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -31,21 +38,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <head>
-        {/* Clash Display — headline typeface. Self-host via
-            next/font/local before production to drop the CDN dependency. */}
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
-        />
-      </head>
       <body className="min-h-full">
         {children}
       </body>

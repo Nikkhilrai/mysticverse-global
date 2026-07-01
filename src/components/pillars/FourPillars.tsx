@@ -10,7 +10,7 @@ const PILLARS = [
     tag: "Flagship Pillar",
     name: "Conscious Luxury Living",
     body: "Wellness residences, branded communities, biophilic architecture, and premium retail at the intersection of design and conscious living. The headline commercial vertical.",
-    image: "/images/four-pillars/pillar-living.jpg",
+    image: "/images/four-pillars/conscious-luxury-living.jpg",
     href: "/pillars/conscious-luxury-living",
   },
   {

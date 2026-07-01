@@ -47,7 +47,7 @@
   --gradient-signature-soft: linear-gradient(120deg, rgba(245,196,90,0.18) 0%, rgba(124,92,255,0.18) 100%);
 
   /* — Type — */
-  --font-display: 'Clash Display', var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-fraunces), 'Cormorant Garamond', Georgia, serif;
   --font-body:    var(--font-inter), system-ui, sans-serif;
 
   /* — Motion — */
