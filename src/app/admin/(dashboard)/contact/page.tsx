@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { requirePermission } from "@/lib/auth-server";
 import styles from "@/components/admin/panel.module.css";
 import SubmissionTable from "@/components/admin/SubmissionTable";
 import { setContactStatus, deleteContact } from "./actions";
@@ -16,6 +17,7 @@ function fmt(d: Date) {
 }
 
 export default async function ContactPage() {
+  await requirePermission("contact");
   const list = await prisma.contactSubmission.findMany({
     orderBy: { createdAt: "desc" },
   });
@@ -26,6 +28,7 @@ export default async function ContactPage() {
     name: c.name,
     email: c.email,
     enquiry: c.enquiryType,
+    campaign: [c.utmSource, c.utmMedium, c.utmCampaign].filter(Boolean).join(" / ") || "Direct",
     received: fmt(c.createdAt),
     phone: c.phone ?? "—",
     country: c.country ?? "—",
@@ -50,6 +53,7 @@ export default async function ContactPage() {
           { key: "received", label: "Received" },
         ]}
         detail={[
+          { key: "campaign", label: "Campaign / source" },
           { key: "phone", label: "Phone" },
           { key: "country", label: "Country" },
           { key: "organisation", label: "Organisation" },

@@ -10,8 +10,8 @@
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #F6F5F2;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(5rem, 9vw, 9rem)
     clamp(1.5rem, 6vw, 6rem)
@@ -44,8 +44,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(42% 38% at 50% 8%,   rgba(245, 196, 90, 0.08) 0%, transparent 62%),
-    radial-gradient(60% 50% at 50% 108%, rgba(124, 92, 255, 0.14) 0%, transparent 60%);
+    radial-gradient(42% 38% at 50% 8%,   rgba(183, 134, 43, 0.09) 0%, transparent 62%),
+    radial-gradient(60% 50% at 50% 108%, rgba(124, 92, 255, 0.07) 0%, transparent 60%);
 }
 
 /* ── Inner — centered column ─────────────────────────────── */
@@ -72,11 +72,11 @@
   display: block;
   width: clamp(1.5rem, 4vw, 3rem);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(245, 196, 90, 0.6));
+  background: linear-gradient(to right, transparent, rgba(183, 134, 43, 0.50));
 }
 
 .eyebrowRule:last-child {
-  background: linear-gradient(to left, transparent, rgba(245, 196, 90, 0.6));
+  background: linear-gradient(to left, transparent, rgba(183, 134, 43, 0.50));
 }
 
 .eyebrow {
@@ -85,7 +85,7 @@
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   line-height: 1;
   white-space: nowrap;
 }
@@ -98,7 +98,7 @@
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.015em;
-  color: #A8A6B4;
+  color: #5A5866;
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
   padding-bottom: clamp(1rem, 2vw, 1.5rem);
 }
@@ -123,7 +123,7 @@
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.035em;
-  color: #F4F2F7;
+  color: #14141F;
   max-width: 18ch;
   margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
 }
@@ -135,12 +135,12 @@
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0.002em;
-  color: #C9C7D4;
+  color: #3F3D48;
   max-width: 60ch;
 }
 
 .figure {
-  color: #F5C45A;
+  color: #B7862B;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -161,7 +161,7 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #A8A6B4;
+  color: #5A5866;
   line-height: 1;
   margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
   padding-top: 1.75rem;
@@ -197,11 +197,11 @@
   font-size: clamp(0.75rem, 0.95vw, 0.8125rem);
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: #C9C7D4;
+  color: #3F3D48;
   padding: 0.625rem 1.125rem;
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(20, 20, 31, 0.1);
   border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: rgba(20, 20, 31, 0.032);
   opacity: 0;
   transition:
     opacity          600ms var(--ease-out-cubic),
@@ -222,9 +222,9 @@
 .section.visible .tag:nth-child(7) { transition-delay: 880ms; }
 
 .tag:hover {
-  border-color: rgba(245, 196, 90, 0.55);
-  color: #F4F2F7;
-  background-color: rgba(245, 196, 90, 0.06);
+  border-color: rgba(183, 134, 43, 0.50);
+  color: #14141F;
+  background-color: rgba(183, 134, 43, 0.07);
   transform: translateY(-2px);
   transition-delay: 0ms; /* keep hover feedback instant */
 }

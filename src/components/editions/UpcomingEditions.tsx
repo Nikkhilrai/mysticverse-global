@@ -11,10 +11,10 @@ const EDITIONS = [
     tag: "Inaugural Edition",
     status: "Now Open",
     kind: "live" as const,
-    meta: "10 & 11 September · Dubai, UAE",
-    copy: "Two days where the builders, investors, and practitioners shaping the conscious luxury economy — and the people buying into it — share the same room.",
+    meta: "11 September · Dubai, UAE",
+    copy: "One day where the builders, investors, and practitioners shaping the conscious luxury economy — and the people buying into it — share the same room.",
     image: "/images/editions/dubai-night-3.jpg",
-    action: { label: "Reserve Your Seat", href: "#register" },
+    action: { label: "Reserve Your Seat", href: "/register" },
   },
   {
     year: "2027",
@@ -71,7 +71,7 @@ export default function UpcomingEditions() {
             <p className={styles.eyebrow}>The Global Series</p>
           </div>
           <h2 className={styles.headline}>
-            The World Is <span className="gradientText">The Venue.</span>
+            The World Is <span className="gradientTextInk">The Venue.</span>
           </h2>
           <p className={styles.sub}>
             One platform, travelling the world's capitals of conscious capital.

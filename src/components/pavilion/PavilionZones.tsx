@@ -30,7 +30,7 @@ const ZONES: Zone[] = [
   {
     no: "03",
     title: "The Meditation Garden",
-    desc: "Sponsored by a single developer for the two days. The brand owns the space, the smell, the silence.",
+    desc: "Sponsored by a single developer for the day. The brand owns the space, the smell, the silence.",
     image: "/images/pavilion/zones/zone3.jpg",
     alt: "A Japanese dry garden — raked gravel in concentric circles.",
   },

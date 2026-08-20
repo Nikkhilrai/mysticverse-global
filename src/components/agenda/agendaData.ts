@@ -1,6 +1,7 @@
 /* ══════════════════════════════════════════════════════════════
    Agenda data — MysticVerse Global Conference 2026
-   Two days, Dubai. Canonical dates: 10 & 11 September 2026.
+   One day, Dubai. Canonical date: 11 September 2026.
+   Venue: Taj Jumeirah Lakes Towers, Dubai.
 
    kind:
      "feature" — keynotes & the Excellence Awards (highlighted)
@@ -17,320 +18,164 @@ export interface Session {
   kind: SessionKind;
   desc?: string;
   points?: readonly string[];
+  speaker?: string;
 }
 
-export interface AgendaDay {
-  n: string;
-  date: string;
-  theme: string;
-  sessions: readonly Session[];
-}
+export const CONFERENCE_DATE = "11 September 2026";
+export const CONFERENCE_VENUE = "Taj Jumeirah Lakes Towers, Dubai";
+export const CONFERENCE_THEME =
+  "Where Ancient Wisdom Meets Strategic Innovation";
+export const CONFERENCE_THEME_SUB =
+  "Redefining how we live, work, and thrive.";
+export const CONFERENCE_FOCUS =
+  "Real Estate Wellness · Workplace Wellbeing (HR Lens) · Wellness Retreats & Longevity Science";
 
-export const DAYS: readonly AgendaDay[] = [
+export const SESSIONS: readonly Session[] = [
   {
-    n: "Day 1",
-    date: "10 September 2026",
-    theme: "Ancient Wisdom & Holistic Wellness",
-    sessions: [
-      {
-        time: "08:00 AM – 09:00 AM",
-        tag: "Opening",
-        title: "Registration & Aura Cleansing Ceremony",
-        kind: "break",
-        desc: "An immersive opening with energy rituals, grounding music, and intention-setting practices led by spiritual elders and sound therapists.",
-      },
-      {
-        time: "09:00 AM – 09:40 AM",
-        tag: "Keynote",
-        title: "Timeless Wisdom for Modern Flourishing",
-        kind: "feature",
-        desc: "Explore how ancient traditions like Vedic philosophy and Taoist teachings offer practical tools for emotional, mental, and spiritual harmony.",
-        points: [
-          "Daily life applications of ancient spiritual principles",
-          "Redefining well-being through timeless wisdom",
-          "Scientific validation of spiritual disciplines",
-          "Cultivating inner clarity and outer balance",
-        ],
-      },
-      {
-        time: "09:40 AM – 10:30 AM",
-        tag: "Panel",
-        title: "Navigating Life's Path – Astrology & Numerology Today",
-        kind: "main",
-        desc: "Learn how astrological charts and numerological codes continue to inform personal alignment, timing, and life decisions.",
-        points: [
-          "Birth chart analysis and life-path indicators",
-          "Using planetary periods to make confident decisions",
-          "Numerology in relationships, careers, and health",
-          "Case studies on practical transformations",
-        ],
-      },
-      {
-        time: "10:30 AM – 10:55 AM",
-        tag: "Break",
-        title: "Prana Boost: Morning Tea, Breathwork & Body Reset",
-        kind: "break",
-        desc: "A revitalizing break combining conscious breathing techniques with energizing herbal teas.",
-      },
-      {
-        time: "10:55 AM – 11:25 AM",
-        tag: "Mystic Session",
-        title: "Transforming the Mind – Spiritual Psychology in Action",
-        kind: "main",
-        desc: "A hands-on experience blending modern psychological tools with spiritual insight for emotional regulation and mindset healing.",
-        points: [
-          "NLP and somatic techniques for belief reprogramming",
-          "Guided breathwork and inner-child visualization",
-          "Identifying emotional triggers and redirecting patterns",
-          "Gentle trauma release via body awareness",
-        ],
-      },
-      {
-        time: "11:25 AM – 12:10 PM",
-        tag: "Panel",
-        title: "Vastu Shastra – Designing Sacred and Balanced Spaces",
-        kind: "main",
-        desc: "Explore the Vedic science of architecture and energy alignment to enhance health, relationships, and productivity.",
-        points: [
-          "Core Vastu principles for homes, offices, and healing spaces",
-          "Common errors and how to correct them",
-          "Using direction and placement to elevate energy flow",
-          "Modern integrations with architecture and real estate",
-        ],
-      },
-      {
-        time: "12:10 PM – 12:20 PM",
-        tag: "Pause",
-        title: "Mystic Moments: Mindfulness in Minutes",
-        kind: "break",
-        desc: "A brief guided practice with breath and silence to center attendees before lunch.",
-      },
-      {
-        time: "12:20 PM – 01:20 PM",
-        tag: "Lunch",
-        title: "Ayurvedic Nourishment – Conscious Lunch Experience",
-        kind: "break",
-        desc: "Mindful dining with traditional Ayurvedic principles and seasonal ingredients.",
-      },
-      {
-        time: "01:20 PM – 02:10 PM",
-        tag: "Panel",
-        title: "Healing Energies – Reiki, Pranic Healing & Beyond",
-        kind: "main",
-        desc: "Understand how energy healing methods are transforming lives and integrating with mainstream wellness.",
-        points: [
-          "Overview of life-force energy and chakra healing",
-          "Demonstrations of hand techniques and distance healing",
-          "Ethics and lineage in healing practices",
-          "Healing trauma, illness, and emotional fatigue",
-        ],
-      },
-      {
-        time: "02:10 PM – 02:55 PM",
-        tag: "Panel",
-        title: "Yoga & the Mind-Body Connection",
-        kind: "main",
-        desc: "Discover how yoga extends beyond movement into mental, emotional, and cellular healing.",
-        points: [
-          "Yoga therapy for anxiety, stress, and burnout",
-          "Role of pranayama and mudras in mental clarity",
-          "Integrating yoga into clinical or coaching practices",
-          "Exploring the five koshas and inner alignment",
-        ],
-      },
-      {
-        time: "02:55 PM – 03:25 PM",
-        tag: "Break",
-        title: "Chai & Chakra – Afternoon Energy Break",
-        kind: "break",
-        desc: "Rejuvenating tea ceremony with energy work and gentle movement.",
-      },
-      {
-        time: "03:25 PM – 03:55 PM",
-        tag: "Mystic Session",
-        title: "Guided Visualization & Group Meditation",
-        kind: "main",
-        desc: "A shared meditative journey to activate intuition and dissolve inner resistance.",
-        points: [
-          "Chakra-aligned visual journey",
-          "Mantra and frequency immersion",
-          "Group intention setting for healing",
-          "Emotional cleansing through imagery",
-        ],
-      },
-      {
-        time: "03:55 PM – 04:40 PM",
-        tag: "Panel",
-        title: "Ancient Practices, Modern Lives",
-        kind: "main",
-        desc: "A discussion on daily rituals, practices, and routines rooted in tradition and adapted for modern well-being.",
-        points: [
-          "Full-moon and seasonal rituals",
-          "Creating sacred space in modern homes",
-          "Technology boundaries and energetic hygiene",
-          "How to build mindful habits without complexity",
-        ],
-      },
-      {
-        time: "04:40 PM – 05:00 PM",
-        tag: "Closing",
-        title: "Day 1 Closing Reflections",
-        kind: "break",
-        desc: "Integration and gratitude circle to close the first day's journey.",
-      },
+    time: "8:00 AM – 9:00 AM",
+    tag: "Registration & Networking",
+    title: "Registration & Mindful Connections",
+    kind: "break",
+    desc: "A quiet, grounding moment to arrive, featuring a welcome tea, acoustic healing music, and a signature Aura Cleansing Ceremony to set a mindful intention. Followed by five minutes of opening remarks.",
+    speaker: "Organiser / Co-Founder & Director",
+  },
+  {
+    time: "9:00 AM – 9:15 AM",
+    tag: "Ceremony",
+    title: "Organizer's Welcome & Lamp-Lighting Ceremony",
+    kind: "break",
+    desc: "Setting the stage for a transformative day where ancient wisdom officially meets modern strategy.",
+  },
+  {
+    time: "9:15 AM – 9:45 AM",
+    tag: "Keynote Address",
+    title: "Timeless Wisdom for Modern Flourishing",
+    kind: "feature",
+    desc: '"Wellbeing as Strategy: The Convergence of Longevity, Sacred Spaces, and Human Success." Challenging the notion of wellness as an "escape" and framing it as a fundamental driver of corporate productivity, luxury living, and global lifestyle aspirations.',
+    speaker: "A global wellness officer, major corporation",
+  },
+  {
+    time: "9:45 AM – 10:25 AM",
+    tag: "Panel Discussion",
+    title: "From Burnout to Resilience: Redefining Workplace Wellbeing & Corporate HR Strategy",
+    kind: "main",
+    desc: "Focus (HR Lens): Transitioning from superficial perks to structural workplace wellness.",
+    points: [
+      "Treating employee burnout as a critical organizational risk",
+      "Designing roles, workflows, and hybrid-work policies that promote physiological and psychological safety",
+      "Building organizational resilience through HR capacity planning, mindful leadership, and emotional intelligence metrics",
     ],
   },
   {
-    n: "Day 2",
-    date: "11 September 2026",
-    theme: "Spiritual Science & Modern Well-being",
-    sessions: [
-      {
-        time: "08:00 AM – 09:00 AM",
-        tag: "Welcome",
-        title: "Check-in & Conscious Conversations",
-        kind: "break",
-        desc: "Connect with attendees through curated small circles over herbal tea, journaling prompts, and light breathwork.",
-      },
-      {
-        time: "09:00 AM – 09:40 AM",
-        tag: "Keynote",
-        title: "Integrating Ancient Practices in Modern Mental Health",
-        kind: "feature",
-        desc: "Explore how spiritual disciplines like meditation, mantra, and ritual are reshaping the mental health landscape.",
-        points: [
-          "The rise of spiritual psychology",
-          "Mindfulness-based stress reduction in clinical settings",
-          "Energetic self-care for therapists and coaches",
-          "Bridging therapy and transformation",
-        ],
-      },
-      {
-        time: "09:40 AM – 10:30 AM",
-        tag: "Panel",
-        title: "Mindfulness in Clinical Psychology",
-        kind: "main",
-        desc: "Professionals discuss where therapy meets tradition for a new generation of healing.",
-        points: [
-          "Trauma-sensitive mindfulness",
-          "Meditation as a clinical intervention",
-          "Emotional regulation through somatic practices",
-          "The intersection of science and spirituality",
-        ],
-      },
-      {
-        time: "10:30 AM – 10:55 AM",
-        tag: "Break",
-        title: "Morning Reset: Mindfulness & Herbal Brew",
-        kind: "break",
-        desc: "Centering practice with medicinal herbs and breath awareness.",
-      },
-      {
-        time: "10:55 AM – 11:25 AM",
-        tag: "Case Study",
-        title: "Holistic Wellness Success Stories",
-        kind: "main",
-        desc: "Real-world results from schools, corporates, and hospitals integrating spiritual wellness.",
-        points: [
-          "Meditation in education",
-          "Energy work in post-surgical recovery",
-          "Employee well-being frameworks",
-          "Measurable benefits of alternative wellness",
-        ],
-      },
-      {
-        time: "11:25 AM – 12:10 PM",
-        tag: "Panel",
-        title: "Traditional Healing Meets Modern Medicine",
-        kind: "main",
-        desc: "Ayurveda, naturopathy, and energy science in partnership with conventional healthcare.",
-        points: [
-          "Herbal protocols for chronic illness",
-          "Eastern tools in palliative care",
-          "Collaborating with hospitals and clinicians",
-          "Regulation, safety, and global case studies",
-        ],
-      },
-      {
-        time: "12:10 PM – 12:20 PM",
-        tag: "Pause",
-        title: "Mystic Moments: Emotional Clarity in Ten Minutes",
-        kind: "break",
-        desc: "Quick centering practice for emotional balance and mental clarity.",
-      },
-      {
-        time: "12:20 PM – 01:20 PM",
-        tag: "Lunch",
-        title: "Global Wellness Cuisine – Lunch Break",
-        kind: "break",
-        desc: "International plant-based cuisine celebrating diverse healing traditions.",
-      },
-      {
-        time: "01:20 PM – 02:10 PM",
-        tag: "Panel",
-        title: "Future of Wellness Retreats – Strategy, Guest Experience & Business Growth",
-        kind: "main",
-        desc: "A deep-dive panel exploring retreat design, guest experience models, and sustainable business strategies for high-impact wellness retreats.",
-        points: [
-          "Designing immersive retreat journeys",
-          "Guest experience and hospitality best practices",
-          "Monetization & sustainable growth models",
-          "Case studies from successful retreat operators",
-        ],
-      },
-      {
-        time: "02:10 PM – 02:55 PM",
-        tag: "Panel",
-        title: "Mentally Healthy Workplaces",
-        kind: "main",
-        desc: "A look at conscious leadership, stress management, and energy wellness at work.",
-        points: [
-          "Workplace rituals for emotional clarity",
-          "Meditation for leaders and teams",
-          "Setting boundaries with energetic intention",
-          "Building value-aligned team culture",
-        ],
-      },
-      {
-        time: "02:55 PM – 03:25 PM",
-        tag: "Break",
-        title: "Yoga Stretch & Herbal Tea Break",
-        kind: "break",
-        desc: "Gentle movement and relaxation with healing teas.",
-      },
-      {
-        time: "03:25 PM – 03:50 PM",
-        tag: "Panel",
-        title: "Emerging Trends in Holistic Wellness",
-        kind: "main",
-        desc: "What's next in healing, spirituality, and wellness innovation.",
-        points: [
-          "Wearables and AI in emotional intelligence",
-          "Virtual retreats and immersive experiences",
-          "Psychedelic therapy and consciousness tech",
-          "Wellness tourism and eco-healing spaces",
-        ],
-      },
-      {
-        time: "03:50 PM – 05:20 PM",
-        tag: "Awards",
-        title: "MysticVerse Global Excellence Awards 2026",
-        kind: "feature",
-        desc: "Celebrating exceptional healers, thought leaders, and transformative businesses.",
-        points: [
-          "Spiritual Entrepreneur of the Year",
-          "Global Mystic Leader Award",
-          "Conscious Innovation in Wellness Tech",
-          "Lifetime Contribution to Holistic Healing",
-        ],
-      },
-      {
-        time: "05:20 PM – 05:45 PM",
-        tag: "Closing",
-        title: "Closing Ceremony & Collective Intentions",
-        kind: "break",
-        desc: "A heart-centered closing with blessings, gratitude circle, and shared affirmations to carry forward.",
-      },
+    time: "10:25 AM – 10:55 AM",
+    tag: "Prana Boost",
+    title: "Morning Rejuvenation Break",
+    kind: "break",
+    desc: "Breathwork, body resets, and an organic herbal tea and brew bar.",
+  },
+  {
+    time: "11:15 AM – 11:55 AM",
+    tag: "Panel Discussion",
+    title: "Sacred Architecture & Spatial Tech: Redefining Real Estate Wellness",
+    kind: "main",
+    desc: "Focus (Real Estate Lens): How wellness is transforming luxury living and shaping investment in the homes of high-net-worth individuals.",
+    points: [
+      "Integrating ancient spatial sciences — Vaastu and Feng Shui — with smart-home and environmental technologies",
+      "Designing residences, master-planned wellness communities, and offices for circadian alignment, air quality, and emotional clarity",
+      'Creating "sacred spaces" within high-pressure urban environments to ease digital overload',
     ],
+  },
+  {
+    time: "12:00 PM – 12:15 PM",
+    tag: "Mystic Moments",
+    title: "Micro-Rituals for Daily Presence",
+    kind: "break",
+    desc: "A rapid somatic de-stressing session to build immediate emotional resilience and mental clarity.",
+  },
+  {
+    time: "12:15 PM – 1:15 PM",
+    tag: "Lunch Break",
+    title: "Networking & Lunch Break",
+    kind: "break",
+    desc: "Networking, connection, and lunch.",
+  },
+  {
+    time: "1:15 PM – 1:55 PM",
+    tag: "Panel Discussion",
+    title: "The Longevity Frontier: Bridging Ancient Retreat Wisdom with Preventative Science",
+    kind: "main",
+    desc: "Focus (Retreats & Longevity Lens): The evolution of wellness tourism from temporary getaways to hyper-personalised, scientific lifespans.",
+    points: [
+      "How premium wellness retreats are incorporating cellular science, bio-hacking, and neuro-resilience into their programming",
+      "Combining ancient healing systems — Ayurveda, pranic healing, herbalism — with modern preventative medicine to delay biological ageing",
+      "The business of longevity: high-end wellness travel that drives lasting lifestyle transformation",
+    ],
+  },
+  {
+    time: "1:55 PM – 2:25 PM",
+    tag: "Interactive Mystic Session",
+    title: "Chakra Balancing & Bio-Harmonizing",
+    kind: "main",
+    desc: "A hands-on immersive experience bridging traditional energy healing, sound therapy, and neuro-wellness technology.",
+  },
+  {
+    time: "2:25 PM – 3:05 PM",
+    tag: "Cross-Pillar Synthesis Panel",
+    title: "The Multidimensional Life: How HR, Real Estate, and Retreats Shape the Future of Living",
+    kind: "main",
+    desc: "A collaborative discussion featuring real estate developers, HR executives, and longevity retreat curators.",
+    points: [
+      "How corporate packages are expanding to offer executive-level longevity retreats as retention benefits",
+      "Designing residential environments that sustain the physical benefits gained from wellness retreats",
+      "Actionable tools for high-performing leaders to integrate wellness habits into demanding lifestyles",
+    ],
+  },
+  {
+    time: "3:05 PM – 3:35 PM",
+    tag: "Tea & Coffee",
+    title: "Afternoon Energy Break",
+    kind: "break",
+    desc: "Networking and hands-on exploration at the Spatial Tech & Holistic Healing Solutions exhibition booths.",
+  },
+  {
+    time: "3:35 PM – 4:15 PM",
+    tag: "Panel Discussion",
+    title: "Yoga & Other Forms of Mind and Physical Fitness for Holistic Well-Being",
+    kind: "main",
+    desc: "A dual exploration of yoga's therapeutic power and the wider science of mind-body fitness for high-performing lives.",
+    points: [
+      "Yoga — preventive and therapeutic health benefits",
+      "Yoga — mindfulness, breath control, and emotional balance",
+      "Yoga — enhancing focus and stress resilience",
+      "Mind & body — the science-backed connection between mind and body",
+      "Mind & body — strength, mobility, recovery, and endurance",
+      "Mind & body — sustaining performance in high-pressure roles",
+    ],
+  },
+  {
+    time: "4:15 PM – 4:30 PM",
+    tag: "Solo Session",
+    title: "Holistic Wellness through Ancient Wisdom",
+    kind: "main",
+    desc: "An expert-led session.",
+  },
+  {
+    time: "4:30 PM – 5:00 PM",
+    tag: "Awards",
+    title: "MysticVerse Global Excellence Awards",
+    kind: "feature",
+    desc: "Honoring visionary changemakers and brands across three curated categories.",
+    points: [
+      "Workplace Well-being Champion (HR)",
+      "Innovative Wellness Architecture & Real Estate",
+      "Pioneering Longevity Retreat of the Year",
+    ],
+  },
+  {
+    time: "5:00 PM – 5:15 PM",
+    tag: "Closing",
+    title: "Closing Ceremony & Vote of Thanks",
+    kind: "break",
+    desc: "Reflections on wrapping up for the day.",
   },
 ] as const;

@@ -12,7 +12,7 @@ type Stop = {
 
 const STOPS: Stop[] = [
   { date: "Early September", label: "Markets & term resume", sub: "Europe · India · GCC" },
-  { date: "10–11 September", label: "MysticVerse Global", sub: "The conscious luxury conversation", star: true },
+  { date: "11 September", label: "MysticVerse Global", sub: "The conscious luxury conversation", star: true },
   { date: "Two weeks later", label: "Cityscape Global", sub: "The conventional one" },
 ];
 
@@ -50,7 +50,7 @@ export default function WhyDubaiSeptember() {
               <p className={styles.overline}>Why this week</p>
             </div>
             <p id="why-september-heading" className={styles.date}>
-              10 <span className={styles.amp}>&amp;</span> 11
+              11
             </p>
             <p className={styles.month}>September 2026</p>
           </div>

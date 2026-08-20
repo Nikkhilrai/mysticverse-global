@@ -12,7 +12,6 @@ const ANCHOR = {
 
 const REST = [
   { name: "Manoyaa Alchemy",     src: "/images/partners/Manoyaa-Alchemy.avif",          tierLabel: "Prominent Exhibitor" },
-  { name: "Cosmicx Healing Art", src: "/images/partners/Cosmicx-healing-Art-Logo.avif", tierLabel: "Prominent Exhibitor" },
   { name: "Ouna Cosmetics",      src: "/images/partners/Ouna Cosmetics.avif",           tierLabel: "Luxury Skincare" },
   { name: "Renophase",           src: "/images/partners/Renophase.png",                 tierLabel: "Luxury Skincare" },
   { name: "StackBerry Media",    src: "/images/partners/stackberry-media.avif",          tierLabel: "Media Partner" },
@@ -92,11 +91,11 @@ export default function ConfirmedPartners() {
 
         {/* ── CTAs ──────────────────────────────────────────── */}
         <div className={styles.ctaRow}>
-          <a href="/partners" className={styles.ctaOutlined}>
+          <a href="/sponsor" className={styles.ctaOutlined}>
             See all confirmed partners
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>
-          <a href="/partner-with-us" className={styles.ctaFilled}>
+          <a href="/sponsor" className={styles.ctaFilled}>
             Become a partner
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>

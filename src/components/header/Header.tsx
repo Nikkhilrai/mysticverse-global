@@ -19,10 +19,11 @@ import styles from "./Header.module.css";
   — "Partner With Us": 4 partner-tier pages (TBD in Phase 4 brief)
 */
 const NAV_ITEMS = [
+  { label: "Home",            href: "/",                  futureDropdown: false },
   { label: "About",           href: "/about",             futureDropdown: false },
   { label: "Why Dubai 2026",  href: "/why-dubai-2026",  futureDropdown: false },
   { label: "The 4 Pillars",   href: "/pillars",          futureDropdown: true  },
-  { label: "The Pavilion",    href: "/pavilion",          futureDropdown: false },
+  // { label: "The Pavilion", href: "/pavilion", futureDropdown: false }, — temporarily unpublished
   {
     label: "Conference",
     href: "/conference",
@@ -30,14 +31,16 @@ const NAV_ITEMS = [
     children: [
       { label: "Speakers", href: "/conference/speakers" },
       { label: "Agenda", href: "/agenda" },
+      { label: "Excellence Awards", href: "/awards" },
     ],
   },
-  { label: "Partner With Us", href: "/partner",           futureDropdown: true  },
+  { label: "Partner With Us", href: "/sponsor",           futureDropdown: false },
   {
     label: "Media",
     href: "/media",
     futureDropdown: false,
     children: [
+      { label: "Blog", href: "/journal" },
       { label: "Magazine", href: "/media/magazine" },
     ],
   },
@@ -110,7 +113,7 @@ export default function Header() {
           className={`${styles.topBar}${topBarExiting ? ` ${styles.topBarExiting}` : ""}`}
         >
           <p className={styles.topBarText}>
-            10 &amp; 11 September 2026&ensp;·&ensp;Dubai, UAE&ensp;·&ensp;Early&#8209;bird pricing closes 31&nbsp;July
+            11 September 2026&ensp;·&ensp;Dubai, UAE&ensp;·&ensp;Early&#8209;bird pricing closes 31&nbsp;August
           </p>
           <button
             className={styles.topBarDismiss}
@@ -152,14 +155,14 @@ export default function Header() {
           {NAV_ITEMS.map((item) =>
             "children" in item ? (
               <div key={item.href} className={styles.navItem}>
-                <a
-                  href={item.href}
+                <button
+                  type="button"
                   className={`${styles.navLink} ${styles.navLinkParent}`}
                   aria-haspopup="true"
                 >
                   {item.label}
                   <span className={styles.caret} aria-hidden="true" />
-                </a>
+                </button>
                 <div className={styles.dropdown} role="menu">
                   {item.children.map((c) => (
                     <a
@@ -217,13 +220,17 @@ export default function Header() {
         <nav className={styles.mobileNav}>
           {NAV_ITEMS.map((item) => (
             <Fragment key={item.href}>
-              <a
-                href={item.href}
-                className={styles.mobileNavLink}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
+              {"children" in item ? (
+                <span className={styles.mobileNavLink}>{item.label}</span>
+              ) : (
+                <a
+                  href={item.href}
+                  className={styles.mobileNavLink}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              )}
               {"children" in item &&
                 item.children.map((c) => (
                   <a

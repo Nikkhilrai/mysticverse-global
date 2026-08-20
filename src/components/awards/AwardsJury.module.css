@@ -1,0 +1,268 @@
+/* ══════════════════════════════════════════════════════════════
+   AwardsJury — "How the awards are decided."
+   Light palette break to close the page. Three process cards,
+   each carrying an explicit "still to be confirmed" status so the
+   placeholder reads as deliberate rather than unfinished.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  background-color: #F6F5F2;
+  color: #14141F;
+  padding:
+    clamp(5.5rem, 13vh, 9.5rem)
+    clamp(1.5rem, 6vw, 6rem);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 45% at 50% 0%, rgba(224, 162, 60, 0.07) 0%, transparent 60%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.head {
+  max-width: 48ch;
+  margin-bottom: clamp(2.75rem, 5.5vw, 4rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms var(--ease-out-cubic), transform 700ms var(--ease-out-cubic);
+}
+
+.section.in .overlineWrap { opacity: 1; transform: none; }
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #E0A23C, rgba(224, 162, 60, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B7862B;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: #14141F;
+  margin-bottom: clamp(0.85rem, 1.8vw, 1.25rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 820ms var(--ease-out-cubic) 120ms, transform 820ms var(--ease-out-cubic) 120ms;
+}
+
+.section.in .heading { opacity: 1; transform: none; }
+
+.deck {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.35vw, 1.1875rem);
+  line-height: 1.65;
+  color: #5A5866;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 820ms var(--ease-out-cubic) 220ms, transform 820ms var(--ease-out-cubic) 220ms;
+}
+
+.section.in .deck { opacity: 1; transform: none; }
+
+/* ── Grid ────────────────────────────────────────────────── */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.4vw, 1.75rem);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.8vw, 2.125rem);
+  border: 1px solid rgba(20, 20, 31, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 780ms var(--ease-out-cubic),
+    transform 780ms var(--ease-out-cubic),
+    border-color 380ms var(--ease-out-cubic);
+  transition-delay: calc(340ms + var(--i) * 110ms), calc(340ms + var(--i) * 110ms), 0ms;
+}
+
+.section.in .card { opacity: 1; transform: none; }
+
+.card:hover { border-color: rgba(224, 162, 60, 0.5); }
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(1rem, 2vw, 1.35rem);
+  padding-bottom: clamp(1rem, 2vw, 1.35rem);
+  border-bottom: 1px solid rgba(20, 20, 31, 0.1);
+}
+
+.cardNo {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #B7862B;
+}
+
+.cardLabel {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #5A5866;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1875rem, 2vw, 1.4375rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: #14141F;
+  margin-bottom: 0.75rem;
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.1vw, 1rem);
+  line-height: 1.65;
+  color: #4A4857;
+  flex: 1;
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.75rem);
+}
+
+/* ── Status pill ─────────────────────────────────────────── */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px dashed rgba(20, 20, 31, 0.22);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #6E6C7C;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #E0A23C;
+  animation: awPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes awPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ── Closer ──────────────────────────────────────────────── */
+.closer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(2rem, 4vw, 2.75rem);
+  border-top: 1px solid rgba(20, 20, 31, 0.14);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 820ms var(--ease-out-cubic) 640ms, transform 820ms var(--ease-out-cubic) 640ms;
+}
+
+.section.in .closer { opacity: 1; transform: none; }
+
+.closerText {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: #14141F;
+}
+
+.closerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.closerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #B7862B;
+  text-decoration: none;
+  border: 0;
+  border-bottom: 1px solid rgba(224, 162, 60, 0.45);
+  background: none;
+  cursor: pointer;
+  padding: 0 0 0.15rem;
+  transition: border-color 300ms var(--ease-out-cubic);
+}
+
+.closerLink:focus-visible { outline: 2px solid #B7862B; outline-offset: 3px; }
+
+.closerLink:hover { border-color: #B7862B; }
+
+.arrow { transition: transform 300ms var(--ease-out-cubic); }
+.closerLink:hover .arrow { transform: translateX(4px); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap, .heading, .deck, .card, .closer {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .statusDot { animation: none; }
+}

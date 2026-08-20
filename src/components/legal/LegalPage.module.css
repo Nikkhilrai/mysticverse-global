@@ -1,0 +1,136 @@
+/* ══════════════════════════════════════════════════════════════
+   LegalPage — shared frame for Terms / Privacy / Code of Conduct.
+   Same bordered, centered "article" treatment as the blog, tuned
+   for long-form legal prose: plain, readable, no decoration.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  background-color: #0B0B12;
+  padding:
+    clamp(7.5rem, 14vh, 11rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 8rem);
+}
+
+.inner { max-width: 800px; margin: 0 auto; }
+
+.back {
+  display: block;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  text-decoration: none;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.back:hover { text-decoration: underline; }
+
+.frame {
+  border: 1px solid var(--hairline);
+  border-radius: 24px;
+  background: rgba(20, 20, 31, 0.4);
+  padding: clamp(2rem, 5vw, 3.5rem);
+}
+
+.headWrap {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  padding-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin: 0 0 0.75rem;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin: 0 0 0.75rem;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  color: #C9C7D4;
+  margin: 0 0 0.5rem;
+}
+
+.meta {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: #8C8A98;
+}
+
+/* ── Body ────────────────────────────────────────────────── */
+.body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #C9C7D4;
+}
+
+.body h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+  margin: 2.25rem 0 0.9rem;
+}
+.body h2:first-child { margin-top: 0; }
+
+.body p { margin: 0 0 1.1rem; }
+.body ul { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+.body li { margin-bottom: 0.5rem; }
+.body strong { color: #F4F2F7; }
+.body a { color: #F5C45A; text-decoration: underline; }
+
+/* ── Contact card ────────────────────────────────────────── */
+.contactCard {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding: clamp(1.25rem, 2.8vw, 1.75rem);
+  border: 1px solid var(--hairline-gold);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(245, 196, 90, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.contactLabel {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin: 0 0 0.6rem;
+}
+
+.contactIntro {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #C9C7D4;
+  margin: 0 0 0.9rem;
+}
+
+.contactLine {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #C9C7D4;
+  margin: 0 0 0.3rem;
+}
+
+.contactLine a { color: #F5C45A; text-decoration: underline; }

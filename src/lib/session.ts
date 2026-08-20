@@ -13,6 +13,8 @@ export interface SessionPayload {
   email: string;
   name?: string | null;
   role: string;
+  /** Section keys this account can access when role is EDITOR. See src/lib/permissions.ts. */
+  permissions?: string[];
   [key: string]: unknown;
 }
 

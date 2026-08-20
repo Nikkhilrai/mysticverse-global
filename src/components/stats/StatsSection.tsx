@@ -13,7 +13,7 @@ import styles from "./StatsSection.module.css";
 const DURATION_MS = 600;
 const STAGGER_MS  =  80;
 
-interface StatDef {
+export interface StatDef {
   readonly accentChar:     string;  // gradient-clipped accent glyph
   readonly accentIsPrefix: boolean; // true = before digits, false = after
   readonly countTo:        number;
@@ -23,7 +23,7 @@ interface StatDef {
   readonly descriptor:     string;
 }
 
-const STATS: readonly StatDef[] = [
+export const STATS: readonly StatDef[] = [
   {
     accentChar:     "$",
     accentIsPrefix: true,
@@ -65,16 +65,19 @@ const STATS: readonly StatDef[] = [
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 
 /* ── Individual stat block ───────────────────────────────── */
-function StatBlock({
+export function StatBlock({
   stat,
   index,
   active,
   reducedMotion,
+  tone = "dark",
 }: {
   stat:         StatDef;
   index:        number;
   active:       boolean;
   reducedMotion: boolean;
+  /** Surface this block sits on. Defaults to dark — the pillar pages. */
+  tone?:        "light" | "dark";
 }) {
   const [count, setCount] = useState(reducedMotion ? stat.countTo : 0);
 
@@ -135,7 +138,7 @@ function StatBlock({
   ].join("").trim();
 
   return (
-    <div className={styles.statBlock}>
+    <div className={`${styles.statBlock}${tone === "dark" ? ` ${styles.onDark}` : ""}`}>
       {/* Static accessible value — visually hidden */}
       <span className={styles.srOnly}>{accessibleValue}</span>
 
@@ -211,6 +214,7 @@ export default function StatsSection() {
               index={i}
               active={active}
               reducedMotion={reducedMotion}
+              tone="light"
             />
           ))}
         </div>

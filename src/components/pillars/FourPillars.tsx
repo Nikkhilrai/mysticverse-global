@@ -73,7 +73,7 @@ export default function FourPillars() {
             </div>
             <h2 className={styles.headline}>
               Four Pillars.<br />
-              <span className="gradientText">One Shared Vision.</span>
+              <span className="gradientTextInk">One Shared Vision.</span>
             </h2>
           </div>
           <p className={styles.subCopy}>

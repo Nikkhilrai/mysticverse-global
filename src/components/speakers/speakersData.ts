@@ -82,17 +82,6 @@ export const SPEAKERS: readonly Speaker[] = [
     ],
   },
   {
-    slug: "lakshmi-ambady",
-    name: "Lakshmi Ambady",
-    title: "Graphic Designer · Digital Artist · Poet · Founder, Layasthana",
-    image: `${IMG}/lakshmi-ambady.avif`,
-    bio: [
-      `A former Biomedical Engineer and Business Analyst at Accenture, Lakshmi transitioned into a full-time artist and designer, crafting a unique space where Indian aesthetics, spirituality, and contemporary art intersect.`,
-      `Her work is deeply influenced by Indic philosophy, yoga, and intuitive artistic exploration, often beginning with random brushstrokes that evolve into evocative forms. A published poet and author of "Moon, Snakes, Love," Lakshmi extends her creative vision beyond personal expression, educating aspiring artists through workshops and online tutorials.`,
-      `With a strong social media presence (100K+ followers on Instagram) and viral reach, Lakshmi's art resonates with audiences drawn to Indian heritage, sarees, jewelry, mythology, and mindfulness. Layasthana embodies this essence, offering artworks, prints, and immersive experiences that celebrate both tradition and spontaneity.`,
-    ],
-  },
-  {
     slug: "elias-hanna",
     name: "Elias Hanna",
     title: "Certified Practitioner in Unified Integrative Medicine",
@@ -110,18 +99,6 @@ export const SPEAKERS: readonly Speaker[] = [
     bio: [
       `Rajani Shridhar, Co-founder of Motivaluate, is a Certified facilitator of The Leadership Challenge, Gold Medalist Event Management Diploma holder and Cambridge Certified English Language Teacher to Adults.`,
       `She actively engages in youth and women's leadership initiatives. She frequently speaks about the intersections of music, life, and leadership, and has coached women and young mothers in effective communication and self-expression.`,
-    ],
-  },
-  {
-    slug: "rajesh-mohandas",
-    name: "Rajesh Mohandas",
-    title: "Vice President — Automation and Applied AI, Thomson Reuters",
-    image: `${IMG}/rajesh-mohandas.avif`,
-    bio: [
-      `With 24+ years of global leadership, Rajesh specializes in architecting enterprise-wide transformations that fuse AI, automation, and strategic execution. His journey spans Fortune 500s and high-growth disruptors, where he has consistently delivered exponential revenue growth, operational excellence, and customer-centric innovation.`,
-      `As Vice President of AI & Automation, he has built global Centres of Excellence, designed GRC-aligned delivery frameworks, and led multi-million-dollar global scale-ups. From mobilizing pipelines to growing revenues, he has driven outcomes others deemed unachievable.`,
-      `His expertise spans CRM consulting, shared services strategy, M&A integration, and GenAI deployment — transforming fragmented operations into high-velocity growth engines. He has owned $60M+ P&Ls, advised CXOs, and helped position India as a strategic growth hub on the world stage.`,
-      `Armed with an Engineering degree, Law credentials, and a Six Sigma Black Belt, he brings a rare blend of technical depth, legal acumen, and operational rigor. Whether in boardrooms, war rooms, or transformation trenches, he leads with clarity, empathy, and a "make it happen" mindset.`,
     ],
   },
   {

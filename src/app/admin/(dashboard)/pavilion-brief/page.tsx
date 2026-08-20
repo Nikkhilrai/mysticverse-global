@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { requirePermission } from "@/lib/auth-server";
 import styles from "@/components/admin/panel.module.css";
 import SubmissionTable from "@/components/admin/SubmissionTable";
 import { setPavilionBriefStatus, deletePavilionBrief } from "./actions";
@@ -16,6 +17,7 @@ function fmt(d: Date) {
 }
 
 export default async function PavilionBriefPage() {
+  await requirePermission("pavilion-brief");
   const list = await prisma.pavilionBriefRequest.findMany({
     orderBy: { createdAt: "desc" },
   });
@@ -27,6 +29,7 @@ export default async function PavilionBriefPage() {
     email: r.email,
     company: r.company ?? "—",
     tier: r.tierInterest ?? "—",
+    campaign: [r.utmSource, r.utmMedium, r.utmCampaign].filter(Boolean).join(" / ") || "Direct",
     received: fmt(r.createdAt),
     role: r.role ?? "—",
     phone: r.phone ?? "—",
@@ -55,6 +58,7 @@ export default async function PavilionBriefPage() {
           { key: "received", label: "Received" },
         ]}
         detail={[
+          { key: "campaign", label: "Campaign / source" },
           { key: "role", label: "Role" },
           { key: "phone", label: "Phone" },
           { key: "country", label: "Country" },

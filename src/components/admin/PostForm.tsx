@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "./RichTextEditor";
+import AuthorManagerModal, { type AuthorLite } from "./AuthorManagerModal";
 import { savePost, deletePost, type PostInput } from "@/app/admin/(dashboard)/posts/actions";
+import { pickAndUpload } from "@/lib/admin-upload";
 import styles from "./PostForm.module.css";
 
 interface Initial {
@@ -15,37 +17,18 @@ interface Initial {
   coverImage: string;
   tags: string[];
   status: "DRAFT" | "PUBLISHED";
+  blogAuthorId?: string;
+  /** "YYYY-MM-DD", for the date input. Empty means "use today when published". */
+  publishedAt?: string;
 }
 
-/* Opens a file picker, uploads to /api/admin/upload, returns the URL. */
-async function pickAndUpload(): Promise<string | null> {
-  return new Promise((resolve) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) return resolve(null);
-      const fd = new FormData();
-      fd.append("file", file);
-      try {
-        const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          alert(data.error ?? "Upload failed.");
-          return resolve(null);
-        }
-        resolve(data.url as string);
-      } catch {
-        alert("Upload failed.");
-        resolve(null);
-      }
-    };
-    input.click();
-  });
-}
-
-export default function PostForm({ initial }: { initial: Initial }) {
+export default function PostForm({
+  initial,
+  authors: initialAuthors,
+}: {
+  initial: Initial;
+  authors: AuthorLite[];
+}) {
   const router = useRouter();
   const [title, setTitle] = useState(initial.title);
   const [slug, setSlug] = useState(initial.slug);
@@ -54,8 +37,14 @@ export default function PostForm({ initial }: { initial: Initial }) {
   const [content, setContent] = useState(initial.content);
   const [coverImage, setCoverImage] = useState(initial.coverImage);
   const [tags, setTags] = useState(initial.tags.join(", "));
+  const [publishedAt, setPublishedAt] = useState(initial.publishedAt ?? "");
+  const [blogAuthorId, setBlogAuthorId] = useState(initial.blogAuthorId ?? "");
+  const [authors, setAuthors] = useState<AuthorLite[]>(initialAuthors);
+  const [authorModalOpen, setAuthorModalOpen] = useState(false);
   const [saving, setSaving] = useState<"" | "draft" | "publish">("");
   const [error, setError] = useState<string | null>(null);
+
+  const selectedAuthor = authors.find((a) => a.id === blogAuthorId) ?? null;
 
   const onTitle = (v: string) => {
     setTitle(v);
@@ -82,6 +71,8 @@ export default function PostForm({ initial }: { initial: Initial }) {
       coverImage,
       tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
       status,
+      blogAuthorId: blogAuthorId || null,
+      publishedAt: publishedAt || null,
     };
     try {
       await savePost(input);
@@ -120,6 +111,18 @@ export default function PostForm({ initial }: { initial: Initial }) {
 
       <aside className={styles.side}>
         <div className={styles.panel}>
+          <label className={styles.label} htmlFor="publishedAt">Published date</label>
+          <input
+            id="publishedAt"
+            type="date"
+            className={styles.input}
+            value={publishedAt}
+            onChange={(e) => setPublishedAt(e.target.value)}
+          />
+          <p className={styles.hint}>
+            Backdate an older article, or leave blank to use today when you publish.
+          </p>
+
           <div className={styles.actionsTop}>
             <button type="button" className={styles.draftBtn} onClick={() => submit("DRAFT")} disabled={Boolean(saving)}>
               {saving === "draft" ? "Saving…" : "Save draft"}
@@ -158,7 +161,62 @@ export default function PostForm({ initial }: { initial: Initial }) {
           </div>
           <input className={styles.input} value={coverImage} onChange={(e) => setCoverImage(e.target.value)} placeholder="…or paste image URL" />
         </div>
+
+        <div className={styles.panel}>
+          <label className={styles.label} htmlFor="author">Author</label>
+          <select
+            id="author"
+            className={styles.input}
+            value={blogAuthorId}
+            onChange={(e) => setBlogAuthorId(e.target.value)}
+          >
+            <option value="">No byline</option>
+            {authors.map((a) => (
+              <option key={a.id} value={a.id}>{a.name}</option>
+            ))}
+          </select>
+
+          {selectedAuthor && (
+            <div className={styles.authorPreview}>
+              {selectedAuthor.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className={styles.authorAvatar} src={selectedAuthor.image} alt="" />
+              ) : (
+                <span className={styles.authorAvatarFallback}>
+                  {selectedAuthor.name.charAt(0).toUpperCase()}
+                </span>
+              )}
+              <span className={styles.authorPreviewText}>
+                <span className={styles.authorPreviewName}>{selectedAuthor.name}</span>
+                {selectedAuthor.role && (
+                  <span className={styles.authorPreviewRole}>{selectedAuthor.role}</span>
+                )}
+              </span>
+            </div>
+          )}
+
+          <button
+            type="button"
+            className={styles.smallBtn}
+            style={{ marginTop: "0.75rem" }}
+            onClick={() => setAuthorModalOpen(true)}
+          >
+            Manage authors
+          </button>
+        </div>
       </aside>
+
+      <AuthorManagerModal
+        open={authorModalOpen}
+        authors={authors}
+        onChange={(next) => {
+          setAuthors(next);
+          if (blogAuthorId && !next.some((a) => a.id === blogAuthorId)) {
+            setBlogAuthorId("");
+          }
+        }}
+        onClose={() => setAuthorModalOpen(false)}
+      />
     </div>
   );
 }

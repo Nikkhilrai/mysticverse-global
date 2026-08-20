@@ -95,7 +95,7 @@ export default function WhoIsInTheRoom() {
             </div>
             <h2 className={styles.headline}>
               Who You Meet,<br />
-              <span className="gradientText">Not How Many.</span>
+              <span className="gradientTextInk">Not How Many.</span>
             </h2>
           </div>
 

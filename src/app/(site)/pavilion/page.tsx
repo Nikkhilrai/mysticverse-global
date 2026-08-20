@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import PavilionHero from "@/components/pavilion/PavilionHero";
 import PavilionIntro from "@/components/pavilion/PavilionIntro";
@@ -15,12 +16,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Conscious Living Pavilion — MysticVerse Global 2026",
     description:
-      "The flagship zone where wellness real estate and luxury retail meet. 10 & 11 September 2026, Dubai.",
+      "The flagship zone where wellness real estate and luxury retail meet. 11 September 2026, Dubai.",
     type: "website",
   },
 };
 
+// Temporarily unpublished from the live site — components and copy
+// below are untouched. Remove the notFound() call to restore the page.
 export default function PavilionPage() {
+  notFound();
+
   return (
     <main>
       <PavilionHero />

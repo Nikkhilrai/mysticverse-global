@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
+import { getUtm } from "@/lib/utm";
 
 const INTERESTS = ["Sponsor", "Exhibit", "Delegate", "Press", "HR", "Other"] as const;
 
@@ -31,6 +32,7 @@ export default function ContactSection() {
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const payload = {
+      ...getUtm(),
       name: fd.get("name"),
       email: fd.get("email"),
       phone: fd.get("phone"),

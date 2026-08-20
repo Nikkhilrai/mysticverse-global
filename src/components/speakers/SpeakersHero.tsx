@@ -36,7 +36,7 @@ export default function SpeakersHero() {
 
         <p className={styles.sub}>
           Healers, founders, physicians, artists, and yogis — convening to bridge
-          ancient wisdom and modern innovation across two days in Dubai.
+          ancient wisdom and modern innovation in a single day in Dubai.
         </p>
 
         {/* Overlapping portrait stack — a premium preview of the faculty */}

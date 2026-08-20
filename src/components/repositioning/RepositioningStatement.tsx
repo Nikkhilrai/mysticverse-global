@@ -56,7 +56,7 @@ export default function RepositioningStatement() {
         <h2 className={styles.manifesto}>
           The Global Platform for
           <br />
-          <span className="gradientText">Conscious Living.</span>
+          <span className="gradientTextInk">Conscious Living.</span>
         </h2>
 
         {/* ── Supporting statement ─────────────────────────── */}

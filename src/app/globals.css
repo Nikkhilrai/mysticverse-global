@@ -86,6 +86,16 @@ body {
 }
 
 /* ── Gradient text utility — the signature device ─────────────────── */
+/* Light-surface counterpart to .gradientText — the signature gradient's
+   gold leg is too pale to read on canvas tones. Large display text only. */
+.gradientTextInk {
+  background: linear-gradient(120deg, #B7862B 0%, #A855D8 45%, #5B3FD9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .gradientText {
   background: var(--gradient-signature);
   -webkit-background-clip: text;

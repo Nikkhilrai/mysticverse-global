@@ -15,6 +15,8 @@ export default function SubmissionTable({
   columns,
   detail,
   exportHref,
+  extraExports,
+  rowLinks,
   onSetStatus,
   onDelete,
 }: {
@@ -22,6 +24,12 @@ export default function SubmissionTable({
   columns: Col[];
   detail: Col[];
   exportHref: string;
+  /** Additional list-level downloads shown beside "Export CSV". */
+  extraExports?: { label: string; href: string }[];
+  /** Per-row downloads shown in the expanded detail panel. `href` is a
+   *  template containing `{id}` — a function prop would not survive the
+   *  Server → Client component boundary. */
+  rowLinks?: { label: string; href: string }[];
   onSetStatus: (id: string, status: Status) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }) {
@@ -43,7 +51,12 @@ export default function SubmissionTable({
       <div className={styles.toolbar}>
         <span className={styles.count}>{rows.length} total</span>
         {rows.length > 0 && (
-          <a className={styles.exportBtn} href={exportHref}>Export CSV</a>
+          <>
+            <a className={styles.exportBtn} href={exportHref}>Export CSV</a>
+            {extraExports?.map((x) => (
+              <a key={x.href} className={styles.exportBtn} href={x.href}>{x.label}</a>
+            ))}
+          </>
         )}
       </div>
 
@@ -96,6 +109,15 @@ export default function SubmissionTable({
                               </div>
                             ))}
                           </div>
+                          {rowLinks && rowLinks.length > 0 && (
+                            <div className={styles.rowLinks}>
+                              {rowLinks.map((l) => (
+                                <a key={l.label} className={styles.rowLink} href={l.href.replace("{id}", row.id)}>
+                                  {l.label}
+                                </a>
+                              ))}
+                            </div>
+                          )}
                           <div className={styles.actionRow}>
                             <div className={styles.statusBtns}>
                               {STATUSES.map((s) => (

@@ -31,6 +31,17 @@ enum PostStatus {
   PUBLISHED
 }
 
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum AwardSubmissionKind {
+  NOMINATION
+  JURY_PARTNER
+}
+
 enum UserRole {
   ADMIN
   EDITOR
@@ -43,6 +54,10 @@ model User {
   name         String?
   passwordHash String
   role         UserRole @default(ADMIN)
+  // Section keys this user may access when role = EDITOR (see
+  // src/lib/permissions.ts for the canonical list). Ignored for ADMIN,
+  // who always has full access.
+  permissions  String[] @default([])
   posts        Post[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -59,6 +74,9 @@ model ContactSubmission {
   enquiryType  EnquiryType      @default(OTHER)
   message      String
   status       SubmissionStatus @default(NEW)
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
   ipAddress    String?
   userAgent    String?
   createdAt    DateTime         @default(now())
@@ -69,18 +87,23 @@ model ContactSubmission {
 
 // ── Delegate / registration interest submissions ───────────
 model InterestSubmission {
-  id        String           @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  country   String?
-  passType  String? // Delegate, HNI, Corporate, Investor, etc.
-  company   String?
-  message   String?
-  status    SubmissionStatus @default(NEW)
-  ipAddress String?
-  userAgent String?
-  createdAt DateTime         @default(now())
+  id          String           @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  country     String?
+  passType    String? // Delegate, HNI, Corporate, Investor, etc.
+  company     String?
+  seats       Int? // bulk/corporate enquiries — the qualifying field for triage
+  message     String?
+  source      String? // "register-page" | "homepage-popup" | "corporate-page" — where the lead came from
+  status      SubmissionStatus @default(NEW)
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime         @default(now())
 
   @@index([status])
   @@index([createdAt])
@@ -98,6 +121,9 @@ model PavilionBriefRequest {
   tierInterest String? // Title Partner, Real Estate Booth, Retail Curation, Sustainable Living, Undecided
   message      String?
   status       SubmissionStatus @default(NEW)
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
   ipAddress    String?
   userAgent    String?
   createdAt    DateTime         @default(now())
@@ -106,22 +132,256 @@ model PavilionBriefRequest {
   @@index([createdAt])
 }
 
+// ── Excellence Awards: nominations & jury-partner enquiries ─
+model AwardSubmission {
+  id   String              @id @default(cuid())
+  kind AwardSubmissionKind @default(NOMINATION)
+
+  // The person submitting
+  name         String
+  email        String
+  phone        String?
+  organisation String?
+  role         String?
+  country      String?
+
+  // The nominated project / person (NOMINATION only)
+  category       String? // one of the eight award categories
+  nomineeName    String?
+  nomineeOrg     String?
+  nomineeWebsite String?
+  relationship   String? // Self-nomination, Colleague, Client, Other
+  statement      String? // why this nomination deserves the award
+
+  status      SubmissionStatus @default(NEW)
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime         @default(now())
+
+  @@index([kind])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ── Excellence Awards: full paid nomination form ────────────
+// The real nomination mechanism (42 categories, $499/category,
+// executive pitch, file uploads, payment). AwardSubmission above
+// stays untouched — it still serves the "Join the jury" flow.
+model AwardNomination {
+  id String @id @default(cuid())
+
+  // Section A — nominator/applicant
+  nominatorName         String
+  nominatorTitle        String?
+  nominatorOrganisation String?
+  nominatorEmail        String
+  nominatorPhone        String?
+  nominatorCountry      String?
+  nominationType        String // Self-Nomination | Nominating an Individual | Nominating an Entity/Organization/Brand | Nominating a Specific Project/Development
+
+  // Section B — nominee (if different from nominator)
+  nomineeName     String?
+  nomineeTitle    String?
+  nomineeEmail    String?
+  nomineePhone    String?
+  nomineeWebsite  String?
+  nomineeLinkedin String?
+
+  // Part 3 — selected award categories (denormalized names — see src/lib/awardCategories.ts)
+  categories String[]
+
+  // Part 4 — executive pitch
+  executiveSummary   String
+  keyAchievements    String
+  alignmentStatement String
+  documents          Json     @default("[]") // Array<{ url, name, sizeBytes, format }>
+  videoLinks         String[] @default([])
+
+  // Part 5 — billing + declaration
+  paymentMethodPreference String  @default("card") // card | wire
+  billingName             String?
+  billingAddressLine1     String?
+  billingAddressLine2     String?
+  billingCity             String?
+  billingState            String?
+  billingPostalCode       String?
+  billingCountry          String?
+  declarationAccepted     Boolean @default(false)
+
+  // Payment — mirrors PassRegistration
+  amount            Int // minor units (cents); categories.length × 49900, set server-side
+  currency          String        @default("USD")
+  paymentStatus     PaymentStatus @default(PENDING)
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?
+  razorpaySignature String?
+  paidAt            DateTime?
+
+  status      SubmissionStatus @default(NEW)
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime         @default(now())
+
+  @@index([paymentStatus])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ── Sponsorship deck / tier-brief requests ─────────────────
+model DeckRequest {
+  id String @id @default(cuid())
+
+  // Which deck was requested — segments the lead by audience.
+  // "tier-brief" when the request came from a specific tier panel.
+  deckId   String
+  deckName String
+  tierName String? // set only for tier-brief requests
+
+  name         String
+  email        String
+  organisation String?
+  role         String?
+  country      String?
+  note         String?
+
+  status      SubmissionStatus @default(NEW)
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime         @default(now())
+
+  @@index([deckId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ── Pass registrations (paid delegate passes via Razorpay) ─
+model PassRegistration {
+  id                String           @id @default(cuid())
+  name              String
+  email             String
+  phone             String?
+  country           String?
+  company           String?
+  passType          String // "Seeker Pass" | "Mystic Pass"
+  seats             Int              @default(1) // >1 = corporate/team booking
+  amount            Int // charged amount in minor units (fils) — set server-side
+  currency          String           @default("AED")
+  paymentStatus     PaymentStatus    @default(PENDING)
+  razorpayOrderId   String?          @unique
+  razorpayPaymentId String?
+  razorpaySignature String?
+  couponId          String? // Coupon.id — denormalized, no @relation (same reasoning as passType)
+  couponCode        String? // snapshot, stays readable if the coupon is later edited/deleted
+  couponDiscountPct Float? // snapshot % actually applied
+  status            SubmissionStatus @default(NEW) // lead-workflow status (New/Read/Archived)
+  utmSource         String?
+  utmMedium         String?
+  utmCampaign       String?
+  ipAddress         String?
+  userAgent         String?
+  createdAt         DateTime         @default(now())
+  paidAt            DateTime?
+
+  @@index([paymentStatus])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ── Coupons (percentage discounts on delegate passes) ──────
+model Coupon {
+  id               String   @id @default(cuid())
+  code             String   @unique // stored uppercase, e.g. "LAUNCH20"
+  name             String // display name, e.g. "Launch Week Discount"
+  discountPct      Float // 1–100
+  validFrom        DateTime @default(now())
+  validUntil       DateTime
+  maxUses          Int? // null = unlimited
+  usedCount        Int      @default(0)
+  isActive         Boolean  @default(true)
+  isFeatured       Boolean  @default(false) // promote publicly on the passes page
+  applicablePasses String? // comma-joined pass ids, e.g. "seeker,mystic" — null/empty = all passes
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([code])
+  @@index([isActive])
+}
+
+// ── Email nurture ──────────────────────────────────────────
+/// One row per email actually sent. The compound unique key makes the
+/// nurture cron idempotent: re-running it can never double-send a step.
+model EmailSend {
+  id       String   @id @default(cuid())
+  email    String
+  sequence String // "delegate" | "sponsor" | "awards"
+  step     Int // 0 = welcome, 1..n = follow-ups
+  leadId   String // id of the originating submission row
+  leadType String // "interest" | "deck" | "award"
+  subject  String
+  sentAt   DateTime @default(now())
+  ok       Boolean  @default(true)
+  error    String?
+
+  @@unique([leadId, sequence, step])
+  @@index([email])
+  @@index([sentAt])
+}
+
+/// Suppression list. Checked before every nurture send — never cleared
+/// automatically, and honoured across all sequences.
+model EmailUnsubscribe {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
 // ── Blog posts (Tiptap rich-text content) ──────────────────
 model Post {
-  id          String     @id @default(cuid())
-  title       String
-  slug        String     @unique
-  excerpt     String?
-  content     String // Tiptap HTML
-  coverImage  String?
-  status      PostStatus @default(DRAFT)
-  tags        String[]
-  author      User?      @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String?
-  publishedAt DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  excerpt      String?
+  content      String // Tiptap HTML
+  coverImage   String?
+  status       PostStatus  @default(DRAFT)
+  tags         String[]
+  author       User?       @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId     String?
+  // Public byline shown on the article — a reusable author profile,
+  // distinct from `author` above (which just tracks the admin who
+  // created the post). Nullable: a post can go out without a byline.
+  blogAuthor   BlogAuthor? @relation(fields: [blogAuthorId], references: [id], onDelete: SetNull)
+  blogAuthorId String?
+  publishedAt  DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@index([status, publishedAt])
   @@index([slug])
+}
+
+// ── Blog author profiles (public byline, reusable across posts) ─
+model BlogAuthor {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  role      String? // e.g. "Editor", "Founder", "Guest Contributor"
+  image     String?
+  bio       String?
+  email     String?
+  linkedin  String?
+  twitter   String?
+  website   String?
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

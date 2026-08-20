@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { PavilionBriefSchema } from "@/lib/validation";
-import { notify, rowsToHtml } from "@/lib/email";
+import { notifyAfter, rowsToHtml } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -42,6 +42,9 @@ export async function POST(req: NextRequest) {
         country: d.country ?? null,
         tierInterest: d.tierInterest ?? null,
         message: d.message ?? null,
+        utmSource: d.utmSource ?? null,
+        utmMedium: d.utmMedium ?? null,
+        utmCampaign: d.utmCampaign ?? null,
         ipAddress,
         userAgent,
       },
@@ -54,7 +57,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  await notify(
+  notifyAfter(
     `New Pavilion Brief request — ${d.tierInterest ?? "Unspecified"}`,
     rowsToHtml("New Pavilion Brief Request", [
       ["Name", d.name],

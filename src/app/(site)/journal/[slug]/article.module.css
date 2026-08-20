@@ -6,10 +6,11 @@
     clamp(5rem, 9vw, 8rem);
 }
 
-.inner { max-width: 720px; margin: 0 auto; }
+.inner { max-width: 800px; margin: 0 auto; }
 
 .back {
-  display: inline-block;
+  display: block;
+  text-align: center;
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 600;
@@ -20,6 +21,15 @@
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 .back:hover { text-decoration: underline; }
+
+.frame {
+  border: 1px solid var(--hairline);
+  border-radius: 24px;
+  background: rgba(20, 20, 31, 0.4);
+  padding: clamp(2rem, 5vw, 3.5rem);
+}
+
+.headWrap { text-align: center; margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem); }
 
 .meta {
   font-family: var(--font-body);
@@ -40,26 +50,16 @@
   margin: 0.75rem 0 1rem;
 }
 
-.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
-.tag {
-  font-family: var(--font-body);
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #C9C7D4;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--hairline-gold);
-  border-radius: 999px;
-}
-
 .cover {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
   border-radius: 16px;
+  overflow: hidden;
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
+
+.coverImg { object-fit: cover; }
 
 /* ── Article body (Tiptap HTML) ──────────────────────────── */
 .body {
@@ -97,3 +97,66 @@
   color: #DAD8E2;
 }
 .body :global(img) { max-width: 100%; height: auto; border-radius: 12px; margin: 1.5rem 0; }
+
+/* ── Related articles ────────────────────────────────────── */
+.related { margin-top: clamp(3rem, 6vw, 4.5rem); }
+
+.relatedLabel {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #A8A6B4;
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 1.25rem;
+}
+
+.relatedCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: rgba(20, 20, 31, 0.5);
+  text-decoration: none;
+  transition: transform 250ms var(--ease-out-cubic), border-color 250ms var(--ease-out-cubic);
+}
+.relatedCard:hover { transform: translateY(-3px); border-color: rgba(245, 196, 90, 0.3); }
+
+.relatedCover { position: relative; aspect-ratio: 16 / 10; background-color: #14141F; overflow: hidden; }
+.relatedCoverImg { object-fit: cover; }
+.relatedCoverFallback {
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(70% 60% at 50% 20%, rgba(124, 92, 255, 0.25) 0%, transparent 70%),
+    linear-gradient(160deg, #211B33 0%, #14141F 100%);
+}
+
+.relatedBody { padding: 1.1rem 1.15rem 1.25rem; }
+
+.relatedMeta {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin: 0 0 0.4rem;
+}
+
+.relatedTitle {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #F4F2F7;
+  margin: 0;
+}

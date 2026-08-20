@@ -38,7 +38,7 @@ export default function PavilionSunset() {
       <div className={styles.inner}>
         <div className={styles.overlineWrap}>
           <span className={styles.overlineRule} aria-hidden="true" />
-          <p className={styles.overline}>The Day 1 Finale</p>
+          <p className={styles.overline}>The Closing Finale</p>
           <span className={styles.overlineRule} aria-hidden="true" />
         </div>
 
@@ -47,7 +47,7 @@ export default function PavilionSunset() {
         </h2>
 
         <p className={styles.body}>
-          After Day 1 closes on the main stage,{" "}
+          After the main stage closes for the day,{" "}
           <strong className={styles.em}>eighty guests</strong> move to a single
           luxury property within{" "}
           <strong className={styles.em}>thirty minutes</strong> of the venue.
