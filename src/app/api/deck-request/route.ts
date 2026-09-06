@@ -1,12 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { InterestSchema } from "@/lib/validation";
+import { DeckRequestSchema } from "@/lib/validation";
 import { notifyAfter, rowsToHtml } from "@/lib/email";
 import { after } from "next/server";
 import { sendStep } from "@/lib/nurture";
 
 export const runtime = "nodejs";
 
+/*
+  Sponsorship deck + tier-brief requests from /sponsor.
+
+  `deckId` segments the lead by audience — the three audience decks
+  ("conscious-luxury-living" | "workplace-wellness-hr" |
+  "longevity-lifestyle") or "tier-brief" when the request came from a
+  specific tier panel (in which case `tierName` carries the tier).
+
+  NOTE: the deck PDFs are not attached yet — no files exist to send.
+  The lead is captured and the team notified; attach the PDFs to the
+  confirmation email once the decks are supplied.
+*/
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try {
@@ -15,11 +27,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
 
+  // Honeypot — silently accept bot submissions.
   if (typeof body.hp === "string" && body.hp.trim() !== "") {
     return NextResponse.json({ ok: true });
   }
 
-  const parsed = InterestSchema.safeParse(body);
+  const parsed = DeckRequestSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { ok: false, error: "Please check the form and try again." },
@@ -34,17 +47,17 @@ export async function POST(req: NextRequest) {
   let created: { id: string };
 
   try {
-    created = await prisma.interestSubmission.create({
+    created = await prisma.deckRequest.create({
       data: {
+        deckId: d.deckId,
+        deckName: d.deckName,
+        tierName: d.tierName ?? null,
         name: d.name,
         email: d.email,
-        phone: d.phone ?? null,
+        organisation: d.organisation ?? null,
+        role: d.role ?? null,
         country: d.country ?? null,
-        passType: d.passType ?? null,
-        company: d.company ?? null,
-        seats: d.seats ?? null,
-        message: d.message ?? null,
-        source: d.source ?? "register-page",
+        note: d.note ?? null,
         utmSource: d.utmSource ?? null,
         utmMedium: d.utmMedium ?? null,
         utmCampaign: d.utmCampaign ?? null,
@@ -53,47 +66,39 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
-    console.error("[interest] db write failed:", err);
+    console.error("[deck-request] db write failed:", err);
     return NextResponse.json(
       { ok: false, error: "Something went wrong. Please try again." },
       { status: 500 },
     );
   }
 
-  const SOURCE_LABELS: Record<string, string> = {
-    "homepage-popup": "Homepage popup",
-    "register-page": "Register page",
-    "corporate-page": "Corporate bundles page",
-  };
-  const sourceLabel = SOURCE_LABELS[d.source ?? "register-page"] ?? d.source ?? "Register page";
-
-  // Seat count leads the subject on bulk enquiries — it's the triage signal.
-  const subject = d.seats
-    ? `New corporate enquiry — ${d.seats} seats${d.company ? ` · ${d.company}` : ""}`
-    : `New delegate interest — ${d.passType ?? "Unspecified"}`;
-
   notifyAfter(
-    subject,
-    rowsToHtml(d.seats ? "New Corporate Bundle Enquiry" : "New Delegate Interest", [
-      ["Source", sourceLabel],
-      ["Name", d.name],
-      ["Email", d.email],
-      ["Phone", d.phone],
-      ["Country", d.country],
-      ["Pass type", d.passType],
-      ["Company", d.company],
-      ["Seats", d.seats ? String(d.seats) : null],
-      ["Message", d.message],
-    ]),
+    d.tierName
+      ? `Tier brief requested — ${d.tierName}`
+      : `Sponsorship deck requested — ${d.deckName}`,
+    rowsToHtml(
+      d.tierName ? "Tier Brief Request" : "Sponsorship Deck Request",
+      [
+        ["Requested", d.tierName ?? d.deckName],
+        ["Segment", d.deckId],
+        ["Name", d.name],
+        ["Email", d.email],
+        ["Organisation", d.organisation],
+        ["Role", d.role],
+        ["Country", d.country],
+        ["Note", d.note],
+      ],
+    ),
   );
 
   // Welcome email to the lead (step 0), sent after the response.
   after(() =>
     sendStep({
-      sequence: "delegate",
+      sequence: "sponsor",
       step: 0,
       leadId: created.id,
-      leadType: "interest",
+      leadType: "deck",
       email: d.email,
       name: d.name,
     }),

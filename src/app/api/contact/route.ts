@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { ContactSchema } from "@/lib/validation";
-import { notify, rowsToHtml } from "@/lib/email";
+import { notifyAfter, rowsToHtml } from "@/lib/email";
 
 // Prisma + pg need the Node.js runtime (not edge).
 export const runtime = "nodejs";
@@ -42,6 +42,9 @@ export async function POST(req: NextRequest) {
         organisation: d.organisation ?? null,
         enquiryType: d.enquiryType,
         message: d.message,
+        utmSource: d.utmSource ?? null,
+        utmMedium: d.utmMedium ?? null,
+        utmCampaign: d.utmCampaign ?? null,
         ipAddress,
         userAgent,
       },
@@ -54,7 +57,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  await notify(
+  notifyAfter(
     `New contact enquiry — ${d.enquiryType}`,
     rowsToHtml("New Contact Enquiry", [
       ["Name", d.name],
