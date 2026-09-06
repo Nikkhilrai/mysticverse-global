@@ -17,12 +17,15 @@ export type PillarId =
   | "conscious-luxury-living"
   | "workplace-wellness-human-capital"
   | "personal-mastery-longevity"
-  | "ancient-wisdom-energy-consciousness";
+  | "ancient-wisdom-energy-consciousness"
+  | "content-creator-health-beauty-fitness"
+  | "spa-wellness-centres";
 
 export interface Pillar {
   id: PillarId;
   name: string;
-  focus: string;
+  /** Strapline shown under the heading. Award-only groups have none. */
+  focus?: string;
 }
 
 export interface AwardCategory {
@@ -52,6 +55,19 @@ export const PILLARS: readonly Pillar[] = [
     id: "ancient-wisdom-energy-consciousness",
     name: "Ancient Wisdom, Energy Healing & Consciousness",
     focus: "Energy healing, sound therapy, consciousness research, breathwork, and ancient traditions.",
+  },
+  /*
+    The two groups below are award-only audience segments, not
+    conference pillars. They exist so the nomination form can group
+    their categories; nothing on the marketing site reads PILLARS.
+  */
+  {
+    id: "content-creator-health-beauty-fitness",
+    name: "For Health, Beauty, Fitness (Content Creator Profiles)",
+  },
+  {
+    id: "spa-wellness-centres",
+    name: "For Spa & Wellness Centres",
   },
 ] as const;
 
@@ -314,6 +330,40 @@ export const AWARD_CATEGORIES: readonly AwardCategory[] = [
     name: "Content Creator – Health, Beauty & Wellness",
     description: "Recognising creators building trusted audiences and shaping public conversation around health, beauty, and wellness.",
     pillarId: "ancient-wisdom-energy-consciousness",
+  },
+
+  // ── Health, Beauty, Fitness (Content Creator Profiles) ─────
+  {
+    id: "health-preventive-care-influence",
+    name: "Health & Preventive Care Influence",
+    description: "Honoring individuals or digital platforms advancing awareness around preventive health, lifestyle balance, and sustainable wellbeing through impactful content.",
+    pillarId: "content-creator-health-beauty-fitness",
+  },
+  {
+    id: "beauty-aesthetic-wellness-influence",
+    name: "Beauty & Aesthetic Wellness Influence",
+    description: "Recognizing creators shaping conscious beauty, skincare, and aesthetic wellness narratives with a focus on authenticity, self-care, and holistic transformation.",
+    pillarId: "content-creator-health-beauty-fitness",
+  },
+  {
+    id: "fitness-performance-influence",
+    name: "Fitness & Performance Influence",
+    description: "Celebrating individuals driving fitness awareness, physical performance, and disciplined lifestyle adoption through consistent and result-oriented content.",
+    pillarId: "content-creator-health-beauty-fitness",
+  },
+
+  // ── Spa & Wellness Centres ─────────────────────────────────
+  {
+    id: "luxury-wellness-experience-spa-excellence",
+    name: "Luxury Wellness Experience & Spa Excellence",
+    description: "Honoring spa and wellness centers delivering elevated, immersive experiences focused on holistic relaxation, rejuvenation, and guest wellbeing.",
+    pillarId: "spa-wellness-centres",
+  },
+  {
+    id: "integrative-wellness-healing-space",
+    name: "Integrative Wellness & Healing Space",
+    description: "Recognizing wellness centers that combine modern therapies with holistic and alternative healing approaches to create transformative wellness journeys.",
+    pillarId: "spa-wellness-centres",
   },
 ] as const;
 

@@ -28,7 +28,9 @@ export default function CategoryPicker({
       {PILLARS.map((pillar) => (
         <div key={pillar.id} className={styles.pillarGroup}>
           <h3 className={styles.pillarName}>{pillar.name}</h3>
-          <p className={styles.pillarFocus}>Focus: {pillar.focus}</p>
+          {pillar.focus && (
+            <p className={styles.pillarFocus}>Focus: {pillar.focus}</p>
+          )}
           <div className={styles.categoryGrid}>
             {getCategoriesByPillar(pillar.id).map((cat) => {
               const active = selected.includes(cat.name);
