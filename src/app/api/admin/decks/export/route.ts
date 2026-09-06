@@ -10,25 +10,38 @@ export async function GET() {
   if (!session) {
     return new Response("Unauthorized", { status: 401 });
   }
-  if (!can(session, "pavilion-brief")) {
+  if (!can(session, "decks")) {
     return new Response("Forbidden", { status: 403 });
   }
-  const rows = await prisma.pavilionBriefRequest.findMany({
+  const rows = await prisma.deckRequest.findMany({
     orderBy: { createdAt: "desc" },
   });
   const csv = toCsv(
-    ["Date", "Name", "Email", "Company", "Role", "Phone", "Country", "Interest", "Status", "Message", "UTM Source", "UTM Medium", "UTM Campaign",],
+    [
+      "Date",
+      "Requested",
+      "Segment",
+      "Tier",
+      "Name",
+      "Email",
+      "Organisation",
+      "Role",
+      "Country",
+      "Note",
+      "Status",
+     "UTM Source", "UTM Medium", "UTM Campaign",],
     rows.map((r) => [
       r.createdAt,
+      r.tierName ?? r.deckName,
+      r.deckId,
+      r.tierName,
       r.name,
       r.email,
-      r.company,
+      r.organisation,
       r.role,
-      r.phone,
       r.country,
-      r.tierInterest,
+      r.note,
       r.status,
-      r.message,
       r.utmSource,
       r.utmMedium,
       r.utmCampaign,
@@ -37,7 +50,7 @@ export async function GET() {
   return new Response(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="pavilion-brief-requests.csv"`,
+      "Content-Disposition": `attachment; filename="deck-requests.csv"`,
     },
   });
 }

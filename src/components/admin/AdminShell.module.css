@@ -61,6 +61,10 @@
 }
 
 .navLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 500;
@@ -147,4 +151,19 @@
 .main {
   padding: clamp(1.5rem, 4vw, 3rem);
   min-width: 0;
+}
+
+/* Unread count on a nav section (see notifications.ts — counts NEW submissions). */
+.navBadge {
+  flex: none;
+  min-width: 1.15rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #14100C;
+  background: var(--gradient-signature);
+  border-radius: 999px;
+  padding: 0.2rem 0.4rem;
 }

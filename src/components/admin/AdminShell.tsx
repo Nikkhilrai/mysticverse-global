@@ -2,22 +2,26 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { RESOURCES, can, type ResourceKey } from "@/lib/permissions";
+import type { AdminNotifications } from "@/lib/notifications";
+import NotificationBell from "./NotificationBell";
 import styles from "./AdminShell.module.css";
 
-const NAV = [
+type NavItem = { label: string; href: string; resource?: ResourceKey };
+
+const NAV: readonly NavItem[] = [
   { label: "Dashboard", href: "/admin" },
-  { label: "Contact enquiries", href: "/admin/contact" },
-  { label: "Delegate interest", href: "/admin/interest" },
-  { label: "Pavilion Brief", href: "/admin/pavilion-brief" },
-  { label: "Blog posts", href: "/admin/posts" },
+  ...RESOURCES.map((r) => ({ label: r.label, href: r.href, resource: r.key })),
   { label: "Settings", href: "/admin/settings" },
-] as const;
+];
 
 export default function AdminShell({
   user,
+  notifications,
   children,
 }: {
-  user: { name?: string | null; email: string };
+  user: { name?: string | null; email: string; role: string; permissions: string[] };
+  notifications: AdminNotifications;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -42,16 +46,29 @@ export default function AdminShell({
           <span className={styles.brandText}>MysticVerse</span>
         </div>
 
+        <NotificationBell notifications={notifications} />
+
         <nav className={styles.nav}>
-          {NAV.map((item) => (
+          {NAV.filter((item) => !item.resource || can(user, item.resource)).map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={`${styles.navLink}${isActive(item.href) ? ` ${styles.navActive}` : ""}`}
             >
-              {item.label}
+              <span>{item.label}</span>
+              {item.resource && notifications.counts[item.resource] ? (
+                <span className={styles.navBadge}>{notifications.counts[item.resource]}</span>
+              ) : null}
             </a>
           ))}
+          {user.role === "ADMIN" && (
+            <a
+              href="/admin/team"
+              className={`${styles.navLink}${isActive("/admin/team") ? ` ${styles.navActive}` : ""}`}
+            >
+              Team
+            </a>
+          )}
         </nav>
 
         <div className={styles.footer}>

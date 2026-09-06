@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import styles from "@/components/admin/panel.module.css";
+import { requirePermission } from "@/lib/auth-server";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,11 @@ function fmt(d: Date) {
 }
 
 export default async function PostsPage() {
-  const posts = await prisma.post.findMany({ orderBy: { updatedAt: "desc" } });
+  await requirePermission("posts");
+  const posts = await prisma.post.findMany({
+    orderBy: { updatedAt: "desc" },
+    include: { blogAuthor: true },
+  });
 
   return (
     <div>
@@ -32,7 +37,9 @@ export default async function PostsPage() {
             <thead>
               <tr>
                 <th className={styles.th}>Title</th>
+                <th className={styles.th}>Author</th>
                 <th className={styles.th}>Status</th>
+                <th className={styles.th}>Published</th>
                 <th className={styles.th}>Updated</th>
               </tr>
             </thead>
@@ -42,10 +49,14 @@ export default async function PostsPage() {
                   <td className={`${styles.td} ${styles.tdStrong}`}>
                     <a className={styles.rowLink} href={`/admin/posts/${p.id}`}>{p.title}</a>
                   </td>
+                  <td className={`${styles.td} ${styles.tdMuted}`}>{p.blogAuthor?.name ?? "—"}</td>
                   <td className={styles.td}>
                     <span className={`${styles.badge} ${p.status === "PUBLISHED" ? styles.badgePublished : styles.badgeDraft}`}>
                       {p.status}
                     </span>
+                  </td>
+                  <td className={`${styles.td} ${styles.tdMuted}`}>
+                    {p.publishedAt ? fmt(p.publishedAt) : "—"}
                   </td>
                   <td className={`${styles.td} ${styles.tdMuted}`}>{fmt(p.updatedAt)}</td>
                 </tr>

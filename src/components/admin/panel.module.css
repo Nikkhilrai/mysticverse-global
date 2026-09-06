@@ -342,3 +342,30 @@ a.statCard:hover {
 
 .deleteBtn:hover:not(:disabled) { background-color: rgba(255, 90, 70, 0.1); border-color: rgba(255, 120, 100, 0.6); }
 .deleteBtn:disabled { opacity: 0.5; cursor: default; }
+
+/* Per-row downloads inside an expanded submission (see SubmissionTable rowLinks). */
+.rowLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.rowLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #F5C45A;
+  text-decoration: none;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(245, 196, 90, 0.35);
+  border-radius: 8px;
+  transition: background-color 180ms, border-color 180ms;
+}
+
+.rowLink:hover {
+  background-color: rgba(245, 196, 90, 0.12);
+  border-color: rgba(245, 196, 90, 0.6);
+}

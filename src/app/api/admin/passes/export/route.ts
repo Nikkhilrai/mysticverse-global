@@ -10,40 +10,57 @@ export async function GET() {
   if (!session) {
     return new Response("Unauthorized", { status: 401 });
   }
-  if (!can(session, "interest")) {
+  if (!can(session, "passes")) {
     return new Response("Forbidden", { status: 403 });
   }
-  const rows = await prisma.interestSubmission.findMany({
+  const rows = await prisma.passRegistration.findMany({
     orderBy: { createdAt: "desc" },
   });
-  const SOURCE_LABELS: Record<string, string> = {
-    "homepage-popup": "Homepage popup",
-    "register-page": "Register page",
-    "corporate-page": "Corporate page",
-  };
   const csv = toCsv(
-    ["Date", "Source", "Name", "Email", "Phone", "Country", "Pass type", "Seats", "Company", "Status", "Message", "UTM Source", "UTM Medium", "UTM Campaign",],
+    [
+      "Date",
+      "Name",
+      "Email",
+      "Phone",
+      "Country",
+      "Organisation",
+      "Pass",
+      "Seats",
+      "Amount",
+      "Currency",
+      "Payment",
+      "Paid At",
+      "Razorpay Payment ID",
+      "Razorpay Order ID",
+      "Lead Status",
+     "UTM Source", "UTM Medium", "UTM Campaign", "Coupon Code", "Coupon Discount %",],
     rows.map((r) => [
       r.createdAt,
-      SOURCE_LABELS[r.source ?? "register-page"] ?? r.source ?? "Register page",
       r.name,
       r.email,
       r.phone,
       r.country,
+      r.company,
       r.passType,
       r.seats,
-      r.company,
+      (r.amount / 100).toString(),
+      r.currency,
+      r.paymentStatus,
+      r.paidAt,
+      r.razorpayPaymentId,
+      r.razorpayOrderId,
       r.status,
-      r.message,
       r.utmSource,
       r.utmMedium,
       r.utmCampaign,
+      r.couponCode,
+      r.couponDiscountPct,
     ]),
   );
   return new Response(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="delegate-interest.csv"`,
+      "Content-Disposition": `attachment; filename="pass-registrations.csv"`,
     },
   });
 }

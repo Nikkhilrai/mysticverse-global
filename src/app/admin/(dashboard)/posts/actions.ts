@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
-import { getSession } from "@/lib/auth-server";
+import { assertPermission } from "@/lib/auth-server";
 import { slugify } from "@/lib/slug";
 
 export interface PostInput {
@@ -14,6 +14,9 @@ export interface PostInput {
   coverImage?: string;
   tags: string[];
   status: "DRAFT" | "PUBLISHED";
+  blogAuthorId?: string | null;
+  /** "YYYY-MM-DD" from the date input. Null/omitted means "use today" (or keep the existing date on update). */
+  publishedAt?: string | null;
 }
 
 async function uniqueSlug(base: string, excludeId?: string): Promise<string> {
@@ -30,8 +33,7 @@ async function uniqueSlug(base: string, excludeId?: string): Promise<string> {
 }
 
 export async function savePost(input: PostInput): Promise<{ id: string; slug: string }> {
-  const session = await getSession();
-  if (!session) throw new Error("Unauthorized");
+  const session = await assertPermission("posts");
 
   const slug = await uniqueSlug(input.slug || input.title, input.id);
   const base = {
@@ -42,14 +44,21 @@ export async function savePost(input: PostInput): Promise<{ id: string; slug: st
     coverImage: input.coverImage?.trim() || null,
     tags: input.tags,
     status: input.status,
+    blogAuthorId: input.blogAuthorId || null,
   };
+
+  // A caller-chosen date (from the date input) always wins — this is what
+  // lets an editor backdate an older article being uploaded today, or fix
+  // a wrong date after the fact. Falls back to the existing/current date
+  // only when the field was left blank.
+  const chosenDate = input.publishedAt ? new Date(input.publishedAt) : null;
 
   let result: { id: string; slug: string };
 
   if (input.id) {
     const existing = await prisma.post.findUnique({ where: { id: input.id } });
     const publishedAt =
-      input.status === "PUBLISHED" ? existing?.publishedAt ?? new Date() : null;
+      input.status === "PUBLISHED" ? chosenDate ?? existing?.publishedAt ?? new Date() : null;
     const updated = await prisma.post.update({
       where: { id: input.id },
       data: { ...base, publishedAt },
@@ -59,7 +68,7 @@ export async function savePost(input: PostInput): Promise<{ id: string; slug: st
     const created = await prisma.post.create({
       data: {
         ...base,
-        publishedAt: input.status === "PUBLISHED" ? new Date() : null,
+        publishedAt: input.status === "PUBLISHED" ? chosenDate ?? new Date() : null,
         authorId: (session.uid as string) ?? null,
       },
     });
@@ -74,7 +83,7 @@ export async function savePost(input: PostInput): Promise<{ id: string; slug: st
 }
 
 export async function deletePost(id: string): Promise<void> {
-  if (!(await getSession())) throw new Error("Unauthorized");
+  await assertPermission("posts");
   await prisma.post.delete({ where: { id } });
   revalidatePath("/admin/posts");
   revalidatePath("/admin");

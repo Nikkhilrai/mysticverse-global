@@ -43,7 +43,7 @@
   background-color: rgba(20, 20, 31, 0.5);
 }
 
-.actionsTop { display: flex; gap: 0.5rem; }
+.actionsTop { display: flex; gap: 0.5rem; margin-top: 1.125rem; }
 
 .draftBtn, .publishBtn {
   flex: 1;
@@ -163,3 +163,51 @@
   cursor: pointer;
 }
 .smallBtn:hover { border-color: rgba(245, 196, 90, 0.5); color: #F4F2F7; }
+
+.authorPreview {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 9px;
+  background: rgba(245, 196, 90, 0.06);
+  border: 1px solid rgba(245, 196, 90, 0.18);
+}
+
+.authorAvatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+
+.authorAvatarFallback {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: var(--gradient-signature);
+  color: #14100C;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+}
+
+.authorPreviewText { display: flex; flex-direction: column; min-width: 0; }
+
+.authorPreviewName {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #F4F2F7;
+}
+
+.authorPreviewRole {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  color: #A8A6B4;
+}
