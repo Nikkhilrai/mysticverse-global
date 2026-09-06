@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { Resend } from "resend";
 
 /*
@@ -13,7 +14,7 @@ const resend = apiKey ? new Resend(apiKey) : null;
 const FROM = process.env.NOTIFY_FROM ?? "MysticVerse Global <onboarding@resend.dev>";
 const TO = process.env.NOTIFY_TO ?? "contact@mysticverseglobal.com";
 
-function escapeHtml(s: string) {
+export function escapeHtml(s: string) {
   return s
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -37,6 +38,18 @@ export function rowsToHtml(title: string, rows: Array<[string, string | undefine
   )}</h2><table style="border-collapse:collapse;width:100%">${cells}</table></div>`;
 }
 
+/*
+  Schedule the notification to send *after* the response is flushed.
+
+  Sending inline added ~2.5–6s to every form submission, which the user
+  sat through watching a "Sending…" button. The DB write is what must
+  succeed before we answer; the email is a side effect. `after()` keeps
+  the work alive on the serverless platform once the response is sent.
+*/
+export function notifyAfter(subject: string, html: string): void {
+  after(() => notify(subject, html));
+}
+
 export async function notify(subject: string, html: string): Promise<void> {
   if (!resend) {
     console.log(`[email] RESEND_API_KEY not set — skipping notification: ${subject}`);
@@ -46,5 +59,37 @@ export async function notify(subject: string, html: string): Promise<void> {
     await resend.emails.send({ from: FROM, to: TO, subject, html });
   } catch (err) {
     console.error("[email] failed to send notification:", err);
+  }
+}
+
+/*
+  Send to an arbitrary recipient and *report* the outcome.
+
+  `notify()` deliberately swallows failures — a broken mailbox should
+  never fail a form submission. Nurture is different: we record whether
+  each send actually landed, so a silent failure can't masquerade as a
+  delivered sequence step.
+*/
+export async function sendMail(params: {
+  to: string;
+  subject: string;
+  html: string;
+}): Promise<{ ok: boolean; error?: string }> {
+  if (!resend) {
+    return { ok: false, error: "RESEND_API_KEY not configured" };
+  }
+  try {
+    const res = await resend.emails.send({
+      from: FROM,
+      to: params.to,
+      subject: params.subject,
+      html: params.html,
+    });
+    if (res.error) {
+      return { ok: false, error: res.error.message ?? String(res.error) };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
 }
