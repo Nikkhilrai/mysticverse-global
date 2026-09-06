@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import styles from "./InterestForm.module.css";
+import { getUtm } from "@/lib/utm";
 
 const PASS_TYPES = [
   "Delegate",
-  "HNI Pass",
   "Corporate Bundle",
-  "Wellness Investor Circle",
 ] as const;
 
 export default function InterestForm() {
@@ -22,12 +21,22 @@ export default function InterestForm() {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  // Lets links like /register?passType=Corporate+Bundle#interest land with
+  // the right chip pre-selected, instead of dumping every visitor on "Delegate".
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("passType");
+    if (requested && (PASS_TYPES as readonly string[]).includes(requested)) {
+      setPassType(requested);
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const payload = {
+      ...getUtm(),
       name: fd.get("name"),
       email: fd.get("email"),
       phone: fd.get("phone"),
@@ -57,7 +66,7 @@ export default function InterestForm() {
   };
 
   return (
-    <section className={`${styles.section}${mounted ? ` ${styles.in}` : ""}`} aria-label="Register interest">
+    <section id="interest" className={`${styles.section}${mounted ? ` ${styles.in}` : ""}`} aria-label="Register interest">
       <div className={styles.glow} aria-hidden="true" />
       <div className={styles.inner}>
 

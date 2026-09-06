@@ -1,0 +1,180 @@
+/* ══════════════════════════════════════════════════════════════
+   PromoBanner — featured coupon strip above the pass cards.
+   Urgency is real: the countdown runs to the coupon's actual
+   validUntil, and the whole banner is server-gated on the coupon
+   still being live.
+   ══════════════════════════════════════════════════════════════ */
+
+.banner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: clamp(1rem, 2.2vw, 1.35rem) clamp(1.15rem, 2.5vw, 1.75rem);
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+  border: 1px solid rgba(245, 196, 90, 0.38);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(245, 196, 90, 0.1), rgba(124, 92, 255, 0.05));
+  overflow: hidden;
+}
+
+/* Slow sheen — draws the eye without animating anything load-bearing. */
+.banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -60%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 100%
+  );
+  animation: sheen 5.5s ease-in-out infinite;
+}
+
+@keyframes sheen {
+  0%   { left: -60%; }
+  55%  { left: 120%; }
+  100% { left: 120%; }
+}
+
+.left { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+
+.flag {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #14100C;
+  background: var(--gradient-signature);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.headline {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.3vw, 0.9375rem);
+  line-height: 1.6;
+  color: #DAD8E2;
+  margin: 0;
+}
+
+.headline strong { color: #F5C45A; font-weight: 700; }
+
+/* ── Code chip (click to copy) ────────────────────────────── */
+.code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #F4F2F7;
+  background: rgba(11, 11, 18, 0.55);
+  border: 1px dashed rgba(245, 196, 90, 0.55);
+  border-radius: 8px;
+  padding: 0.28rem 0.6rem;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 200ms, border-color 200ms;
+}
+
+.code:hover { background: rgba(11, 11, 18, 0.8); border-color: rgba(245, 196, 90, 0.9); }
+.code:focus-visible { outline: 2px solid #F5C45A; outline-offset: 2px; }
+
+.copyHint {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  opacity: 0.85;
+}
+
+/* ── Countdown + CTA ──────────────────────────────────────── */
+.right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 2vw, 1.35rem);
+  flex-wrap: wrap;
+}
+
+.countdown { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.countLabel {
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8C8A98;
+}
+
+.clock { display: flex; align-items: baseline; gap: 0.3rem; }
+
+.unit { display: inline-flex; align-items: baseline; gap: 0.1rem; }
+
+.num {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #F4F2F7;
+  font-variant-numeric: tabular-nums;
+}
+
+.unitLabel {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #8C8A98;
+}
+
+.sep { color: rgba(140, 138, 152, 0.5); font-size: 0.875rem; line-height: 1; }
+
+.applyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #14100C;
+  background: var(--gradient-signature);
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.15rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 240ms var(--ease-out-cubic), box-shadow 240ms var(--ease-out-cubic);
+}
+
+.applyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -12px rgba(245, 196, 90, 0.65);
+}
+
+@media (max-width: 640px) {
+  .banner { flex-direction: column; align-items: stretch; }
+  .right { justify-content: space-between; }
+  .applyBtn { flex: 1; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner::after { animation: none; }
+  .applyBtn:hover { transform: none; }
+}
