@@ -51,7 +51,7 @@ export default function WhyDubaiHero() {
 
         <p className={styles.sub}>
           The geographic centre of the wellness real estate boom. Three hours
-          from a third of the world&apos;s HNIs. Built for premium gatherings.
+          from a third of the world&apos;s population. Built for premium gatherings.
         </p>
       </div>
 

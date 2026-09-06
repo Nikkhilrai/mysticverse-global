@@ -48,7 +48,7 @@ export default function WhyDubaiReasons() {
             <p className={styles.overline}>Why Dubai</p>
           </div>
           <h2 id="why-dubai-reasons-heading" className={styles.heading}>
-            Three <span className="gradientText">reasons.</span>
+            Three <span className="gradientTextInk">reasons.</span>
           </h2>
           <p className={styles.sub}>
             Connectivity, hospitality, and a meeting of worlds.

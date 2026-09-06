@@ -8,8 +8,8 @@
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #FFFFFF;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(4.5rem, 9vw, 8rem)
     clamp(1.5rem, 6vw, 6rem);
@@ -52,7 +52,7 @@
   display: block;
   width: clamp(1.75rem, 4vw, 3rem);
   height: 1px;
-  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+  background: linear-gradient(to right, #B7862B, rgba(183, 134, 43, 0));
 }
 
 .overline {
@@ -61,7 +61,7 @@
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
 }
 
 .heading {
@@ -70,7 +70,7 @@
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.02em;
-  color: #F4F2F7;
+  color: #14141F;
   margin-bottom: clamp(0.85rem, 1.6vw, 1.25rem);
 
   opacity: 0;
@@ -82,7 +82,7 @@
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.4vw, 1.1875rem);
   line-height: 1.6;
-  color: #B8B6C4;
+  color: #5A5866;
 
   opacity: 0;
   transform: translateY(20px);
@@ -100,10 +100,10 @@
   gap: clamp(1.75rem, 4vw, 3.5rem);
   align-items: center;
   padding: clamp(2.5rem, 5vw, 4rem) 0;
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
 }
 
-.row:last-child { border-bottom: 1px solid var(--hairline); }
+.row:last-child { border-bottom: 1px solid rgba(20, 20, 31, 0.1); }
 
 @media (min-width: 860px) {
   .row {
@@ -132,16 +132,16 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
 .tagNo {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.75rem;
-  color: #7C7A88;
+  color: #8A8896;
   padding-right: 0.7rem;
-  border-right: 1px solid var(--hairline-gold);
+  border-right: 1px solid rgba(183, 134, 43, 0.35);
 }
 
 .kicker {
@@ -150,7 +150,7 @@
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.015em;
-  color: #F4F2F7;
+  color: #14141F;
   margin-bottom: clamp(1rem, 2vw, 1.4rem);
   max-width: 18ch;
 }
@@ -159,14 +159,14 @@
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.3vw, 1.1875rem);
   line-height: 1.68;
-  color: #B0AEBD;
+  color: #3F3D48;
   max-width: 42ch;
 }
 
 /* ── Visual frame ─────────────────────────────────────────── */
 .visual {
   position: relative;
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(20, 20, 31, 0.12);
   border-radius: 18px;
   background:
     radial-gradient(120% 120% at 50% 0%, rgba(124, 92, 255, 0.06), transparent 60%),

@@ -1,8 +1,8 @@
 /* ══════════════════════════════════════════════════════════════
-   WhyDubaiSeptember — "Why 10 & 11 September."
+   WhyDubaiSeptember — "Why 11 September."
    A light editorial palette break. The date is defended with a
-   strategic-window timeline: MysticVerse (10–11) landing before
-   Cityscape Global two weeks later.
+   strategic-window timeline: MysticVerse (11 September) landing
+   before Cityscape Global two weeks later.
    ══════════════════════════════════════════════════════════════ */
 
 .section {
@@ -85,12 +85,6 @@
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--color-ink-text);
-}
-
-.amp {
-  font-style: italic;
-  font-weight: 400;
-  color: #E0A23C;
 }
 
 .month {
