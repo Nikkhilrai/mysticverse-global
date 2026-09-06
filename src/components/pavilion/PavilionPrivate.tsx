@@ -14,13 +14,14 @@ type Room = {
   href: string;
 };
 
-// NOTE: HNI Lounge & Investor Circle get their own sub-pages in Phase 2;
-// for now they route to /contact. Sunset links to the finale on this page.
+// NOTE: Principals Lounge & Investor Circle get their own sub-pages in
+// Phase 2; for now they route to /contact. Sunset links to the finale on
+// this page.
 const ROOMS: Room[] = [
   {
     index: "I",
     kicker: "Private Lounge",
-    title: "HNI Lounge",
+    title: "Principals Lounge",
     desc: "A quiet floor above the noise — where collectors, principals and family offices meet developers and curators, away from the crowd.",
     meta: "By invitation",
     cta: "Request access",
@@ -39,8 +40,8 @@ const ROOMS: Room[] = [
     index: "III",
     kicker: "Off-site Finale",
     title: "Sunset Networking",
-    desc: "When Day 1 closes, eighty guests continue the conversation at a single luxury property as the sun goes down.",
-    meta: "Day 1, at dusk",
+    desc: "When the day's sessions close, eighty guests continue the conversation at a single luxury property as the sun goes down.",
+    meta: "At dusk",
     cta: "See the finale",
     href: "#pavilion-sunset-heading",
   },

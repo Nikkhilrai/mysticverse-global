@@ -7,7 +7,7 @@ const SEGMENTS = [
   {
     number: "01",
     range: "60–80",
-    title: "HNIs & Family Principals",
+    title: "Private Wealth & Family Principals",
     descriptor: "Personal wealth directed toward wellness real estate, longevity programmes, and consciousness-led lifestyle infrastructure.",
   },
   {
@@ -95,7 +95,7 @@ export default function WhoIsInTheRoom() {
             </div>
             <h2 className={styles.headline}>
               Who You Meet,<br />
-              <span className="gradientText">Not How Many.</span>
+              <span className="gradientTextInk">Not How Many.</span>
             </h2>
           </div>
 

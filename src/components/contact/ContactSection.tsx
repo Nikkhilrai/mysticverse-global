@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
+import { getUtm } from "@/lib/utm";
 
 const INTERESTS = ["Sponsor", "Exhibit", "Delegate", "Press", "HR", "Other"] as const;
 
 const CHANNELS = [
   { label: "General", value: "contact@mysticverseglobal.com", href: "mailto:contact@mysticverseglobal.com" },
-  { label: "Partnerships", value: "partnerships@mysticverseglobal.com", href: "mailto:partnerships@mysticverseglobal.com" },
-  { label: "HR & Corporate", value: "hr@mysticverseglobal.com", href: "mailto:hr@mysticverseglobal.com" },
-  { label: "Press", value: "press@mysticverseglobal.com", href: "mailto:press@mysticverseglobal.com" },
   { label: "WhatsApp", value: "+91 92116 11150", href: "https://wa.me/919211611150" },
 ] as const;
 
@@ -31,6 +29,7 @@ export default function ContactSection() {
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const payload = {
+      ...getUtm(),
       name: fd.get("name"),
       email: fd.get("email"),
       phone: fd.get("phone"),

@@ -169,7 +169,7 @@
 }
 
 /* Spatial landmarks — elegant italic emphasis + a waypoint underline
-   that sweeps in one-by-one, like the HNI walking past each. */
+   that sweeps in one-by-one, like the buyer walking past each. */
 .place {
   position: relative;
   font-family: var(--font-display);

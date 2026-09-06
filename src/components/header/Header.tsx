@@ -1,8 +1,10 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
+
+const HEADER_INTRO_KEY = "mvg-header-intro-seen";
 
 /*
   NAV_ITEMS — simple links for now.
@@ -19,10 +21,11 @@ import styles from "./Header.module.css";
   — "Partner With Us": 4 partner-tier pages (TBD in Phase 4 brief)
 */
 const NAV_ITEMS = [
+  { label: "Home",            href: "/",                  futureDropdown: false },
   { label: "About",           href: "/about",             futureDropdown: false },
   { label: "Why Dubai 2026",  href: "/why-dubai-2026",  futureDropdown: false },
   { label: "The 4 Pillars",   href: "/pillars",          futureDropdown: true  },
-  { label: "The Pavilion",    href: "/pavilion",          futureDropdown: false },
+  // { label: "The Pavilion", href: "/pavilion", futureDropdown: false }, — temporarily unpublished
   {
     label: "Conference",
     href: "/conference",
@@ -30,14 +33,16 @@ const NAV_ITEMS = [
     children: [
       { label: "Speakers", href: "/conference/speakers" },
       { label: "Agenda", href: "/agenda" },
+      { label: "Excellence Awards", href: "/awards" },
     ],
   },
-  { label: "Partner With Us", href: "/partner",           futureDropdown: true  },
+  { label: "Partner With Us", href: "/sponsor",           futureDropdown: false },
   {
     label: "Media",
     href: "/media",
     futureDropdown: false,
     children: [
+      { label: "Blog", href: "/journal" },
       { label: "Magazine", href: "/media/magazine" },
     ],
   },
@@ -51,6 +56,9 @@ export default function Header() {
   const [topBarVisible,  setTopBarVisible]  = useState(true);
   const [topBarExiting,  setTopBarExiting]  = useState(false);
   const [menuOpen,       setMenuOpen]       = useState(false);
+  const [playLogoIntro,  setPlayLogoIntro]  = useState(false);
+  const logoVideoRef = useRef<HTMLVideoElement>(null);
+  const introDoneRef = useRef(false);
 
   /* ── Init top bar from localStorage (client-only) ──────── */
   useEffect(() => {
@@ -58,6 +66,38 @@ export default function Header() {
       setTopBarVisible(false);
     }
   }, []);
+
+  /* ── Logo intro animation ─────────────────────────────────
+     Plays the brand logo animation in place of the static mark once
+     per session, on whichever page the header first mounts on.
+  ───────────────────────────────────────────────────── */
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || sessionStorage.getItem(HEADER_INTRO_KEY)) return;
+    setPlayLogoIntro(true);
+  }, []);
+
+  useEffect(() => {
+    if (!playLogoIntro) return;
+    const fallback = setTimeout(settleLogo, 4000);
+
+    function settleLogo() {
+      if (introDoneRef.current) return;
+      introDoneRef.current = true;
+      sessionStorage.setItem(HEADER_INTRO_KEY, "1");
+      setPlayLogoIntro(false);
+    }
+
+    const video = logoVideoRef.current;
+    video?.addEventListener("ended", settleLogo);
+    video?.addEventListener("error", settleLogo);
+
+    return () => {
+      clearTimeout(fallback);
+      video?.removeEventListener("ended", settleLogo);
+      video?.removeEventListener("error", settleLogo);
+    };
+  }, [playLogoIntro]);
 
   /* ── Scroll: toggle shrunk state after 100px ────────────── */
   useEffect(() => {
@@ -110,7 +150,7 @@ export default function Header() {
           className={`${styles.topBar}${topBarExiting ? ` ${styles.topBarExiting}` : ""}`}
         >
           <p className={styles.topBarText}>
-            10 &amp; 11 September 2026&ensp;·&ensp;Dubai, UAE&ensp;·&ensp;Early&#8209;bird pricing closes 31&nbsp;July
+            11 September 2026&ensp;·&ensp;Dubai, UAE&ensp;·&ensp;Early&#8209;bird pricing closes 31&nbsp;August
           </p>
           <button
             className={styles.topBarDismiss}
@@ -137,14 +177,28 @@ export default function Header() {
           className={styles.logo}
           aria-label="MysticVerse Global — return to homepage"
         >
-          <Image
-            src="/images/logo/mysticverse_global.png"
-            alt="MysticVerse Global"
-            width={160}
-            height={48}
-            className={styles.logoImage}
-            priority
-          />
+          {playLogoIntro ? (
+            <span className={styles.logoVideoWrap}>
+              <video
+                ref={logoVideoRef}
+                className={styles.logoVideo}
+                src="/video/Mysticverse_logo_animation-nav.mp4"
+                autoPlay
+                muted
+                playsInline
+                aria-label="MysticVerse Global"
+              />
+            </span>
+          ) : (
+            <Image
+              src="/images/logo/mysticverse_global.png"
+              alt="MysticVerse Global"
+              width={160}
+              height={48}
+              className={styles.logoImage}
+              priority
+            />
+          )}
         </a>
 
         {/* Desktop nav — collapses to hamburger below 1120px */}
@@ -152,14 +206,14 @@ export default function Header() {
           {NAV_ITEMS.map((item) =>
             "children" in item ? (
               <div key={item.href} className={styles.navItem}>
-                <a
-                  href={item.href}
+                <button
+                  type="button"
                   className={`${styles.navLink} ${styles.navLinkParent}`}
                   aria-haspopup="true"
                 >
                   {item.label}
                   <span className={styles.caret} aria-hidden="true" />
-                </a>
+                </button>
                 <div className={styles.dropdown} role="menu">
                   {item.children.map((c) => (
                     <a
@@ -217,13 +271,17 @@ export default function Header() {
         <nav className={styles.mobileNav}>
           {NAV_ITEMS.map((item) => (
             <Fragment key={item.href}>
-              <a
-                href={item.href}
-                className={styles.mobileNavLink}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
+              {"children" in item ? (
+                <span className={styles.mobileNavLink}>{item.label}</span>
+              ) : (
+                <a
+                  href={item.href}
+                  className={styles.mobileNavLink}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              )}
               {"children" in item &&
                 item.children.map((c) => (
                   <a

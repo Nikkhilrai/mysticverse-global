@@ -4,19 +4,13 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./ConfirmedPartners.module.css";
 
-const ANCHOR = {
-  name: "Evrenroo",
-  src: "/images/partners/Evrenroo.avif",
-  tierLabel: "Anchor Partner",
-};
-
 const REST = [
   { name: "Manoyaa Alchemy",     src: "/images/partners/Manoyaa-Alchemy.avif",          tierLabel: "Prominent Exhibitor" },
-  { name: "Cosmicx Healing Art", src: "/images/partners/Cosmicx-healing-Art-Logo.avif", tierLabel: "Prominent Exhibitor" },
   { name: "Ouna Cosmetics",      src: "/images/partners/Ouna Cosmetics.avif",           tierLabel: "Luxury Skincare" },
   { name: "Renophase",           src: "/images/partners/Renophase.png",                 tierLabel: "Luxury Skincare" },
   { name: "StackBerry Media",    src: "/images/partners/stackberry-media.avif",          tierLabel: "Media Partner" },
   { name: "KNeer",               src: "/images/partners/KNeer_Logo.avif",               tierLabel: "Supporting Partner" },
+  { name: "Taj",                 src: "/images/partners/taj.jpg",                       tierLabel: "Venue Partner" },
 ] as const;
 
 export default function ConfirmedPartners() {
@@ -58,20 +52,6 @@ export default function ConfirmedPartners() {
           </p>
         </div>
 
-        {/* ── Anchor partner ────────────────────────────────── */}
-        <div className={styles.anchor}>
-          <span className={styles.anchorLabel}>{ANCHOR.tierLabel}</span>
-          <div className={styles.anchorLogoWrap}>
-            <Image
-              src={ANCHOR.src}
-              alt={`${ANCHOR.name} — Anchor Partner, MysticVerse Global 2026`}
-              fill
-              sizes="(min-width: 900px) 28vw, 70vw"
-              className={styles.logoImg}
-            />
-          </div>
-        </div>
-
         {/* ── Partner grid (hairline table) ─────────────────── */}
         <div className={styles.grid}>
           {REST.map((p) => (
@@ -81,22 +61,29 @@ export default function ConfirmedPartners() {
                   src={p.src}
                   alt={`${p.name} — MysticVerse Global 2026`}
                   fill
-                  sizes="(min-width: 760px) 30vw, 50vw"
+                  sizes="(min-width: 760px) 40vw, 65vw"
                   className={styles.logoImg}
                 />
               </div>
               <span className={styles.tier}>{p.tierLabel}</span>
             </div>
           ))}
+
+          {/* Blank cells padding out the final row — the grid paints the
+              hairlines via its own background, so an unfilled slot would
+              otherwise read as a grey block. */}
+          {Array.from({ length: (3 - (REST.length % 3)) % 3 }).map((_, i) => (
+            <div key={`filler-${i}`} className={styles.cellFiller} aria-hidden="true" />
+          ))}
         </div>
 
         {/* ── CTAs ──────────────────────────────────────────── */}
         <div className={styles.ctaRow}>
-          <a href="/partners" className={styles.ctaOutlined}>
+          <a href="/sponsor" className={styles.ctaOutlined}>
             See all confirmed partners
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>
-          <a href="/partner-with-us" className={styles.ctaFilled}>
+          <a href="/sponsor" className={styles.ctaFilled}>
             Become a partner
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>

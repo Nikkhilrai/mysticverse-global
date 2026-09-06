@@ -11,8 +11,8 @@
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #F6F5F2;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(4.5rem, 8vw, 8rem)
     clamp(1.5rem, 6vw, 6rem)
@@ -25,8 +25,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(40% 40% at 100% 0%, rgba(124, 92, 255, 0.10) 0%, transparent 60%),
-    radial-gradient(40% 40% at 0% 100%, rgba(245, 196, 90, 0.06) 0%, transparent 60%);
+    radial-gradient(40% 40% at 100% 0%, rgba(124, 92, 255, 0.05) 0%, transparent 60%),
+    radial-gradient(40% 40% at 0% 100%, rgba(183, 134, 43, 0.07) 0%, transparent 60%);
 }
 
 /* ── Inner ───────────────────────────────────────────────── */
@@ -66,7 +66,7 @@
   display: block;
   width: 1px;
   height: 1.75rem;
-  background: linear-gradient(to bottom, #F5C45A, rgba(245, 196, 90, 0));
+  background: linear-gradient(to bottom, #B7862B, rgba(183, 134, 43, 0.00));
   margin-bottom: 0.875rem;
 }
 
@@ -76,7 +76,7 @@
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   line-height: 1;
 }
 
@@ -86,7 +86,7 @@
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.025em;
-  color: #F4F2F7;
+  color: #14141F;
 }
 
 .subCopy {
@@ -94,7 +94,7 @@
   font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
   font-weight: 400;
   line-height: 1.75;
-  color: #A8A6B4;
+  color: #5A5866;
   max-width: 42ch;
   padding-bottom: 0.4rem;
 }
@@ -103,8 +103,8 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(245, 196, 90, 0.35),
-    rgba(124, 92, 255, 0.18) 60%,
+    rgba(183, 134, 43, 0.39),
+    rgba(124, 92, 255, 0.09) 60%,
     transparent
   );
   margin-bottom: clamp(2.5rem, 4vw, 4rem);
@@ -133,8 +133,8 @@
   aspect-ratio: 4 / 3;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--hairline);
-  background-color: #14141F;
+  border: 1px solid rgba(20, 20, 31, 0.1);
+  background-color: #FFFFFF;
 }
 
 @media (min-width: 900px) {
@@ -170,7 +170,7 @@
   pointer-events: none;
   background:
     linear-gradient(to top, rgba(11, 11, 18, 0.85) 0%, rgba(11, 11, 18, 0.1) 40%, transparent 70%),
-    linear-gradient(rgba(11, 11, 18, 0.12), rgba(11, 11, 18, 0.12));
+    linear-gradient(rgba(20, 20, 31, 0.08), rgba(20, 20, 31, 0.08));
 }
 
 .visualMeta {
@@ -196,14 +196,14 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 242, 247, 0.7);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* ── List (right) — numbered rows ────────────────────────── */
 .list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
 }
 
 /* Distribute rows so the list's bottom edge locks flush with the image */
@@ -216,7 +216,7 @@
 .row {
   position: relative;
   padding: clamp(1.125rem, 2vw, 1.5rem) 0 clamp(1.125rem, 2vw, 1.5rem) clamp(1rem, 2vw, 1.5rem);
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid rgba(20, 20, 31, 0.1);
   cursor: pointer;
   transition: background-color var(--duration-base) var(--ease-out-cubic);
 }
@@ -236,7 +236,7 @@
 }
 
 .rowActive {
-  background-color: rgba(245, 196, 90, 0.04);
+  background-color: rgba(183, 134, 43, 0.04);
 }
 
 .rowActive::before {
@@ -254,13 +254,13 @@
   font-size: clamp(0.875rem, 1.1vw, 1rem);
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: rgba(168, 166, 180, 0.6);
+  color: rgba(90, 88, 102, 0.65);
   flex-shrink: 0;
   transition: color var(--duration-base) var(--ease-out-cubic);
 }
 
 .rowActive .rowIndex {
-  color: #F5C45A;
+  color: #B7862B;
 }
 
 .rowTitle {
@@ -269,12 +269,12 @@
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: rgba(244, 242, 247, 0.82);
+  color: rgba(20, 20, 31, 0.820);
   transition: color var(--duration-base) var(--ease-out-cubic);
 }
 
 .rowActive .rowTitle {
-  color: #F4F2F7;
+  color: #14141F;
 }
 
 /* Persistent category tag — keeps collapsed rows informative */
@@ -286,13 +286,13 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(168, 166, 180, 0.55);
+  color: rgba(90, 88, 102, 0.65);
   white-space: nowrap;
   transition: color var(--duration-base) var(--ease-out-cubic);
 }
 
 .rowActive .rowTag {
-  color: #F5C45A;
+  color: #B7862B;
 }
 
 /* Expand indicator — signals the row opens; rotates when active */
@@ -303,7 +303,7 @@
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;
-  color: rgba(168, 166, 180, 0.5);
+  color: rgba(90, 88, 102, 0.65);
   transition:
     transform var(--duration-slow) var(--ease-out-cubic),
     color     var(--duration-base) var(--ease-out-cubic);
@@ -315,12 +315,12 @@
 }
 
 .row:hover .rowChevron {
-  color: rgba(244, 242, 247, 0.8);
+  color: rgba(20, 20, 31, 0.800);
 }
 
 .rowActive .rowChevron {
   transform: rotate(180deg);
-  color: #F5C45A;
+  color: #B7862B;
 }
 
 /* On narrow screens drop the tag; the chevron carries the signal */
@@ -354,7 +354,7 @@
   font-size: clamp(0.8125rem, 1vw, 0.9375rem);
   font-weight: 400;
   line-height: 1.72;
-  color: #A8A6B4;
+  color: #5A5866;
   padding-top: 0.875rem;
   max-width: 46ch;
 }
@@ -369,7 +369,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   text-decoration: none;
 }
 

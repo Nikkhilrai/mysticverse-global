@@ -6,8 +6,8 @@
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #F6F5F2;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(4rem, 7vw, 7rem)
     clamp(1.5rem, 6vw, 6rem);
@@ -48,14 +48,14 @@
   position: relative;
   overflow: hidden;
   padding: clamp(2rem, 3.5vw, 3.25rem);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(20, 20, 31, 0.10);
   border-radius: 22px;
-  background-color: rgba(20, 20, 31, 0.55);
+  background-color: rgba(255, 255, 255, 0.72);
   -webkit-backdrop-filter: blur(18px) saturate(1.1);
   backdrop-filter: blur(18px) saturate(1.1);
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 24px 64px rgba(20, 20, 31, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition:
     transform   var(--duration-slow) var(--ease-out-cubic),
     border-color var(--duration-slow) var(--ease-out-cubic);
@@ -76,7 +76,7 @@
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(245, 196, 90, 0.28);
+  border-color: rgba(183, 134, 43, 0.4);
 }
 
 .cardHead {
@@ -100,7 +100,7 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   line-height: 1;
 }
 
@@ -110,7 +110,7 @@
   font-weight: 500;
   line-height: 1.42;
   letter-spacing: -0.018em;
-  color: #F4F2F7;
+  color: #14141F;
 }
 
 /* ══════════════════════════════════════════════════════════════

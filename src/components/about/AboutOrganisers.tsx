@@ -38,7 +38,7 @@ export default function AboutOrganisers() {
           </div>
           <h2 className={styles.headline}>
             Built by{" "}
-            <span className="gradientText">MantraNex&nbsp;Vista.</span>
+            <span className="gradientTextInk">MantraNex&nbsp;Vista.</span>
           </h2>
         </div>
 

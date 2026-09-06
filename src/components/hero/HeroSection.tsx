@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { EVENT } from "@/lib/site";
 import styles from "./HeroSection.module.css";
 
 interface HeroSectionProps {
@@ -31,8 +32,10 @@ export default function HeroSection({
       <div className={styles.aboveFold}>
         <div className={styles.textBlock}>
 
+          {/* Venue reads from EVENT so it can never drift from the agenda,
+              structured data, or the confirmation emails. */}
           <p className={styles.microcopy}>
-            <span className={styles.microcopyInitial}>M</span>ysticVerse&nbsp;Global&nbsp;2026&ensp;&middot;&ensp;10&nbsp;&amp;&nbsp;11&nbsp;September&ensp;&middot;&ensp;Dubai
+            <span className={styles.microcopyInitial}>M</span>ysticVerse&nbsp;Global&nbsp;2026&ensp;&middot;&ensp;11&nbsp;September&ensp;&middot;&ensp;{`${EVENT.venueName}, ${EVENT.addressLocality}`}
           </p>
 
           <h1 className={styles.headline}>
@@ -40,7 +43,7 @@ export default function HeroSection({
           </h1>
 
           <p className={styles.subHeadline}>
-            Two days in Dubai. Four pillars. One curated room where wellness
+            One day in Dubai. Four pillars. One curated room where wellness
             real estate, workplace wellbeing, longevity, and ancient wisdom
             converge — and the people building the conscious luxury economy
             meet the people buying into it.
@@ -48,7 +51,7 @@ export default function HeroSection({
 
           <div className={styles.ctaRow}>
             <a
-              href="#register"
+              href="/register"
               className={styles.ctaPrimary}
               aria-label="Reserve your seat at MysticVerse Global 2026"
             >

@@ -86,7 +86,7 @@ export default function PavilionThesis() {
             <span className={styles.microEyebrow}>The Pattern</span>
             <p className={styles.body}>
               Conscious luxury is not a category. It is a way of treating life.
-              The HNI who buys a wellness residence in Dubai is the HNI who buys
+              The buyer who buys a wellness residence in Dubai is the same buyer who buys
               a <strong className={styles.figure}>USD&nbsp;12,000</strong> piece
               of ceremonial jewellery on the way home. The architect designing
               the biophilic atrium is choosing the rare crystal that anchors it.
@@ -101,7 +101,7 @@ export default function PavilionThesis() {
             <span className={styles.microEyebrow}>The Decision</span>
             <p className={styles.body}>
               We placed both inside the Pavilion deliberately. The retailer
-              benefits from the foot traffic of an HNI walking a developer&apos;s
+              benefits from the foot traffic of a buyer walking a developer&apos;s
               showcase. The developer benefits from the tactile, beautiful
               surrounding to walk a buyer through. Both audiences benefit from
               being treated as one.

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MagazineCollection from "@/components/magazine/MagazineCollection";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/media/magazine" },
   title: "Magazine | MysticVerse Global 2026",
   description:
     "The MysticVerse Magazine Collection — curated digital magazines covering consciousness, wellness, spirituality, and transformative living. Read The MysticVerse Digest, Issue 01.",

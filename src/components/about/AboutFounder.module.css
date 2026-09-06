@@ -6,8 +6,8 @@
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #FFFFFF;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(4.5rem, 9vw, 9rem)
     clamp(1.5rem, 6vw, 6rem)
@@ -113,7 +113,7 @@
   font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #F4F2F7;
+  color: #14141F;
 }
 
 .captionRole {
@@ -122,7 +122,7 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
 }
 
 /* ── Quote ───────────────────────────────────────────────── */
@@ -147,7 +147,7 @@
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   line-height: 1;
 }
 
@@ -168,7 +168,7 @@
   font-weight: 500;
   line-height: 1.28;
   letter-spacing: -0.025em;
-  color: #F4F2F7;
+  color: #14141F;
   margin: 0 0 clamp(1.75rem, 3vw, 2.5rem);
 }
 
@@ -177,7 +177,7 @@
   flex-direction: column;
   gap: 0.3rem;
   padding-top: clamp(1.25rem, 2vw, 1.75rem);
-  border-top: 1px solid var(--hairline-gold);
+  border-top: 1px solid rgba(183, 134, 43, 0.35);
 }
 
 .attrName {
@@ -185,7 +185,7 @@
   font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #F4F2F7;
+  color: #14141F;
 }
 
 .attrRole {
@@ -193,7 +193,7 @@
   font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: #A8A6B4;
+  color: #5A5866;
 }
 
 /* ══════════════════════════════════════════════════════════════

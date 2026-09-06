@@ -1,8 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { Fragment, useEffect, useRef } from "react";
 import styles from "./AgendaSchedule.module.css";
-import { DAYS, type Session } from "./agendaData";
+import {
+  SESSIONS,
+  CONFERENCE_DATE,
+  CONFERENCE_THEME,
+  type Session,
+  type SessionSpeaker,
+} from "./agendaData";
+import { SPEAKERS } from "@/components/speakers/speakersData";
+
+/** Resolves a speaker's photo from their MysticVerse speaker profile, if any. */
+function speakerImage(sp: SessionSpeaker): string | undefined {
+  if (!sp.slug) return undefined;
+  return SPEAKERS.find((s) => s.slug === sp.slug)?.image;
+}
 
 function SessionRow({ s }: { s: Session }) {
   return (
@@ -24,6 +38,32 @@ function SessionRow({ s }: { s: Session }) {
         </div>
         <h3 className={styles.title}>{s.title}</h3>
         {s.desc && <p className={styles.desc}>{s.desc}</p>}
+        {s.speakers && (
+          <ul className={styles.speakers}>
+            {s.speakers.map((sp) => {
+              const img = speakerImage(sp);
+              return (
+                <li key={sp.name} className={styles.speakerItem}>
+                  {img ? (
+                    <Image
+                      src={img}
+                      alt={sp.name}
+                      width={40}
+                      height={40}
+                      className={styles.speakerAvatar}
+                    />
+                  ) : (
+                    <span className={styles.speakerAvatarFallback} aria-hidden="true" />
+                  )}
+                  <span className={styles.speakerText}>
+                    <span className={styles.speakerName}>{sp.name}</span>
+                    {sp.role && <span className={styles.speakerRole}>{sp.role}</span>}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
         {s.points && (
           <ul className={styles.points}>
             {s.points.map((p) => (
@@ -40,10 +80,9 @@ function SessionRow({ s }: { s: Session }) {
 }
 
 export default function AgendaSchedule() {
-  const [active, setActive] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
 
-  /* Reveal rows as they scroll into view (one observer, re-run per day). */
+  /* Reveal rows as they scroll into view. */
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
@@ -69,41 +108,29 @@ export default function AgendaSchedule() {
     );
     rows.forEach((r) => io.observe(r));
     return () => io.disconnect();
-  }, [active]);
-
-  const day = DAYS[active];
+  }, []);
 
   return (
     <section className={styles.section} aria-label="Agenda schedule">
       <div className={styles.inner}>
 
-        {/* ── Day toggle ────────────────────────────────────── */}
-        <div className={styles.toggle} role="tablist" aria-label="Select a day">
-          {DAYS.map((d, i) => (
-            <button
-              key={d.n}
-              role="tab"
-              type="button"
-              aria-selected={i === active}
-              className={`${styles.tab}${i === active ? ` ${styles.tabActive}` : ""}`}
-              onClick={() => setActive(i)}
-            >
-              <span className={styles.tabDay}>{d.n}</span>
-              <span className={styles.tabTheme}>{d.theme}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* ── Active day header ─────────────────────────────── */}
-        <div key={`head-${active}`} className={styles.dayHead}>
-          <span className={styles.dayDate}>{day.date}</span>
-          <h2 className={styles.dayTheme}>{day.theme}</h2>
+        {/* ── Day header ─────────────────────────────────────── */}
+        <div className={styles.dayHead}>
+          <span className={styles.dayDate}>{CONFERENCE_DATE}</span>
+          <h2 className={styles.dayTheme}>{CONFERENCE_THEME}</h2>
         </div>
 
         {/* ── Timeline ──────────────────────────────────────── */}
-        <div key={`list-${active}`} ref={listRef} className={styles.list}>
-          {day.sessions.map((s) => (
-            <SessionRow key={s.title} s={s} />
+        <div ref={listRef} className={styles.list}>
+          {SESSIONS.map((s) => (
+            <Fragment key={s.title}>
+              {s.section && (
+                <h3 data-row className={styles.sectionHead}>
+                  {s.section}
+                </h3>
+              )}
+              <SessionRow s={s} />
+            </Fragment>
           ))}
         </div>
 

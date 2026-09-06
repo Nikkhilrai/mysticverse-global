@@ -5,7 +5,7 @@ import styles from "./RepositioningStatement.module.css";
 
 /* Audience segments — rendered as chips, not prose. */
 const AUDIENCE = [
-  "HNIs & Family Principals",
+  "Private Wealth & Family Principals",
   "Real Estate Decision-Makers",
   "CHROs & HR Leaders",
   "Longevity Entrepreneurs",
@@ -56,7 +56,7 @@ export default function RepositioningStatement() {
         <h2 className={styles.manifesto}>
           The Global Platform for
           <br />
-          <span className="gradientText">Conscious Living.</span>
+          <span className="gradientTextInk">Conscious Living.</span>
         </h2>
 
         {/* ── Supporting statement ─────────────────────────── */}

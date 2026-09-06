@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 import styles from "./AgendaHero.module.css";
-import { DAYS } from "./agendaData";
+import {
+  CONFERENCE_DATE,
+  CONFERENCE_VENUE,
+  CONFERENCE_THEME,
+  CONFERENCE_THEME_SUB,
+  CONFERENCE_FOCUS,
+} from "./agendaData";
 
-/* Split "10 September 2026" → { num: "10", rest: "September 2026" } */
+/* Split "11 September 2026" → { num: "11", rest: "September 2026" } */
 function splitDate(date: string) {
   const [num, ...rest] = date.split(" ");
   return { num, rest: rest.join(" ") };
@@ -12,6 +18,7 @@ function splitDate(date: string) {
 
 export default function AgendaHero() {
   const [visible, setVisible] = useState(false);
+  const { num, rest } = splitDate(CONFERENCE_DATE);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
@@ -37,28 +44,16 @@ export default function AgendaHero() {
           <span className="gradientText">Conference 2026.</span>
         </h1>
 
-        <p className={styles.sub}>
-          Where Ancient Wisdom Meets Modern Innovation.
-        </p>
+        <p className={styles.sub}>{CONFERENCE_THEME}. {CONFERENCE_THEME_SUB}</p>
 
-        {/* ── Two-day diptych — the distinctive "program" element ── */}
-        <div className={styles.diptych}>
-          {DAYS.map((d, i) => {
-            const { num, rest } = splitDate(d.date);
-            return (
-              <div key={d.n} className={styles.dayCard}>
-                <div className={styles.dayTop}>
-                  <span className={styles.dayNum}>{num}</span>
-                  <span className={styles.dayMonth}>
-                    {rest}
-                    <span className={styles.dayOrdinal}>{d.n}</span>
-                  </span>
-                </div>
-                <p className={styles.dayTheme}>{d.theme}</p>
-              </div>
-            );
-          })}
-          <span className={styles.divider} aria-hidden="true" />
+        {/* ── One-day date card ────────────────────────────── */}
+        <div className={styles.dateCard}>
+          <div className={styles.dateTop}>
+            <span className={styles.dateNum}>{num}</span>
+            <span className={styles.dateMonth}>{rest}</span>
+          </div>
+          <span className={styles.dateVenue}>{CONFERENCE_VENUE}</span>
+          <span className={styles.dateFocus}>{CONFERENCE_FOCUS}</span>
         </div>
       </div>
     </section>

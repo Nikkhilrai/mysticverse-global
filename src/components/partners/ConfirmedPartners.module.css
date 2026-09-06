@@ -175,15 +175,11 @@
 .logoImg {
   object-fit: contain;
   object-position: center;
-  filter: grayscale(100%);
-  transition:
-    filter    400ms var(--ease-out-cubic),
-    transform 400ms var(--ease-out-cubic);
+  transition: transform 400ms var(--ease-out-cubic);
 }
 
 .anchorLogoWrap:hover .logoImg,
 .cell:hover .logoImg {
-  filter: grayscale(0%);
   transform: scale(1.04);
 }
 

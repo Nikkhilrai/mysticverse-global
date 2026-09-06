@@ -60,7 +60,7 @@ export default function AboutFounder() {
 
           <blockquote className={styles.quote}>
             MysticVerse Global is where healers and seekers unite with the
-            leaders shaping how we will <span className="gradientText">live, lead, and age</span>{" "}
+            leaders shaping how we will <span className="gradientTextInk">live, lead, and age</span>{" "}
             — to bridge mysticism, psychology, spiritual science, and wellness
             for the next decade of human growth.
           </blockquote>

@@ -7,6 +7,7 @@ import AboutOrganisers from "@/components/about/AboutOrganisers";
 import AboutFounder from "@/components/about/AboutFounder";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About | MysticVerse Global 2026",
   description:
     "MysticVerse Global is the platform on which the conscious luxury economy is becoming visible — across real estate, retail, workplace wellbeing, and human longevity.",

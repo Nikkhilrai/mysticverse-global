@@ -25,7 +25,7 @@ const PILLARS = [
     index: "03",
     tag: "Longevity",
     name: "Personal Mastery & Longevity",
-    body: "Where longevity science, contemplative practice, and human optimisation converge — for high-performers, HNIs, and biological-age investors.",
+    body: "Where longevity science, contemplative practice, and human optimisation converge — for high-performers, private wealth, and biological-age investors.",
     image: "/images/four-pillars/pillar-longevity.jpg",
     href: "/pillars/personal-mastery-longevity",
   },
@@ -73,7 +73,7 @@ export default function FourPillars() {
             </div>
             <h2 className={styles.headline}>
               Four Pillars.<br />
-              <span className="gradientText">One Shared Vision.</span>
+              <span className="gradientTextInk">One Shared Vision.</span>
             </h2>
           </div>
           <p className={styles.subCopy}>

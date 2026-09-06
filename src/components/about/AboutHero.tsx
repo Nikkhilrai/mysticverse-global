@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./AboutHero.module.css";
 
@@ -37,21 +36,6 @@ export default function AboutHero() {
             economy is becoming visible — across real estate, retail, workplace
             wellbeing, and human longevity.
           </p>
-        </div>
-
-        {/* ── Single still image ────────────────────────────── */}
-        <div className={styles.media}>
-          <figure className={styles.frame}>
-            <Image
-              src="/images/four-pillars/pillar-living.jpg"
-              alt="A conscious-living residence at dusk — architecture, landscape, and quiet luxury."
-              fill
-              sizes="(max-width: 900px) 100vw, 42vw"
-              className={styles.img}
-              priority
-            />
-            <div className={styles.frameGrad} aria-hidden="true" />
-          </figure>
         </div>
 
       </div>

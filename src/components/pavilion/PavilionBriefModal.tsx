@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./PavilionBriefModal.module.css";
+import { getUtm } from "@/lib/utm";
 
 const TIERS = [
   "Title Partner",
@@ -85,6 +86,7 @@ export default function PavilionBriefModal({
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
     const payload = {
+      ...getUtm(),
       name: fd.get("name"),
       email: fd.get("email"),
       company: fd.get("company"),

@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════
-   AgendaSchedule — Day toggle + vertical timeline
+   AgendaSchedule — vertical timeline, one day
    MysticVerse Global Conference 2026.
 
    Row kinds:
@@ -24,76 +24,9 @@
   margin: 0 auto;
 }
 
-/* ── Day toggle (sticky) ─────────────────────────────────── */
-.toggle {
-  position: sticky;
-  top: clamp(64px, 8vh, 84px);
-  z-index: 5;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.375rem;
-  padding: 0.375rem;
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  background-color: rgba(11, 11, 18, 0.82);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  backdrop-filter: blur(16px) saturate(1.1);
-}
-
-.tab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.25rem;
-  padding: clamp(0.75rem, 1.6vw, 1.125rem) clamp(1rem, 2vw, 1.5rem);
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  cursor: pointer;
-  text-align: left;
-  transition: background-color var(--duration-base) var(--ease-out-cubic);
-}
-
-.tab:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-.tabActive {
-  background-color: rgba(245, 196, 90, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(245, 196, 90, 0.28);
-}
-
-.tabDay {
-  font-family: var(--font-display);
-  font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: rgba(244, 242, 247, 0.6);
-  transition: color var(--duration-base) var(--ease-out-cubic);
-}
-
-.tabActive .tabDay {
-  color: #F5C45A;
-}
-
-.tabTheme {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-  color: rgba(168, 166, 180, 0.75);
-}
-
-@media (max-width: 520px) {
-  .tabTheme { display: none; }
-  .tab { align-items: center; }
-}
-
 /* ── Day header ──────────────────────────────────────────── */
 .dayHead {
-  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  margin-bottom: clamp(2.5rem, 4.5vw, 3.5rem);
   animation: dayFade 520ms var(--ease-out-cubic) both;
 }
 
@@ -119,6 +52,40 @@
 /* ── Timeline list ───────────────────────────────────────── */
 .list {
   animation: dayFade 560ms var(--ease-out-cubic) both;
+}
+
+/* ── Programme block heading ─────────────────────────────────
+   Sits in the timeline's content column, aligned past the time
+   gutter and rail so the vertical line reads unbroken.
+─────────────────────────────────────────────────────────────── */
+.sectionHead {
+  margin: clamp(2.25rem, 4vw, 3.25rem) 0 clamp(0.75rem, 1.4vw, 1.25rem);
+  padding-left: calc(clamp(118px, 13vw, 168px) + 30px);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1.5;
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 620ms var(--ease-out-cubic),
+    transform 620ms var(--ease-out-cubic);
+}
+
+.sectionHead:first-child {
+  margin-top: 0;
+}
+
+/* Matches the breakpoint where .row collapses to a single column
+   with its own 1.25rem rail gutter. */
+@media (max-width: 680px) {
+  .sectionHead {
+    padding-left: 1.25rem;
+  }
 }
 
 /* ── Row ─────────────────────────────────────────────────── */
@@ -176,8 +143,11 @@
   background: var(--hairline);
 }
 
-/* Trim the rail at the very top and bottom of the list */
-.row:first-child .rail::before { top: 0.7rem; }
+/* Trim the rail at the very top and bottom of the list. The first row
+   of each programme block follows a .sectionHead, so match that too —
+   :first-child alone no longer reaches the opening row. */
+.row:first-child .rail::before,
+.sectionHead + .row .rail::before { top: 0.7rem; }
 .row:last-child  .rail::before { bottom: auto; height: 0.7rem; }
 
 .node {
@@ -308,6 +278,67 @@
 .break .desc {
   font-size: 0.8125rem;
   color: rgba(168, 166, 180, 0.8);
+}
+
+/* ── Speakers ────────────────────────────────────────────────
+   A list rather than a single line: panels carry up to three
+   speakers, each with a role, which the old uppercase one-liner
+   could not hold legibly.
+─────────────────────────────────────────────────────────────── */
+.speakers {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.speakerItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.speakerAvatar {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--hairline-gold);
+}
+
+.speakerAvatarFallback {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: rgba(245, 196, 90, 0.08);
+  border: 1px solid var(--hairline);
+}
+
+.speakerText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.speakerName {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #F5C45A;
+}
+
+.speakerRole {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(168, 166, 180, 0.85);
 }
 
 /* ── Points ──────────────────────────────────────────────── */

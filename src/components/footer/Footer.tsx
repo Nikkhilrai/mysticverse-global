@@ -4,44 +4,41 @@ import { type FormEvent, useState } from "react";
 import styles from "./Footer.module.css";
 
 /*
-  KNOWN SIMPLIFICATION — same pattern as the header's nav items.
-  Most footer links point to pages that have not been built yet.
-  Each un-built destination is flagged with a comment.
-  Do not add these pages to the site without confirming hrefs here.
+  Every link below points to a page that actually exists and resolves.
+  Pages that aren't built yet (Venue, Press Room, Careers, Think Tank,
+  FAQ, Privacy, Code of Conduct) are deliberately left out rather than
+  shown as dead links — add them back here once those pages are real.
 */
 
 const ABOUT_LINKS = [
-  { label: "About MysticVerse",  href: "/about"          }, // FUTURE PAGE
-  { label: "Why Dubai 2026",     href: "/why-dubai-2026"  }, // FUTURE PAGE
-  { label: "The Venue",          href: "/venue"           }, // FUTURE PAGE
-  { label: "Press Room",         href: "/press"           }, // FUTURE PAGE
-  { label: "Careers",            href: "/careers"         }, // FUTURE PAGE
+  { label: "About MysticVerse",  href: "/about"          },
+  { label: "Why Dubai 2026",     href: "/why-dubai-2026"  },
+  { label: "Advisory Board",     href: "/advisory"        },
+  { label: "Blog",               href: "/journal"         },
+  { label: "Magazine",           href: "/media/magazine"  },
 ] as const;
 
 const PROGRAMME_LINKS = [
-  { label: "The 4 Pillars",              href: "/pillars"                     }, // FUTURE PAGE
-  { label: "Conscious Living Pavilion",  href: "/pavilion"                    },
+  { label: "The 4 Pillars",              href: "/pillars"                     },
+  // { label: "Conscious Living Pavilion", href: "/pavilion" }, — temporarily unpublished
   { label: "Agenda",                     href: "/agenda"                      },
-  { label: "Speakers",                   href: "/conference/speakers"         }, // FUTURE PAGE
-  { label: "Excellence Awards",          href: "/conference/awards"           }, // FUTURE PAGE
-  { label: "Think Tank",                 href: "/conference/think-tank"       }, // FUTURE PAGE
+  { label: "Speakers",                   href: "/conference/speakers"         },
+  { label: "Excellence Awards",          href: "/awards"                      },
 ] as const;
 
 const INVOLVED_LINKS = [
-  { label: "Become a Sponsor",          href: "/partner/sponsor"              }, // FUTURE PAGE
-  { label: "Exhibit With Us",           href: "/partner/exhibit"              }, // FUTURE PAGE
-  { label: "HR Leaders Hub",            href: "/pillars/workplace-wellness/hr-leaders-hub" }, // FUTURE PAGE
-  { label: "Media Partnerships",        href: "/partner/media"                }, // FUTURE PAGE
-  { label: "Speak at MysticVerse",      href: "/speak"                        }, // FUTURE PAGE
-  { label: "Nominate for the Awards",   href: "/conference/awards/nominate"   }, // FUTURE PAGE
+  { label: "Become a Sponsor",          href: "/sponsor"                      },
+  { label: "Exhibit With Us",           href: "/sponsor#tiers"                },
+  { label: "HR Leaders Hub",            href: "/pillars/workplace-wellness"   },
+  { label: "Media Partnerships",        href: "/sponsor"                      },
+  { label: "Speak at MysticVerse",      href: "/contact"                      }, // no dedicated speaker-application flow yet — routes to general contact for now
+  { label: "Nominate for the Awards",   href: "/nomination-form"              },
 ] as const;
 
 const ATTEND_LINKS = [
-  { label: "Delegate Passes",           href: "/register/delegate"            }, // FUTURE PAGE
-  { label: "HNI Pass",                  href: "/register/hni"                 }, // FUTURE PAGE
-  { label: "Corporate Bundle",          href: "/register/corporate"           }, // FUTURE PAGE
-  { label: "Wellness Investor Circle",  href: "/register/investor"            }, // FUTURE PAGE
-  { label: "FAQ",                       href: "/faq"                          }, // FUTURE PAGE
+  { label: "Delegate Passes",           href: "/register?passType=Delegate#interest"                  },
+  { label: "Corporate Bundle",          href: "/corporate"       },
+  { label: "Wellness Investor Circle",  href: "/register?passType=Wellness%20Investor%20Circle#interest" },
   { label: "Contact",                   href: "/contact"                      },
 ] as const;
 
@@ -118,8 +115,6 @@ function PinIcon() {
 const CONTACT_CHANNELS = [
   { label: "General",      value: "contact@mysticverseglobal.com",      href: "mailto:contact@mysticverseglobal.com",      Icon: MailIcon    },
   { label: "Partnerships", value: "partnerships@mysticverseglobal.com",  href: "mailto:partnerships@mysticverseglobal.com",  Icon: MailIcon    },
-  { label: "HR",           value: "hr@mysticverseglobal.com",            href: "mailto:hr@mysticverseglobal.com",            Icon: MailIcon    },
-  { label: "Press",        value: "press@mysticverseglobal.com",         href: "mailto:press@mysticverseglobal.com",         Icon: MailIcon    },
   { label: "WhatsApp",     value: "+91 92116 11150",                     href: "https://wa.me/919211611150",                Icon: PhoneIcon   },
 ] as const;
 
@@ -136,7 +131,7 @@ function FooterLinkList({ items }: { items: ReadonlyArray<{ label: string; href:
   return (
     <ul className={styles.linkList} role="list">
       {items.map((item) => (
-        <li key={item.href}>
+        <li key={item.label}>
           <a href={item.href} className={styles.footerLink}>
             {item.label}
           </a>
@@ -166,7 +161,7 @@ export default function Footer() {
         <div className={styles.contactStrip}>
           <div className={styles.contactLeft}>
             <h2 className={styles.contactHeading}>Get in touch</h2>
-            <p className={styles.contactSub}>Partnerships · Delegate passes · Press · HR</p>
+            <p className={styles.contactSub}>Partnerships · Delegate passes</p>
             <div className={styles.offices}>
               <span className={styles.officeItem}>
                 <span className={styles.channelIcon}><PinIcon /></span>
@@ -298,9 +293,7 @@ export default function Footer() {
         </p>
 
         <nav className={styles.bottomLinks} aria-label="Legal and contact">
-          <a href="/privacy"          className={styles.bottomLink}>Privacy</a>          {/* FUTURE PAGE */}
-          <a href="/terms"            className={styles.bottomLink}>Terms</a>             {/* FUTURE PAGE */}
-          <a href="/code-of-conduct"  className={styles.bottomLink}>Code of Conduct</a>  {/* FUTURE PAGE */}
+          <a href="/terms"            className={styles.bottomLink}>Terms</a>
           <a
             href="mailto:contact@mysticverseglobal.com"
             className={styles.bottomLink}

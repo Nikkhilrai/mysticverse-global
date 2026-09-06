@@ -2,9 +2,8 @@
    AboutHero — Section 1 of the About page
    MysticVerse Global — "OBSIDIAN & GOLD".
 
-   Deliberately quieter than the homepage hero: a single still image,
-   no grain, generous negative space. Editorial text (left) sits
-   beside a calm, tall photograph (right).
+   Deliberately quiet: no image, generous negative space. Centered
+   editorial text only.
    ══════════════════════════════════════════════════════════════ */
 
 .section {
@@ -12,9 +11,9 @@
   overflow: hidden;
   background-color: #0B0B12;
   padding:
-    clamp(8rem, 16vh, 13rem)
+    clamp(6rem, 13vh, 9.5rem)
     clamp(1.5rem, 6vw, 6rem)
-    clamp(5rem, 10vh, 8rem);
+    clamp(4.5rem, 9vh, 7rem);
 }
 
 /* A single, very soft glow — restrained, not the homepage drama. */
@@ -29,29 +28,25 @@
 .inner {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: 980px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-}
-
-@media (min-width: 900px) {
-  .inner {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: clamp(3rem, 6vw, 6.5rem);
-  }
+  text-align: center;
 }
 
 /* ── Text column ─────────────────────────────────────────── */
 .text {
-  max-width: 38ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .overlineWrap {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 
@@ -81,11 +76,12 @@
 
 .headline {
   font-family: var(--font-display);
-  font-size: clamp(1.875rem, 3.8vw, 3.5rem);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.028em;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: #F4F2F7;
+  max-width: 18ch;
   margin-bottom: clamp(1.5rem, 3vw, 2rem);
 
   opacity: 0;
@@ -110,69 +106,19 @@
     transform 760ms var(--ease-out-cubic) 240ms;
 }
 
-/* ── Still image ─────────────────────────────────────────── */
-.media {
-  position: relative;
-}
-
-.frame {
-  position: relative;
-  margin: 0;
-  aspect-ratio: 5 / 6;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  background-color: #14141F;
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
-
-  opacity: 0;
-  transform: translateY(22px) scale(1.01);
-  transition:
-    opacity   900ms var(--ease-out-cubic) 200ms,
-    transform 900ms var(--ease-out-cubic) 200ms;
-}
-
-@media (min-width: 900px) {
-  .frame {
-    aspect-ratio: 4 / 5;
-  }
-}
-
-.img {
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.06);
-  transition: transform 1200ms var(--ease-out-cubic);
-}
-
-/* Gentle bottom grade so the image grounds into the obsidian */
-.frameGrad {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to top, rgba(11, 11, 18, 0.55) 0%, transparent 42%);
-}
-
 /* ── Reveal ──────────────────────────────────────────────── */
 .section.in .overlineWrap,
 .section.in .headline,
-.section.in .sub,
-.section.in .frame {
+.section.in .sub {
   opacity: 1;
   transform: none;
-}
-
-.section.in .img {
-  transform: scale(1);
 }
 
 /* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .overlineWrap,
   .headline,
-  .sub,
-  .frame,
-  .img {
+  .sub {
     opacity: 1;
     transform: none;
     transition: none;

@@ -34,7 +34,7 @@ export default function PavilionIntro() {
         {/* Technical rail — architectural annotation */}
         <aside className={styles.rail}>
           <span className={styles.area}>500&nbsp;m²</span>
-          <span className={styles.areaNote}>Built for two days only</span>
+          <span className={styles.areaNote}>Built for one day only</span>
           <span className={styles.compass} aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="none">
               <circle cx="32" cy="32" r="26" stroke="rgba(245,196,90,0.35)" strokeWidth="1" />
@@ -48,9 +48,9 @@ export default function PavilionIntro() {
         {/* Annotated narrative */}
         <div className={styles.copy}>
           <p className={styles.body}>
-            Imagine an HNI walking through a{" "}
+            Imagine a buyer walking through a{" "}
             <em className={styles.place}>biophilic atrium</em> that was
-            constructed for two days only. A{" "}
+            constructed for one day only. A{" "}
             <em className={styles.place}>villa walkthrough</em> on her left,
             designed by a Dubai architect whose last project sold out at{" "}
             <span className={styles.figure}>AED&nbsp;35M</span>. A{" "}
