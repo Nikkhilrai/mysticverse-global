@@ -1,17 +1,18 @@
 /* ══════════════════════════════════════════════════════════════
-   JournalPreview — Section 8 / "From The Journal"
+   JournalPreview — "From The Blog"
    MysticVerse Global 2026 — "OBSIDIAN & GOLD".
 
-   Editorial featured + list layout. Typographic (no images until
-   real articles exist). Staggered reveal, gradient accents.
+   Editorial featured + list layout, built around real cover
+   photography: a full-bleed magazine-style featured card, plus
+   compact thumbnail cards for the next two articles.
    ══════════════════════════════════════════════════════════════ */
 
 /* ── Section ─────────────────────────────────────────────── */
 .section {
   position: relative;
   overflow: hidden;
-  background-color: #0B0B12;
-  border-top: 1px solid var(--hairline);
+  background-color: #F6F5F2;
+  border-top: 1px solid rgba(20, 20, 31, 0.1);
   padding:
     clamp(4rem, 7vw, 7rem)
     clamp(1.5rem, 6vw, 6rem)
@@ -24,8 +25,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(45% 45% at 100% 0%, rgba(124, 92, 255, 0.10) 0%, transparent 60%),
-    radial-gradient(40% 40% at 0% 100%, rgba(245, 196, 90, 0.05) 0%, transparent 60%);
+    radial-gradient(45% 45% at 100% 0%, rgba(124, 92, 255, 0.05) 0%, transparent 60%),
+    radial-gradient(40% 40% at 0% 100%, rgba(183, 134, 43, 0.06) 0%, transparent 60%);
 }
 
 .inner {
@@ -64,7 +65,7 @@
   display: block;
   width: 1px;
   height: 1.75rem;
-  background: linear-gradient(to bottom, #F5C45A, rgba(245, 196, 90, 0));
+  background: linear-gradient(to bottom, #B7862B, rgba(183, 134, 43, 0.00));
   margin-bottom: 0.875rem;
 }
 
@@ -74,7 +75,7 @@
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
   line-height: 1;
 }
 
@@ -84,7 +85,7 @@
   font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.025em;
-  color: #F4F2F7;
+  color: #14141F;
   margin-bottom: 0.875rem;
 }
 
@@ -94,7 +95,7 @@
   font-style: italic;
   font-weight: 400;
   line-height: 1.6;
-  color: #A8A6B4;
+  color: #5A5866;
   max-width: 42ch;
 }
 
@@ -109,44 +110,43 @@
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #F4F2F7;
+  color: #14141F;
   text-decoration: none;
   padding: 0.75rem 1.5rem;
-  border: 1px solid var(--hairline);
+  border: 1px solid rgba(20, 20, 31, 0.1);
   border-radius: 999px;
   transition: border-color 220ms var(--ease-out-cubic), color 220ms var(--ease-out-cubic);
 }
 
 .viewAllTop:hover {
-  border-color: rgba(245, 196, 90, 0.5);
-  color: #F5C45A;
+  border-color: rgba(183, 134, 43, 0.50);
+  color: #B7862B;
 }
 
 /* ── Layout — featured + list ────────────────────────────── */
 .layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1rem, 2vw, 1.5rem);
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
 @media (min-width: 900px) {
   .layout {
-    grid-template-columns: 1.25fr 1fr;
+    grid-template-columns: 1.3fr 1fr;
     align-items: stretch;
   }
 }
 
-/* ── Featured ────────────────────────────────────────────── */
+/* ── Featured — full-bleed cover, magazine treatment ───────── */
 .featured {
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  display: block;
+  min-height: 26rem;
   text-decoration: none;
-  padding: clamp(1.75rem, 3vw, 2.75rem);
-  border-radius: 18px;
-  border: 1px solid var(--hairline);
-  background-color: #14141F;
+  border-radius: 20px;
+  border: 1px solid rgba(20, 20, 31, 0.1);
+  background-color: #FFFFFF;
 
   opacity: 0;
   transform: translateY(28px);
@@ -160,94 +160,102 @@
   animation: journalRise 700ms var(--ease-out-cubic) 80ms both;
 }
 
-.featuredGlow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(90% 70% at 100% 0%, rgba(245, 196, 90, 0.1) 0%, rgba(124, 92, 255, 0.08) 38%, transparent 68%);
-  opacity: 0.7;
-  transition: opacity 360ms var(--ease-out-cubic);
-}
-
 .section.visible .featured:hover {
-  border-color: rgba(245, 196, 90, 0.4);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  border-color: rgba(183, 134, 43, 0.44);
+  box-shadow: 0 24px 64px rgba(20, 20, 31, 0.12);
   transform: translateY(-4px);
 }
 
-.featured:hover .featuredGlow { opacity: 1; }
+.featuredImg {
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out-cubic);
+}
+
+.featured:hover .featuredImg {
+  transform: scale(1.045);
+}
+
+.featuredScrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(8, 8, 14, 0.72) 32%,
+    rgba(8, 8, 14, 0.18) 62%,
+    rgba(8, 8, 14, 0.05) 100%
+  );
+}
 
 .featuredBadge {
-  position: relative;
-  z-index: 1;
-  align-self: flex-start;
+  position: absolute;
+  z-index: 2;
+  top: clamp(1.25rem, 2.5vw, 1.75rem);
+  left: clamp(1.25rem, 2.5vw, 1.75rem);
   font-family: var(--font-body);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #14100C;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 999px;
   background: var(--gradient-signature);
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 
-.cat {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-body);
-  font-size: 0.5625rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #F5C45A;
-  margin-bottom: 1rem;
+.featuredContent {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .featuredTitle {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.375rem);
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.025em;
-  color: #F4F2F7;
-  margin-bottom: 1rem;
+  color: #FFFFFF;
+  margin-bottom: 0.75rem;
 }
 
 .featuredExcerpt {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-body);
   font-size: clamp(0.875rem, 1.05vw, 1rem);
   font-weight: 400;
-  line-height: 1.7;
-  color: #A8A6B4;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
   max-width: 52ch;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
-  flex: 1;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .featuredFoot {
-  position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--hairline);
+  padding-top: 1.125rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
 }
 
-.readTime {
+.metaText {
   font-family: var(--font-body);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #8B8997;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .readMore {
@@ -259,30 +267,33 @@
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #F5C45A;
+  color: #B7862B;
 }
 
-/* ── List ────────────────────────────────────────────────── */
+/* ── List — compact cover cards ──────────────────────────── */
 .list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--hairline);
+  gap: clamp(0.875rem, 1.5vw, 1.125rem);
 }
 
 .row {
   position: relative;
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  padding: clamp(1.25rem, 2vw, 1.75rem) 0 clamp(1.25rem, 2vw, 1.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
-  border-bottom: 1px solid var(--hairline);
+  align-items: center;
+  gap: clamp(1rem, 1.8vw, 1.25rem);
   flex: 1;
-  justify-content: center;
-  transition:
-    background-color 260ms var(--ease-out-cubic),
-    padding-left     260ms var(--ease-out-cubic);
+  padding: clamp(0.875rem, 1.5vw, 1.125rem);
+  border: 1px solid rgba(20, 20, 31, 0.1);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(20, 20, 31, 0.040), rgba(20, 20, 31, 0.010));
+  text-decoration: none;
 
   opacity: 0;
+  transition:
+    border-color 260ms var(--ease-out-cubic),
+    background-color 260ms var(--ease-out-cubic),
+    transform 260ms var(--ease-out-cubic);
 }
 
 .section.visible .row {
@@ -292,84 +303,91 @@
 .section.visible .row:nth-child(1) { animation-delay: 220ms; }
 .section.visible .row:nth-child(2) { animation-delay: 320ms; }
 
-/* Active gold bar */
-.row::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--gradient-signature);
-  transform: scaleY(0);
-  transform-origin: center;
-  transition: transform 300ms var(--ease-out-cubic);
-}
-
 .row:hover {
-  background-color: rgba(245, 196, 90, 0.04);
-  padding-left: clamp(1.25rem, 2vw, 1.75rem);
+  border-color: rgba(183, 134, 43, 0.44);
+  background-color: rgba(183, 134, 43, 0.04);
+  transform: translateY(-2px);
 }
 
-.row:hover::before { transform: scaleY(1); }
+.rowMedia {
+  position: relative;
+  flex: none;
+  width: clamp(5.5rem, 9vw, 7rem);
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
 
-.rowCat {
-  font-family: var(--font-body);
-  font-size: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #F5C45A;
-  margin-bottom: 0.625rem;
+.rowImg { object-fit: cover; }
+
+.rowMediaFallback {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(70% 60% at 50% 20%, rgba(124, 92, 255, 0.12) 0%, transparent 70%),
+    linear-gradient(160deg, #211B33 0%, #FFFFFF 100%);
+}
+
+.rowBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .rowTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
-  font-weight: 500;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  color: #F4F2F7;
-  margin-bottom: 0.5rem;
+  font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: #14141F;
   transition: color 220ms var(--ease-out-cubic);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.rowExcerpt {
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  font-weight: 400;
-  line-height: 1.6;
-  color: #8B8997;
-  margin-bottom: 0.875rem;
-}
+.row:hover .rowTitle { color: #B7862B; }
 
 .rowFoot {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.rowTime {
+.metaTextSmall {
   font-family: var(--font-body);
-  font-size: 0.5625rem;
+  font-size: 0.625rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #8B8997;
+  letter-spacing: 0.02em;
+  color: #6E6C7C;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .arrow {
+  flex: none;
   display: inline-block;
-  transition: transform var(--duration-base) var(--ease-out-cubic);
+  color: #6E6C7C;
+  transition: transform var(--duration-base) var(--ease-out-cubic), color 220ms var(--ease-out-cubic);
 }
 
 .featured:hover .arrow,
-.row:hover .arrow,
 .viewAllTop:hover .arrow {
   transform: translateX(5px);
 }
 
-.row:hover .arrow { color: #F5C45A; }
+.row:hover .arrow {
+  color: #B7862B;
+  transform: translateX(3px);
+}
 
 /* ── Reduced motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -380,8 +398,7 @@
     animation: none;
   }
 
-  .featuredGlow,
-  .row::before,
+  .featuredImg,
   .arrow,
   .rowTitle {
     transition: none;

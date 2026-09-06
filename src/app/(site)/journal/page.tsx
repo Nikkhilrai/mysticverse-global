@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { prisma } from "@/lib/db";
 import styles from "./journal.module.css";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Journal | MysticVerse Global 2026",
+  alternates: { canonical: "/journal" },
+  title: "Blog | MysticVerse Global 2026",
   description:
     "Essays and dispatches on conscious luxury, wellness real estate, longevity, and human flourishing from MysticVerse Global.",
 };
@@ -29,7 +31,7 @@ export default async function JournalPage() {
     <main className={styles.section}>
       <div className={styles.inner}>
         <header className={styles.head}>
-          <p className={styles.eyebrow}>The Journal</p>
+          <p className={styles.eyebrow}>The Blog</p>
           <h1 className={styles.h1}>Conscious living, in writing.</h1>
           <p className={styles.sub}>
             Essays and dispatches on conscious luxury, wellness real estate,
@@ -45,8 +47,13 @@ export default async function JournalPage() {
               <a key={p.id} href={`/journal/${p.slug}`} className={styles.card}>
                 <div className={styles.cover}>
                   {p.coverImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img className={styles.coverImg} src={p.coverImage} alt={p.title} />
+                    <Image
+                      className={styles.coverImg}
+                      src={p.coverImage}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                    />
                   ) : (
                     <div className={styles.coverFallback} aria-hidden="true" />
                   )}
