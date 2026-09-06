@@ -1,0 +1,241 @@
+/* ══════════════════════════════════════════════════════════════
+   AwardsHero — "The MysticVerse Global Excellence Awards."
+   No photograph: a ceremony is lighting, not a place. A gold
+   spotlight and a soft stage beam over obsidian, a gradient
+   star emblem, and the headline revealed line-by-line.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #08080E;
+}
+
+/* ── Ceremony lighting ───────────────────────────────────── */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 40% at 50% 8%, rgba(245, 196, 90, 0.20) 0%, transparent 62%),
+    radial-gradient(60% 55% at 50% 108%, rgba(124, 92, 255, 0.20) 0%, transparent 64%),
+    radial-gradient(80% 60% at 50% 50%, rgba(199, 125, 255, 0.06) 0%, transparent 70%);
+}
+
+/* A wide, faint cone of light falling from above */
+.beam {
+  position: absolute;
+  top: -14%;
+  left: 50%;
+  z-index: 0;
+  width: min(1000px, 92vw);
+  height: 78%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+  background: linear-gradient(to bottom, rgba(245, 196, 90, 0.10), rgba(245, 196, 90, 0));
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-out-cubic) 240ms;
+}
+
+.section.in .beam { opacity: 1; }
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Corner brackets ─────────────────────────────────────── */
+.cornerTL,
+.cornerBR {
+  position: absolute;
+  z-index: 3;
+  width: clamp(2.25rem, 5vw, 3.75rem);
+  height: clamp(2.25rem, 5vw, 3.75rem);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 900ms var(--ease-out-cubic) 900ms,
+    transform 900ms var(--ease-out-cubic) 900ms;
+}
+
+.cornerTL {
+  top: clamp(1.5rem, 4vw, 3rem);
+  left: clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid rgba(245, 196, 90, 0.55);
+  border-left: 1px solid rgba(245, 196, 90, 0.55);
+  transform: translate(8px, 8px);
+}
+
+.cornerBR {
+  right: clamp(1.5rem, 4vw, 3rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(245, 196, 90, 0.55);
+  border-right: 1px solid rgba(245, 196, 90, 0.55);
+  transform: translate(-8px, -8px);
+}
+
+.section.in .cornerTL,
+.section.in .cornerBR { opacity: 1; transform: none; }
+
+/* ── Content ─────────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  padding:
+    clamp(7rem, 12vh, 9rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 10vh, 7rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms var(--ease-out-cubic) 150ms,
+    transform 700ms var(--ease-out-cubic) 150ms;
+}
+
+.section.in .overlineWrap { opacity: 1; transform: none; }
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245, 196, 90, 0.7));
+}
+
+.overlineRule:last-child {
+  background: linear-gradient(to left, transparent, rgba(245, 196, 90, 0.7));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* ── Emblem ──────────────────────────────────────────────── */
+.emblem {
+  width: clamp(4.5rem, 9vw, 6.5rem);
+  margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
+
+  opacity: 0;
+  transform: scale(0.82) rotate(-8deg);
+  transition:
+    opacity 900ms var(--ease-out-cubic) 260ms,
+    transform 900ms var(--ease-out-cubic) 260ms;
+}
+
+.section.in .emblem { opacity: 1; transform: none; }
+
+.emblem svg { width: 100%; height: auto; display: block; }
+
+.star { filter: drop-shadow(0 0 14px rgba(245, 196, 90, 0.45)); }
+
+/* ── Headline — line-by-line mask reveal ─────────────────── */
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6.4vw, 5.25rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.lineInner {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 1000ms var(--ease-out-cubic);
+  will-change: transform;
+}
+
+.section.in .headline .line:nth-of-type(1) .lineInner { transition-delay: 420ms; }
+.section.in .headline .line:nth-of-type(2) .lineInner { transition-delay: 560ms; }
+.section.in .lineInner { transform: none; }
+
+/* ── Measure line ────────────────────────────────────────── */
+.measure {
+  display: block;
+  width: clamp(4rem, 12vw, 8.5rem);
+  height: 2px;
+  margin: 0 auto clamp(1.75rem, 3vw, 2.25rem);
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 820ms var(--ease-out-cubic) 860ms;
+}
+
+.section.in .measure { transform: scaleX(1); }
+
+/* ── Sub + meta ──────────────────────────────────────────── */
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  line-height: 1.6;
+  color: #DAD8E2;
+  max-width: 54ch;
+  margin-inline: auto;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 860ms var(--ease-out-cubic) 980ms,
+    transform 860ms var(--ease-out-cubic) 980ms;
+}
+
+.section.in .sub { opacity: 1; transform: none; }
+
+.meta {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8C8A98;
+
+  opacity: 0;
+  transition: opacity 860ms var(--ease-out-cubic) 1150ms;
+}
+
+.section.in .meta { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beam, .overlineWrap, .emblem, .lineInner, .measure, .sub, .meta,
+  .cornerTL, .cornerBR {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

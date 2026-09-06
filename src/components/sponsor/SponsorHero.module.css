@@ -1,0 +1,245 @@
+/* ══════════════════════════════════════════════════════════════
+   SponsorHero — "Partner with the platform building the conscious
+   luxury economy." Left-aligned commercial hero: no photograph,
+   just depth, a three-line mask reveal, and two decisive CTAs.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background-color: #08080E;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(52% 44% at 12% 12%, rgba(245, 196, 90, 0.14) 0%, transparent 62%),
+    radial-gradient(58% 52% at 92% 88%, rgba(124, 92, 255, 0.20) 0%, transparent 64%),
+    radial-gradient(70% 60% at 50% 50%, rgba(199, 125, 255, 0.05) 0%, transparent 70%);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Corner brackets ─────────────────────────────────────── */
+.cornerTL,
+.cornerBR {
+  position: absolute;
+  z-index: 2;
+  width: clamp(2.25rem, 5vw, 3.75rem);
+  height: clamp(2.25rem, 5vw, 3.75rem);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 900ms var(--ease-out-cubic) 900ms,
+    transform 900ms var(--ease-out-cubic) 900ms;
+}
+
+.cornerTL {
+  top: clamp(1.5rem, 4vw, 3rem);
+  left: clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid rgba(245, 196, 90, 0.55);
+  border-left: 1px solid rgba(245, 196, 90, 0.55);
+  transform: translate(8px, 8px);
+}
+
+.cornerBR {
+  right: clamp(1.5rem, 4vw, 3rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(245, 196, 90, 0.55);
+  border-right: 1px solid rgba(245, 196, 90, 0.55);
+  transform: translate(-8px, -8px);
+}
+
+.section.in .cornerTL,
+.section.in .cornerBR { opacity: 1; transform: none; }
+
+/* ── Content ─────────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding:
+    clamp(7rem, 14vh, 10rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(5rem, 10vh, 7rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms var(--ease-out-cubic) 150ms,
+    transform 700ms var(--ease-out-cubic) 150ms;
+}
+
+.section.in .overlineWrap { opacity: 1; transform: none; }
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+/* ── Headline ────────────────────────────────────────────── */
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  max-width: 18ch;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.lineInner {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 1000ms var(--ease-out-cubic);
+  will-change: transform;
+}
+
+.section.in .headline .line:nth-of-type(1) .lineInner { transition-delay: 260ms; }
+.section.in .headline .line:nth-of-type(2) .lineInner { transition-delay: 380ms; }
+.section.in .headline .line:nth-of-type(3) .lineInner { transition-delay: 500ms; }
+.section.in .lineInner { transform: none; }
+
+/* ── Measure ─────────────────────────────────────────────── */
+.measure {
+  display: block;
+  width: clamp(4rem, 12vw, 8.5rem);
+  height: 2px;
+  margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
+  background: var(--gradient-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 820ms var(--ease-out-cubic) 800ms;
+}
+
+.section.in .measure { transform: scaleX(1); }
+
+/* ── Sub ─────────────────────────────────────────────────── */
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  line-height: 1.6;
+  color: #DAD8E2;
+  max-width: 56ch;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 860ms var(--ease-out-cubic) 900ms,
+    transform 860ms var(--ease-out-cubic) 900ms;
+}
+
+.section.in .sub { opacity: 1; transform: none; }
+
+/* ── CTAs ────────────────────────────────────────────────── */
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 1.6vw, 1rem);
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 860ms var(--ease-out-cubic) 1050ms,
+    transform 860ms var(--ease-out-cubic) 1050ms;
+}
+
+.section.in .ctaRow { opacity: 1; transform: none; }
+
+.ctaPrimary,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.85rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 300ms var(--ease-out-cubic),
+    box-shadow 300ms var(--ease-out-cubic),
+    background-color 300ms var(--ease-out-cubic),
+    border-color 300ms var(--ease-out-cubic);
+}
+
+.ctaPrimary {
+  color: #0B0B12;
+  background: var(--gradient-signature);
+  border: 0;
+  box-shadow: 0 14px 42px -16px rgba(199, 125, 255, 0.7);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 52px -16px rgba(199, 125, 255, 0.9);
+}
+
+.ctaGhost {
+  color: #F4F2F7;
+  background: transparent;
+  border: 1px solid var(--hairline-gold);
+}
+
+.ctaGhost:hover {
+  transform: translateY(-2px);
+  background-color: rgba(245, 196, 90, 0.07);
+  border-color: #F5C45A;
+}
+
+.ctaPrimary:focus-visible,
+.ctaGhost:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; }
+
+.arrow { transition: transform 300ms var(--ease-out-cubic); }
+.ctaPrimary:hover .arrow,
+.ctaGhost:hover .arrow { transform: translateX(4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .overlineWrap, .lineInner, .measure, .sub, .ctaRow,
+  .cornerTL, .cornerBR {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

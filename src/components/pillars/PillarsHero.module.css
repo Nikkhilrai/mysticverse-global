@@ -1,0 +1,213 @@
+/* ══════════════════════════════════════════════════════════════
+   PillarsHero — "Four pillars. One curated audience."
+   A colonnade: four vertical image strips that rise into place like
+   pillars, with the headline + sub over a graded scrim and a legend
+   of the four pillar names along the base.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background-color: #08080E;
+}
+
+/* ── Colonnade of strips ─────────────────────────────────── */
+.strips {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+}
+
+.strip {
+  position: relative;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+
+.strip:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 3;
+  background: linear-gradient(to bottom, rgba(245, 196, 90, 0), rgba(245, 196, 90, 0.28), rgba(245, 196, 90, 0));
+}
+
+/* clip-reveal — each pillar rises from the ground */
+.stripInner {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1150ms var(--ease-out-cubic);
+  transition-delay: calc(var(--i) * 150ms);
+}
+
+.section.in .stripInner { clip-path: inset(0 0 0 0); }
+
+.stripImg {
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.06);
+  filter: saturate(0.82) brightness(0.62);
+  transition: transform 1600ms var(--ease-out-cubic);
+}
+
+.section.in .stripImg { transform: scale(1); }
+
+/* ── Grade + grain ───────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(60% 55% at 14% 46%, rgba(124, 92, 255, 0.16) 0%, transparent 62%),
+    linear-gradient(to right, rgba(7, 7, 12, 0.95) 0%, rgba(7, 7, 12, 0.82) 38%, rgba(7, 7, 12, 0.52) 66%, rgba(7, 7, 12, 0.6) 100%),
+    linear-gradient(to top, rgba(7, 7, 12, 0.92) 0%, rgba(7, 7, 12, 0.12) 36%, transparent 62%);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Content ─────────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding:
+    clamp(7rem, 16vh, 12rem)
+    clamp(1.5rem, 6vw, 6rem)
+    clamp(8rem, 18vh, 12rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 700ms var(--ease-out-cubic) 300ms, transform 700ms var(--ease-out-cubic) 300ms;
+}
+
+.section.in .overlineWrap { opacity: 1; transform: none; }
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, #F5C45A, rgba(245, 196, 90, 0));
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: #F4F2F7;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  max-width: 16ch;
+
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 860ms var(--ease-out-cubic) 420ms, transform 860ms var(--ease-out-cubic) 420ms;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  line-height: 1.6;
+  color: #DAD8E2;
+  max-width: 44ch;
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 860ms var(--ease-out-cubic) 560ms, transform 860ms var(--ease-out-cubic) 560ms;
+}
+
+.section.in .headline,
+.section.in .sub { opacity: 1; transform: none; }
+
+/* ── Legend ──────────────────────────────────────────────── */
+.legend {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  border-top: 1px solid var(--hairline);
+}
+
+.legendItem {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: clamp(0.9rem, 1.6vw, 1.25rem) clamp(0.85rem, 1.4vw, 1.35rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.625rem, 0.85vw, 0.8125rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #DAD8E2;
+  border-right: 1px solid var(--hairline);
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity   640ms var(--ease-out-cubic),
+    transform 640ms var(--ease-out-cubic);
+}
+
+.legendItem:last-child { border-right: 0; }
+.legendItem:nth-child(1) { transition-delay: 700ms; }
+.legendItem:nth-child(2) { transition-delay: 820ms; }
+.legendItem:nth-child(3) { transition-delay: 940ms; }
+.legendItem:nth-child(4) { transition-delay: 1060ms; }
+
+.section.in .legendItem { opacity: 1; transform: none; }
+
+.legendNo {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #F5C45A;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .legend { display: none; }
+  .inner {
+    padding-bottom: clamp(5rem, 12vh, 8rem);
+    align-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stripInner { clip-path: inset(0 0 0 0); transition: none; }
+  .stripImg { transform: none; transition: none; }
+  .overlineWrap, .headline, .sub, .legendItem { opacity: 1; transform: none; transition: none; }
+}
