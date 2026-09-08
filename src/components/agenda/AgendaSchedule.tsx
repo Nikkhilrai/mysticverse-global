@@ -12,8 +12,9 @@ import {
 } from "./agendaData";
 import { SPEAKERS } from "@/components/speakers/speakersData";
 
-/** Resolves a speaker's photo from their MysticVerse speaker profile, if any. */
+/** Resolves a speaker's photo — a direct image path, or their MysticVerse speaker profile, if any. */
 function speakerImage(sp: SessionSpeaker): string | undefined {
+  if (sp.image) return sp.image;
   if (!sp.slug) return undefined;
   return SPEAKERS.find((s) => s.slug === sp.slug)?.image;
 }

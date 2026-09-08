@@ -10,6 +10,7 @@ const REST = [
   { name: "Renophase",           src: "/images/partners/Renophase.png",                 tierLabel: "Luxury Skincare" },
   { name: "StackBerry Media",    src: "/images/partners/stackberry-media.avif",          tierLabel: "Media Partner" },
   { name: "KNeer",               src: "/images/partners/KNeer_Logo.avif",               tierLabel: "Supporting Partner" },
+  { name: "SOMA Breath",         src: "/images/partners/soma.jpeg",                     tierLabel: "Breathwork Partner" },
   { name: "Taj",                 src: "/images/partners/taj.jpg",                       tierLabel: "Venue Partner" },
 ] as const;
 

@@ -70,6 +70,38 @@
   opacity: 0;
 }
 
+/* ── Light-page variant ────────────────────────────────────
+   Pages with a light background at the top (e.g. /agenda) need dark
+   nav text and no dark scrim while unscrolled — the transparent
+   header otherwise assumes a dark hero image behind it. Once
+   scrolled, the header's usual solid dark background takes over and
+   the normal light text is correct again. */
+.header.lightPage:not(.scrolled)::before {
+  opacity: 0;
+}
+
+.header.lightPage:not(.scrolled) .navLink {
+  color: rgba(20, 20, 31, 0.75);
+}
+
+.header.lightPage:not(.scrolled) .navLink:hover,
+.header.lightPage:not(.scrolled) .navLink[aria-current="page"] {
+  color: #14141F;
+}
+
+.header.lightPage:not(.scrolled) .caret {
+  border-top-color: rgba(20, 20, 31, 0.5);
+}
+
+.header.lightPage:not(.scrolled) .navItem:hover .caret,
+.header.lightPage:not(.scrolled) .navItem:focus-within .caret {
+  border-top-color: #B7862B;
+}
+
+.header.lightPage:not(.scrolled) .hamburgerLine {
+  background-color: #14141F;
+}
+
 /* ── Top bar ────────────────────────────────────────────── */
 /*
   Slightly deeper shade than Ground creates a distinct upper band.

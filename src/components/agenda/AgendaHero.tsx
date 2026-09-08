@@ -41,7 +41,7 @@ export default function AgendaHero() {
 
         <h1 className={styles.headline}>
           MysticVerse Global<br />
-          <span className="gradientText">Conference 2026.</span>
+          <span className="gradientTextInk">Conference 2026.</span>
         </h1>
 
         <p className={styles.sub}>{CONFERENCE_THEME}. {CONFERENCE_THEME_SUB}</p>

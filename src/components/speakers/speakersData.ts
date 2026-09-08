@@ -217,4 +217,30 @@ export const SPEAKERS: readonly Speaker[] = [
       `With a presence spanning global stages, international retreats, an online community of over a million yoga enthusiasts, viral content, and impactful public speaking, master classes, and workshops across the globe, he has transformed countless lives and continues to make yoga not just a practice, but a lifestyle movement.`,
     ],
   },
+  {
+    slug: "matteo-minero",
+    name: "Matteo Minero",
+    title: "Co-Founder & Co-CEO, Traininpink",
+    image: `${IMG}/matteo-minero.jpeg`,
+    bio: [
+      `Matteo Minero is the Co-Founder and Co-CEO of Traininpink, the female fitness app built around Pilates Linfodrenante®, the world's first method combining Pilates with lymphatic drainage. Headquartered in Dubai with a team of 30, Traininpink is Italy's #1 female fitness app by revenue, with more than 300,000 women trained, around 45,000 paying subscribers and 10M USD in annual recurring revenue, fully bootstrapped and profitable.`,
+      `A former M&A and capital markets lawyer, Matteo spent ten years at global leading law firms, such as DLA Piper, advising companies including Ferrari, Luxottica and Technogym, before leaving law to build Traininpink with his wife and co-founder, Carlotta Gagna, creator of the method. His perspective bridges two worlds: the science-backed connection between movement, recovery and the body, and the reality of sustaining performance in high-pressure roles — a transition he has lived first-hand, from billable hours to building one of Europe's fastest-growing wellness companies.`,
+    ],
+  },
+  {
+    slug: "lisa-moley",
+    name: "Lisa Moley",
+    title: "Transformational SOMA Breath® Coach, representing SOMA Breath",
+    image: `${IMG}/lisa-moley.jpg`,
+    bio: [
+      `Lisa Moley is an Irish-born Transformational SOMA Breath® coach who has called Dubai home for the past 10 years.`,
+      `After years in senior leadership, Lisa knows first-hand what it takes to operate in high-pressure, high-performance environments. From the outside, she looked successful, happy and driven. Behind the scenes, however, chronic stress was taking a serious toll on her body, eventually leading to insomnia and autoimmune conditions.`,
+      `After struggling to find lasting solutions through conventional approaches, Lisa turned inward and discovered the transformative power of conscious breathing. Within one month, she experienced a profound shift in her health, sleep, energy and overall wellbeing.`,
+      `That transformation with SOMA Breath became her mission: helping high-performing individuals learn how to regulate their nervous system, manage stress and perform at their best without sacrificing their health.`,
+      `Today, Lisa works with corporates, business leaders and teams through SOMA Breath®, 1:1 coaching, group experiences and private events. She is also featured on the global SOMA Breath platform and hosts transformational experiences internationally.`,
+    ],
+    links: [
+      { label: "Instagram · @breathewithlisadubai", href: "https://www.instagram.com/breathewithlisadubai" },
+    ],
+  },
 ] as const;
