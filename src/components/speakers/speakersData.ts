@@ -119,17 +119,6 @@ export const SPEAKERS: readonly Speaker[] = [
     ],
   },
   {
-    slug: "raja-ramachandran",
-    name: "Dr. Rajarajachozhan Ramachandran",
-    title: "A Holistic Visionary · Naturopathy Practitioner, Royal Mansour Tamuda Bay",
-    image: `${IMG}/raja-ramachandran.avif`,
-    bio: [
-      `From his early days in India, Dr. Raja found his calling in the transformative power of wellness. For over 22 years, he has dedicated his life to understanding how holistic healthcare can tangibly improve lives. Now the Naturopathy Practitioner at Royal Mansour Tamuda Bay, Dr. Raja brings a wealth of global experience to Morocco, having previously led wellness teams in India, Sri Lanka, UAE and Thailand.`,
-      `Dr. Raja's approach is unique: he seamlessly blends the rigorous standards of a clinician with the warmth of high-end hospitality. He is a strong advocate for the "gut-brain" connection, focusing on microbiome balance and positive energy as the pillars of disease prevention and management.`,
-      `An alumnus of Tamil Nadu Dr. MGR Medical University (2004), Dr. Raja combines his academic background in Naturopathy and Ayurveda with skilled, hands-on therapies. Whether developing a longevity roadmap or performing an Acupuncture or Chi Nei Tsang treatment, his goal remains the same: to empower guests on their journey to optimal health.`,
-    ],
-  },
-  {
     slug: "suha-hamad",
     name: "Suha Hamad",
     title: "Wellness Coach · Founder of Reikilates",

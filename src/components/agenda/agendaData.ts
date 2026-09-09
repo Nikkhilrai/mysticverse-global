@@ -181,11 +181,6 @@ export const SESSIONS: readonly Session[] = [
         slug: "saul-vargas",
       },
       {
-        name: "Dr. Rajarajachozhan Ramachandran",
-        role: "Integrative Clinical Experience · Longevity & Functional Wellness Leader · Integrative Eastern Wellness",
-        slug: "raja-ramachandran",
-      },
-      {
         name: "Zita Desmet",
         role: "Integrative Clinical Experience · Longevity & Functional Wellness Leader · Integrative Eastern Wellness",
         slug: "zita-desmet",
