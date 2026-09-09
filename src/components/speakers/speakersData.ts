@@ -232,4 +232,11 @@ export const SPEAKERS: readonly Speaker[] = [
       { label: "Instagram · @breathewithlisadubai", href: "https://www.instagram.com/breathewithlisadubai" },
     ],
   },
+  {
+    slug: "reema-akhtar",
+    name: "Reema Akhtar",
+    title: "Director People & Program, SeerSolutionz",
+    image: `${IMG}/reema-akhtar.png`,
+    bio: [],
+  },
 ] as const;
