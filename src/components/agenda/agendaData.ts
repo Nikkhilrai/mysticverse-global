@@ -53,14 +53,14 @@ export const CONFERENCE_FOCUS =
 export const SESSIONS: readonly Session[] = [
   {
     section: "Morning — Arrival, Opening & Visibility",
-    time: "8:00 AM – 9:00 AM",
+    time: "8:00 AM – 8:40 AM",
     tag: "Registration & Networking",
     title: "Registration & Mindful Connections",
     kind: "break",
     desc: "Registration, welcome tea, acoustic healing music, and a signature Aura Cleansing Ceremony to help attendees arrive, connect, and set a mindful intention.",
   },
   {
-    time: "9:00 AM – 9:15 AM",
+    time: "8:40 AM – 8:55 AM",
     tag: "Ceremony",
     title: "Organizer's Welcome & Lamp-Lighting Ceremony",
     kind: "break",
@@ -68,18 +68,44 @@ export const SESSIONS: readonly Session[] = [
     speakers: [
       {
         name: "Pallavi Sharma",
-        role: "Co-Founder, MysticVerse Global",
+        role: "Co-Founder & Director, MysticVerse Global",
         image: `${IMG}/pallavi-sharma.jpeg`,
       },
     ],
   },
   {
-    time: "9:15 AM – 9:40 AM",
+    time: "8:55 AM – 9:10 AM",
     tag: "Keynote Address",
     title: "Timeless Wisdom for Modern Flourishing",
     kind: "feature",
     desc: "Wellbeing as strategy: the convergence of longevity, sacred spaces, and human success — framing wellness as a driver of corporate productivity, luxury living, and global lifestyle aspirations.",
     speakers: [{ name: "Speaker to be confirmed — Global Wellness Officer" }],
+  },
+  {
+    time: "9:10 AM – 9:20 AM",
+    tag: "Solo Session",
+    title: "Spirituality Is the Key to Success Wherever You Are",
+    kind: "main",
+    speakers: [
+      {
+        name: "Dr. K. S. Balambika",
+        role: "Principal, B.S.S. B.Ed Training College, Kerala",
+        slug: "balambika",
+      },
+    ],
+  },
+  {
+    time: "9:20 AM – 9:40 AM",
+    tag: "Solo Session",
+    title: "Solo Session — title to be announced",
+    kind: "main",
+    speakers: [
+      {
+        name: "Reema Akhtar",
+        role: "Director People & Program, SeerSolutionz",
+        slug: "reema-akhtar",
+      },
+    ],
   },
   {
     time: "9:40 AM – 10:30 AM",
@@ -95,7 +121,7 @@ export const SESSIONS: readonly Session[] = [
     speakers: [
       {
         name: "Dr. K. S. Balambika",
-        role: "Principal, B.S.S. B.Ed Training College, Kerala",
+        role: "Moderator · Principal, B.S.S. B.Ed Training College, Kerala",
         slug: "balambika",
       },
       {
@@ -104,14 +130,9 @@ export const SESSIONS: readonly Session[] = [
         slug: "neelam-harjani",
       },
       {
-        name: "Dalida Jaafar",
-        role: "Organizational Psychologist · Leadership Development Trainer",
-        slug: "dalida-jaafar",
-      },
-      {
-        name: "Suha Hamad",
-        role: "Wellness Coach · Founder, Reikilates",
-        slug: "suha-hamad",
+        name: "Reema Akhtar",
+        role: "Director People & Program, SeerSolutionz",
+        slug: "reema-akhtar",
       },
     ],
   },
@@ -167,7 +188,7 @@ export const SESSIONS: readonly Session[] = [
     speakers: [
       {
         name: "Elias Hanna",
-        role: "Certified Practitioner, Unified Integrative Medicine",
+        role: "Moderator · Certified Practitioner, Unified Integrative Medicine",
         slug: "elias-hanna",
       },
       {
@@ -188,28 +209,22 @@ export const SESSIONS: readonly Session[] = [
     ],
   },
   {
-    time: "12:45 PM – 1:35 PM",
+    section: "Midday & Afternoon — Longevity, Movement & Performance",
+    time: "12:45 PM – 1:45 PM",
     tag: "Lunch Break",
     title: "Networking Lunch & Exhibition Visit",
     kind: "break",
-    desc: "A lunch interval for nourishment, connectivity, and informal conversations across workplace wellbeing, real estate, retreats, and longevity science.",
+    desc: "A one-hour lunch interval for nourishment, connectivity, and informal conversations across workplace wellbeing, real estate, retreats, and longevity science.",
   },
   {
-    section: "Afternoon — Future of Living & Mind-Body Performance",
-    time: "1:35 PM – 2:10 PM",
-    tag: "Cross-Pillar Synthesis Panel",
-    title: "The Multidimensional Life: How HR, Real Estate, Retreats & Hospitality Shape the Future of Living",
-    kind: "main",
-    desc: "A collaborative discussion featuring HR, real estate, retreat, and hospitality perspectives on the future of living.",
-    points: [
-      "How corporate packages are expanding to offer executive-level longevity retreats as retention benefits",
-      "Designing residential environments that sustain the physical benefits gained from wellness retreats",
-      "Actionable tools for high-performing leaders to integrate wellness habits into demanding lifestyles",
-      "The role of spa and hospitality in shaping the future of living",
-    ],
+    time: "1:45 PM – 2:15 PM",
+    tag: "Networking Session",
+    title: "Networking & Connectivity",
+    kind: "break",
+    desc: "An open networking interval for sharing ideas, opinions, and expertise across the MysticVerse pillars.",
   },
   {
-    time: "2:10 PM – 2:30 PM",
+    time: "2:15 PM – 2:25 PM",
     tag: "Solo Session",
     title: "Mitochondrial Health: The Future of Skin Longevity",
     kind: "main",
@@ -223,7 +238,7 @@ export const SESSIONS: readonly Session[] = [
     ],
   },
   {
-    time: "2:30 PM – 2:50 PM",
+    time: "2:25 PM – 2:50 PM",
     tag: "Chair Yoga",
     title: "Chair Yoga: Reset, Release & Re-energise",
     kind: "main",
@@ -238,10 +253,17 @@ export const SESSIONS: readonly Session[] = [
   },
   {
     time: "2:50 PM – 3:15 PM",
-    tag: "Wellness Networking Experience & High Tea",
-    title: "Curated Exhibition Visit & Cross-Pillar Networking",
-    kind: "break",
-    desc: "A dedicated experience zone to explore wellness solutions, spatial technology, holistic healing, and longevity offerings while connecting with speakers, partners, and fellow delegates.",
+    tag: "Solo Session",
+    title: "Soma Breathwork Transformation",
+    kind: "main",
+    desc: "Restoring mind, body, and nervous-system harmony through intentional breathwork and targeted stress release — calming physiological tension, clearing cognitive fatigue, and renewing daily energy. A short grounding in the science of the breath, followed by a guided journey using headsets.",
+    speakers: [
+      {
+        name: "Lisa Moley",
+        role: "Transformational SOMA Breath® Coach, representing SOMA Breath",
+        slug: "lisa-moley",
+      },
+    ],
   },
   {
     time: "3:15 PM – 4:00 PM",
@@ -265,13 +287,18 @@ export const SESSIONS: readonly Session[] = [
       },
       {
         name: "Peenesh Sanghvi",
-        role: "Inspirational & Motivational Speaker · Spiritual Practitioner",
+        role: "Moderator · Inspirational & Motivational Speaker · Spiritual Practitioner",
         slug: "peenesh-sanghvi",
       },
       {
         name: "Suha Hamad",
         role: "Wellness Coach · Founder, Reikilates",
         slug: "suha-hamad",
+      },
+      {
+        name: "Matteo Minero",
+        role: "Co-Founder & Co-CEO, Traininpink",
+        slug: "matteo-minero",
       },
     ],
   },
@@ -315,7 +342,7 @@ export const SESSIONS: readonly Session[] = [
   },
   {
     time: "5:10 PM – 5:30 PM",
-    tag: "Closing",
+    tag: "Closing Ceremony & Media Bytes",
     title: "Reflections, Closing Remarks & Vote of Thanks",
     kind: "break",
     desc: "A concise closing reflection to synthesise the day's insights, acknowledge contributors, and formally conclude MysticVerse Global 2026.",
