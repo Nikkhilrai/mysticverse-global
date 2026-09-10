@@ -239,4 +239,14 @@ export const SPEAKERS: readonly Speaker[] = [
     image: `${IMG}/reema-akhtar.png`,
     bio: [],
   },
+  {
+    slug: "kavita-shajit",
+    name: "Kavita Shajit",
+    title: "Certified Holistic Wellness Professional · Co-Founder, Manoyaa Alchemy",
+    image: `${IMG}/kavita-shajit.jpeg`,
+    bio: [
+      `Kavita Shajit is a certified Holistic Wellness Professional and co-founder of Manoyaa Alchemy, bringing together breathwork, therapeutic movement, face yoga, and pre/postnatal practices into a grounded, modern approach to wellbeing. An Economics Honors graduate with extensive yoga training, she blends analytical insight with embodied wisdom to make holistic wellness practical, accessible, and relevant for today's fast-paced world.`,
+      `Based in Dubai, Kavita has spent years refining her craft through teaching, study, and lived experience. Her work supports individuals and organizations in strengthening physical health, enhancing mental clarity, and cultivating sustainable lifestyle habits that extend beyond the mat.`,
+    ],
+  },
 ] as const;

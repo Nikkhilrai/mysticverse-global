@@ -160,7 +160,7 @@ export const SESSIONS: readonly Session[] = [
   {
     section: "Late Morning — Somatic Wellbeing & Longevity",
     time: "11:30 AM – 11:55 AM",
-    tag: "Solo Session",
+    tag: "Duo Session",
     title: "Restoring Internal Coherence Through Somatic Release & Nervous System Alignment",
     kind: "main",
     desc: "Attendees will understand how the body stores stress and how gentle modalities foster recovery without force — gaining practical breathwork, somatic tools, and systemic insights to restore daily vitality naturally.",
@@ -169,6 +169,11 @@ export const SESSIONS: readonly Session[] = [
         name: "Savita Malik",
         role: "Co-Founder, Manoyaa",
         slug: "savita-malik",
+      },
+      {
+        name: "Kavita Shajit",
+        role: "Certified Holistic Wellness Professional · Co-Founder, Manoyaa Alchemy",
+        slug: "kavita-shajit",
       },
     ],
   },
