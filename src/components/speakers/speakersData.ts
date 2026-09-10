@@ -133,16 +133,6 @@ export const SPEAKERS: readonly Speaker[] = [
     ],
   },
   {
-    slug: "dalida-jaafar",
-    name: "Dalida Jaafar",
-    title: "Organizational Psychologist · Leadership Development Trainer · Executive Coach",
-    image: `${IMG}/dalida-jaafar.avif`,
-    bio: [
-      `An Organizational Psychologist and Leadership Coach specializing in leadership development, workplace culture, and high-performance coaching. With a background in organizational psychology, behavioral science, and evidence-based coaching, she works with leaders, teams, and entrepreneurs to strengthen communication, decision-making, confidence, and execution.`,
-      `Experienced in delivering leadership training and consulting across the U.S. and UAE, she designs practical, results-driven programs that integrate assessments, coaching, and real-world application. Her work combines leadership psychology, change management, and performance habits, with a strong focus on sustainable growth, team effectiveness, and leader well-being.`,
-    ],
-  },
-  {
     slug: "neelam-harjani",
     name: "Neelam Harjani",
     title: "Corporate Wellness Expert · Founder, Inspire Wellness Dubai",
