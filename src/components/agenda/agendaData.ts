@@ -245,7 +245,7 @@ export const SESSIONS: readonly Session[] = [
   {
     time: "2:25 PM – 2:50 PM",
     tag: "Chair Yoga",
-    title: "Chair Yoga: Reset, Release & Re-energise",
+    title: "The Art of Release: Movement, Breath & Stress Release from Your Chair",
     kind: "main",
     desc: "A short, accessible movement reset designed to restore posture, mobility, breath awareness, and focus before the afternoon sessions.",
     speakers: [
