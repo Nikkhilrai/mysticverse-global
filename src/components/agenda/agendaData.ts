@@ -97,7 +97,7 @@ export const SESSIONS: readonly Session[] = [
   {
     time: "9:20 AM – 9:40 AM",
     tag: "Solo Session",
-    title: "Corporate Wellbeing",
+    title: "I'm Busy",
     kind: "main",
     speakers: [
       {
