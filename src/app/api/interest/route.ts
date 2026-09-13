@@ -4,10 +4,20 @@ import { InterestSchema } from "@/lib/validation";
 import { notifyAfter, rowsToHtml } from "@/lib/email";
 import { after } from "next/server";
 import { sendStep } from "@/lib/nurture";
+import { INTEREST_OPEN } from "@/lib/site";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
+  // The conference has concluded — stop accepting new interest
+  // submissions even if a cached page still renders the live form.
+  if (!INTEREST_OPEN) {
+    return NextResponse.json(
+      { ok: false, error: "MysticVerse Global 2026 has concluded — registration of interest is now closed." },
+      { status: 410 },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();

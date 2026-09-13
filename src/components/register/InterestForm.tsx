@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./InterestForm.module.css";
 import { getUtm } from "@/lib/utm";
+import { INTEREST_OPEN } from "@/lib/site";
 
 const PASS_TYPES = [
   "Delegate",
@@ -73,22 +74,42 @@ export default function InterestForm() {
         <div className={styles.head}>
           <div className={styles.overlineWrap}>
             <span className={styles.overlineRule} aria-hidden="true" />
-            <p className={styles.overline}>Register Interest · Dubai 2026</p>
+            <p className={styles.overline}>
+              {INTEREST_OPEN ? "Register Interest · Dubai 2026" : "Dubai 2026 · Concluded"}
+            </p>
           </div>
-          <h1 className={styles.headline}>
-            Reserve your place<br />
-            <span className="gradientText">in the room.</span>
-          </h1>
-          <p className={styles.sub}>
-            Tell us a little about you and the pass you have in mind. Our team
-            will be in touch with availability and next steps.
-          </p>
+          {INTEREST_OPEN ? (
+            <>
+              <h1 className={styles.headline}>
+                Reserve your place<br />
+                <span className="gradientText">in the room.</span>
+              </h1>
+              <p className={styles.sub}>
+                Tell us a little about you and the pass you have in mind. Our team
+                will be in touch with availability and next steps.
+              </p>
+            </>
+          ) : (
+            <h1 className={styles.headline}>
+              Thank you for joining<br />
+              <span className="gradientText">the room.</span>
+            </h1>
+          )}
         </div>
 
         <div className={styles.panel}>
           <div className={styles.panelGlow} aria-hidden="true" />
 
-          {submitted ? (
+          {!INTEREST_OPEN ? (
+            <div className={styles.success}>
+              <span className={styles.successMark} aria-hidden="true">✓</span>
+              <h2 className={styles.successTitle}>MysticVerse Global 2026 has concluded.</h2>
+              <p className={styles.successText}>
+                Thank you for your interest — registration is now closed. Follow
+                MysticVerse Global for news on the next edition.
+              </p>
+            </div>
+          ) : submitted ? (
             <div className={styles.success}>
               <span className={styles.successMark} aria-hidden="true">✓</span>
               <h2 className={styles.successTitle}>Interest received.</h2>

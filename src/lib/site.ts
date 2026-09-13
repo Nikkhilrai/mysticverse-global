@@ -19,3 +19,11 @@ export const EVENT = {
   description:
     "Where Ancient Wisdom Meets Strategic Innovation. One day in Dubai bringing together wellness real estate, workplace wellbeing, longevity science, and contemplative traditions.",
 } as const;
+
+/*
+  The conference took place on EVENT.startDate and has concluded — flip
+  this back to `true` only if a future edition reopens registration of
+  interest. Gates the register-interest form, the homepage lead popup,
+  and the /api/interest endpoint (belt-and-braces server-side check).
+*/
+export const INTEREST_OPEN = false;

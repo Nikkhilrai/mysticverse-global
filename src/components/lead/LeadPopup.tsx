@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./LeadPopup.module.css";
 import { getUtm } from "@/lib/utm";
+import { INTEREST_OPEN } from "@/lib/site";
 
 /*
   Timed lead-capture popup for the homepage.
@@ -49,7 +50,7 @@ export default function LeadPopup() {
 
   /* ── Trigger: dwell time OR scroll depth, whichever first ── */
   useEffect(() => {
-    if (!mounted || shouldSuppress()) return;
+    if (!mounted || !INTEREST_OPEN || shouldSuppress()) return;
 
     const fire = () => {
       if (firedRef.current) return;
