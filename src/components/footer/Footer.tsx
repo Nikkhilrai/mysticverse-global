@@ -16,6 +16,7 @@ const ABOUT_LINKS = [
   { label: "Advisory Board",     href: "/advisory"        },
   { label: "Blog",               href: "/journal"         },
   { label: "Magazine",           href: "/media/magazine"  },
+  { label: "Gallery",            href: "/gallery"         },
 ] as const;
 
 const PROGRAMME_LINKS = [

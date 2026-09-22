@@ -25,6 +25,7 @@ const STATIC_ROUTES: Array<{
   { path: "/contact", priority: 0.6, changeFrequency: "monthly" },
   { path: "/journal", priority: 0.6, changeFrequency: "weekly" },
   { path: "/media/magazine", priority: 0.5, changeFrequency: "monthly" },
+  { path: "/gallery", priority: 0.6, changeFrequency: "monthly" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

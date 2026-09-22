@@ -51,6 +51,7 @@ const NAV_ITEMS = [
     children: [
       { label: "Blog", href: "/journal" },
       { label: "Magazine", href: "/media/magazine" },
+      { label: "Gallery", href: "/gallery" },
     ],
   },
   { label: "Contact",         href: "/contact",           futureDropdown: false },

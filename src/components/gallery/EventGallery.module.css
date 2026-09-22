@@ -1,0 +1,157 @@
+/* ══════════════════════════════════════════════════════════════
+   EventGallery — masonry photo grid + full-screen lightbox
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  background-color: #0b0b12;
+  border-top: 1px solid var(--hairline);
+  padding:
+    clamp(2.5rem, 5vw, 4rem)
+    clamp(1.25rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 8rem);
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── Masonry via CSS columns — handles the mixed aspect ratios
+   without JS, and reflows cleanly at every breakpoint. ────── */
+.grid {
+  columns: 2 220px;
+  column-gap: clamp(0.6rem, 1.5vw, 1rem);
+}
+
+@media (min-width: 640px) {
+  .grid { columns: 3 240px; }
+}
+@media (min-width: 1000px) {
+  .grid { columns: 4 260px; }
+}
+
+.tile {
+  display: block;
+  width: 100%;
+  margin: 0 0 clamp(0.6rem, 1.5vw, 1rem);
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  position: relative;
+  break-inside: avoid;
+}
+
+.tileImg {
+  object-fit: cover;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tile:hover .tileImg,
+.tile:focus-visible .tileImg {
+  transform: scale(1.04);
+}
+
+.tile:focus-visible {
+  outline: 2px solid rgba(245, 196, 90, 0.6);
+  outline-offset: 2px;
+}
+
+/* ── Lightbox ─────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 10, 0.94);
+  backdrop-filter: blur(6px);
+}
+
+.frame {
+  position: relative;
+  max-width: min(92vw, 1400px);
+  max-height: 86vh;
+  display: flex;
+}
+
+.frameImg {
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.close {
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 180ms, border-color 180ms;
+}
+.close:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--hairline-gold); }
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 180ms, border-color 180ms;
+}
+.navBtn:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--hairline-gold); }
+.navPrev { left: clamp(0.5rem, 3vw, 2rem); }
+.navNext { right: clamp(0.5rem, 3vw, 2rem); }
+
+.counter {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+}
+.counterSep { color: rgba(255, 255, 255, 0.3); margin: 0 0.15em; }
+
+@media (max-width: 640px) {
+  .navBtn { width: 40px; height: 40px; }
+}
