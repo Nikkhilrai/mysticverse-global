@@ -27,3 +27,13 @@ export const EVENT = {
   and the /api/interest endpoint (belt-and-braces server-side check).
 */
 export const INTEREST_OPEN = false;
+
+/*
+  Ditto for paid pass sales — Razorpay is live-keyed, so leaving this
+  on after the event concluded would keep charging real money for a
+  conference that already happened. Gates the /register pass grid and
+  corporate-bundle CTA, and — belt-and-braces — /api/passes/order and
+  /api/corporate/order server-side. Flip to `true` (and update EVENT
+  above) to sell passes for a future edition.
+*/
+export const PASSES_OPEN = false;

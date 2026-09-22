@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { PASSES, type Pass } from "@/lib/passes";
 import PassCheckoutModal from "./PassCheckoutModal";
 import styles from "./PassesSection.module.css";
+import { PASSES_OPEN } from "@/lib/site";
 
 /* The promo banner (PromoBanner.tsx) used to sit above the pass grid and
    advertise the live coupon code publicly. Coupons are now shared privately
@@ -49,17 +50,33 @@ export default function PassesSection() {
         <header className={styles.head}>
           <div className={styles.overlineWrap}>
             <span className={styles.overlineRule} aria-hidden="true" />
-            <p className={styles.overline}>Passes · Dubai 2026</p>
+            <p className={styles.overline}>
+              {PASSES_OPEN ? "Passes · Dubai 2026" : "Dubai 2026 · Concluded"}
+            </p>
           </div>
           <h2 id="passes-heading" className={styles.heading}>
-            Choose your pass.
+            {PASSES_OPEN ? "Choose your pass." : "Passes are closed."}
           </h2>
           <p className={styles.deck}>
-            Two ways into the room on 11 September. Reserve in minutes —
-            secure checkout, instant confirmation.
+            {PASSES_OPEN
+              ? "Two ways into the room on 11 September. Reserve in minutes — secure checkout, instant confirmation."
+              : "MysticVerse Global 2026 has concluded, so pass sales are now closed."}
           </p>
         </header>
 
+        {!PASSES_OPEN ? (
+          <div className={styles.closedPanel}>
+            <span className={styles.closedMark} aria-hidden="true">✓</span>
+            <p className={styles.closedTitle}>Thank you for a memorable day.</p>
+            <p className={styles.closedText}>
+              Missed it? Browse the{" "}
+              <a href="/gallery" className={styles.noteLink}>event gallery</a> or
+              catch up on the{" "}
+              <a href="/agenda" className={styles.noteLink}>full agenda</a>.
+            </p>
+          </div>
+        ) : (
+        <>
         <div className={styles.grid}>
           {PASSES.map((pass, i) => (
             <article
@@ -130,6 +147,8 @@ export default function PassesSection() {
             Talk to our team →
           </a>
         </p>
+        </>
+        )}
       </div>
 
       <PassCheckoutModal pass={active} onClose={() => setActive(null)} />

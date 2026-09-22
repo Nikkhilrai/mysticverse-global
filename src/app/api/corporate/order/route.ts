@@ -10,6 +10,7 @@ import {
 } from "@/lib/corporate";
 import { createOrder, razorpayConfigured, razorpayKeyId } from "@/lib/razorpay";
 import { notifyAfter, rowsToHtml } from "@/lib/email";
+import { PASSES_OPEN } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -27,6 +28,15 @@ export const runtime = "nodejs";
   seats > 1.
 */
 export async function POST(req: NextRequest) {
+  // The conference has concluded — stop taking payment even if a
+  // cached page still renders the live checkout form.
+  if (!PASSES_OPEN) {
+    return NextResponse.json(
+      { ok: false, error: "MysticVerse Global 2026 has concluded — pass sales are now closed." },
+      { status: 410 },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();

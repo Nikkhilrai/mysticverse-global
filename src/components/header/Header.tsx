@@ -4,6 +4,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
+import { PASSES_OPEN } from "@/lib/site";
 
 /* Pages with a light background right at the top — the header needs
    dark nav text (and no dark scrim) while unscrolled there. Once
@@ -156,7 +157,10 @@ export default function Header() {
           Persists dismissal to localStorage (key: mvg_topbar_dismissed).
           Hides automatically once the user scrolls past 100px.
       ───────────────────────────────────────────────────── */}
-      {topBarVisible && (
+      {/* Announced early-bird pricing for a since-concluded event —
+          gate it on the same PASSES_OPEN flag rather than deleting
+          the strip, so it's ready to reuse for a future edition. */}
+      {PASSES_OPEN && topBarVisible && (
         <div
           className={`${styles.topBar}${topBarExiting ? ` ${styles.topBarExiting}` : ""}`}
         >
