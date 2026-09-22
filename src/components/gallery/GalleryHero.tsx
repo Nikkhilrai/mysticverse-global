@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import styles from "./GalleryHero.module.css";
-import { GALLERY_PHOTOS } from "./galleryData";
 
 export default function GalleryHero() {
   const [visible, setVisible] = useState(false);
@@ -27,14 +26,8 @@ export default function GalleryHero() {
         </div>
 
         <h1 className={styles.headline}>
-          The room,{" "}
-          <span className="gradientText">as it happened.</span>
+          Event <span className="gradientText">Glimpse</span>
         </h1>
-
-        <p className={styles.sub}>
-          {GALLERY_PHOTOS.length} moments from 11 September — the sessions, the
-          conversations, and the people who filled the room.
-        </p>
       </div>
     </section>
   );
