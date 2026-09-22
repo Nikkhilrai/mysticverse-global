@@ -1,5 +1,6 @@
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import ThankYouPopup from "@/components/thanks/ThankYouPopup";
 
 export default function SiteLayout({
   children,
@@ -9,6 +10,7 @@ export default function SiteLayout({
       <Header />
       {children}
       <Footer />
+      <ThankYouPopup />
     </>
   );
 }

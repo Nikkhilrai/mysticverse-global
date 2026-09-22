@@ -7,7 +7,6 @@ import WhoIsInTheRoom from "@/components/room/WhoIsInTheRoom";
 import ConfirmedPartners from "@/components/partners/ConfirmedPartners";
 import JournalPreview from "@/components/journal/JournalPreview";
 import UpcomingEditions from "@/components/editions/UpcomingEditions";
-import LeadPopup from "@/components/lead/LeadPopup";
 
 // The page is otherwise static content, but JournalPreview reads live
 // posts from the database — revalidate periodically so a newly
@@ -26,7 +25,6 @@ export default function Home() {
       <ConfirmedPartners />
       <JournalPreview />
       <UpcomingEditions />
-      <LeadPopup />
     </main>
   );
 }
