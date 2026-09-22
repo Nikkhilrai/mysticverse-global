@@ -171,7 +171,10 @@
   box-shadow: 0 0 0 4px rgba(183, 134, 43, 0.17);
 }
 
-.live .node::after {
+/* Pulsing ring is gated on .active, not .live — a concluded edition
+   keeps the flagship node styling above without implying "happening
+   right now". */
+.active .node::after {
   content: '';
   position: absolute;
   inset: -2px;
@@ -408,7 +411,7 @@
     animation: none;
   }
 
-  .live .node::after { animation: none; }
+  .active .node::after { animation: none; }
 
   .bannerImg,
   .actionPrimary,

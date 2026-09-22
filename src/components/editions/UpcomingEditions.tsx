@@ -9,12 +9,16 @@ const EDITIONS = [
     year: "2026",
     city: "Dubai",
     tag: "Inaugural Edition",
-    status: "Now Open",
+    status: "Concluded",
     kind: "live" as const,
+    /** Drives the pulsing timeline dot + primary (vs. ghost) CTA
+     *  styling — distinct from `kind`, which only sets the card's
+     *  visual tier. Nothing is "active" about a concluded edition. */
+    active: false,
     meta: "11 September · Dubai, UAE",
-    copy: "One day where the builders, investors, and practitioners shaping the conscious luxury economy — and the people buying into it — share the same room.",
+    copy: "One day where the builders, investors, and practitioners shaping the conscious luxury economy — and the people buying into it — shared the same room.",
     image: "/images/editions/dubai-night-3.jpg",
-    action: { label: "Reserve Your Seat", href: "/register" },
+    action: { label: "View Event Gallery", href: "/gallery" },
   },
   {
     year: "2027",
@@ -22,10 +26,11 @@ const EDITIONS = [
     tag: "Second Edition",
     status: "Coming Next",
     kind: "next" as const,
-    meta: "Dates & venue to be confirmed",
-    copy: "The series continues into Asia. Be first to know when dates and venue are announced.",
+    active: false,
+    meta: "Bangkok, Thailand",
+    copy: "The series continues into Asia. Dates are still being finalised — be first to know when they're announced.",
     image: null,
-    action: { label: "Notify Me", href: "/notify" },
+    action: { label: "Get in Touch", href: "/contact" },
   },
   {
     year: "2028",
@@ -33,6 +38,7 @@ const EDITIONS = [
     tag: "Third Edition",
     status: "On The Horizon",
     kind: "future" as const,
+    active: false,
     meta: "Host city under consideration",
     copy: "The platform expands. The next host city will be announced in due course.",
     image: null,
@@ -82,7 +88,10 @@ export default function UpcomingEditions() {
         {/* ── Roadmap ───────────────────────────────────────── */}
         <div className={styles.track}>
           {EDITIONS.map((e) => (
-            <article key={e.year} className={`${styles.edition} ${styles[e.kind]}`}>
+            <article
+              key={e.year}
+              className={`${styles.edition} ${styles[e.kind]}${e.active ? ` ${styles.active}` : ""}`}
+            >
 
               {/* Timeline rail */}
               <div className={styles.rail} aria-hidden="true">
@@ -93,7 +102,7 @@ export default function UpcomingEditions() {
               <div className={styles.head}>
                 <span className={styles.year}>{e.year}</span>
                 <span className={styles.statusPill}>
-                  {e.kind === "live" && <span className={styles.statusDot} aria-hidden="true" />}
+                  {e.active && <span className={styles.statusDot} aria-hidden="true" />}
                   {e.status}
                 </span>
               </div>
@@ -119,7 +128,7 @@ export default function UpcomingEditions() {
               {e.action ? (
                 <a
                   href={e.action.href}
-                  className={e.kind === "live" ? styles.actionPrimary : styles.actionGhost}
+                  className={e.active ? styles.actionPrimary : styles.actionGhost}
                 >
                   {e.action.label}
                   <span className={styles.arrow} aria-hidden="true">→</span>
