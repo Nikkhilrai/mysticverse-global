@@ -33,7 +33,6 @@ const INVOLVED_LINKS = [
   { label: "HR Leaders Hub",            href: "/pillars/workplace-wellness"   },
   { label: "Media Partnerships",        href: "/sponsor"                      },
   { label: "Speak at MysticVerse",      href: "/contact"                      }, // no dedicated speaker-application flow yet — routes to general contact for now
-  { label: "Nominate for the Awards",   href: "/nomination-form"              },
 ] as const;
 
 const ATTEND_LINKS = [

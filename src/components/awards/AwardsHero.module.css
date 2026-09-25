@@ -1,8 +1,10 @@
 /* ══════════════════════════════════════════════════════════════
-   AwardsHero — "The MysticVerse Global Excellence Awards."
-   No photograph: a ceremony is lighting, not a place. A gold
-   spotlight and a soft stage beam over obsidian, a gradient
-   star emblem, and the headline revealed line-by-line.
+   AwardsHero — "The MysticVerse Global Excellence Awardees."
+   A ceremony is lighting: a gold spotlight and a soft stage beam
+   over obsidian, a gradient star emblem, and the headline revealed
+   line-by-line. Behind it, the honourees' own portraits (already
+   on the speaker page) drift by, dimmed to a mood rather than a
+   photograph.
    ══════════════════════════════════════════════════════════════ */
 
 .section {
@@ -206,6 +208,7 @@
   color: #DAD8E2;
   max-width: 54ch;
   margin-inline: auto;
+  text-wrap: balance;
 
   opacity: 0;
   transform: translateY(20px);
@@ -238,4 +241,109 @@
     transform: none;
     transition: none;
   }
+}
+
+/* ── Portrait backdrop ───────────────────────────────────── */
+.mosaic {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1800ms var(--ease-out-cubic) 100ms;
+}
+
+.section.in .mosaic { opacity: 0.62; }
+
+.mosaicRow {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 1rem;
+  padding-right: 1rem; /* keeps the -50% loop seamless */
+  width: max-content;
+  animation: awDrift 100s linear infinite;
+}
+
+.trackReverse {
+  animation-direction: reverse;
+  animation-duration: 120s;
+}
+
+@keyframes awDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.tile {
+  position: relative;
+  flex: none;
+  width: clamp(170px, 20vw, 280px);
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #14141F;
+}
+
+.tileImg {
+  object-fit: cover;
+  object-position: 50% 22%;
+  filter: grayscale(0.7) contrast(1.05) brightness(0.62) blur(1.2px);
+}
+
+/* Keeps the type legible: dark at the centre, portraits emerge
+   toward the edges, and the section fades cleanly top and bottom. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(62% 60% at 50% 52%, rgba(8, 8, 14, 0.94) 0%, rgba(8, 8, 14, 0.78) 48%, rgba(8, 8, 14, 0.36) 100%),
+    linear-gradient(to bottom, #08080E 0%, rgba(8, 8, 14, 0) 20%, rgba(8, 8, 14, 0) 76%, #08080E 100%);
+}
+
+/* ── Scroll cue ──────────────────────────────────────────── */
+.cue {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  text-decoration: none;
+
+  opacity: 0;
+  transition: opacity 860ms var(--ease-out-cubic) 1350ms;
+}
+
+.section.in .cue { opacity: 1; }
+.cue:focus-visible { outline: 2px solid #F5C45A; outline-offset: 6px; border-radius: 4px; }
+
+.cueArrow {
+  font-size: 1.05rem;
+  animation: awBob 2.2s ease-in-out infinite;
+}
+
+@keyframes awBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaic { opacity: 0.62; transition: none; }
+  .cue { opacity: 1; transition: none; }
+  .track, .cueArrow { animation: none; }
 }

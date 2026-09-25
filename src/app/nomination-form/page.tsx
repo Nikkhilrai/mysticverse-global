@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import NominationForm from "@/components/awards/nominate/NominationForm";
+import NominationClosed from "@/components/awards/NominationClosed";
+import { AWARD_ENTRIES_OPEN } from "@/lib/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/nomination-form" },
@@ -12,7 +14,7 @@ export const metadata: Metadata = {
 export default function NominatePage() {
   return (
     <main>
-      <NominationForm />
+      {AWARD_ENTRIES_OPEN ? <NominationForm /> : <NominationClosed />}
     </main>
   );
 }

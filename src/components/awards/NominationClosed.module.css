@@ -1,0 +1,116 @@
+/* ══════════════════════════════════════════════════════════════
+   NominationClosed — /nomination-form after the ceremony
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  background-color: #0B0B12;
+  padding: clamp(8rem, 16vh, 11rem) clamp(1.5rem, 6vw, 6rem) clamp(4rem, 8vw, 6rem);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 46% at 50% 0%, rgba(245, 196, 90, 0.12) 0%, transparent 64%),
+    radial-gradient(46% 52% at 92% 96%, rgba(124, 92, 255, 0.14) 0%, transparent 64%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: #14100C;
+  background: var(--gradient-signature);
+  margin-bottom: 1.5rem;
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+  margin-bottom: 1.25rem;
+}
+
+.text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.7;
+  color: #A8A6B4;
+  max-width: 46ch;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0B0B12;
+  background: var(--gradient-signature);
+  text-decoration: none;
+  box-shadow: 0 12px 40px -14px rgba(199, 125, 255, 0.6);
+  transition: transform 300ms var(--ease-out-cubic), box-shadow 300ms var(--ease-out-cubic);
+}
+.primary:hover { transform: translateY(-2px); box-shadow: 0 18px 50px -14px rgba(199, 125, 255, 0.8); }
+.primary:focus-visible, .secondary:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; }
+
+.secondary {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #B8B6C4;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 196, 90, 0.4);
+  text-underline-offset: 4px;
+  transition: color 240ms var(--ease-out-cubic);
+}
+.secondary:hover { color: #F4F2F7; }
+
+@media (prefers-reduced-motion: reduce) {
+  .primary { transition: none; }
+}

@@ -37,3 +37,14 @@ export const INTEREST_OPEN = false;
   above) to sell passes for a future edition.
 */
 export const PASSES_OPEN = false;
+
+/*
+  Excellence Awards entries — the paid nomination form ($499/category
+  via live-keyed Razorpay), its document-upload signer, and the
+  jury-partner / nominate lead form. The 2026 honours were presented
+  at the ceremony, so /awards now showcases the awardees instead.
+  Gates /nomination-form and the three /api/award-* write endpoints.
+  (/api/award-nomination/verify is deliberately left alone — it only
+  confirms orders opened before the close.)
+*/
+export const AWARD_ENTRIES_OPEN = false;

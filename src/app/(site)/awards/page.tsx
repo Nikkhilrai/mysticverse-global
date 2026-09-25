@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import AwardsHero from "@/components/awards/AwardsHero";
-import AwardsCategories from "@/components/awards/AwardsCategories";
-import AwardsJury from "@/components/awards/AwardsJury";
+import AwardeesShowcase from "@/components/awards/AwardeesShowcase";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/awards" },
-  title: "Excellence Awards | MysticVerse Global 2026",
+  title: "Excellence Awardees | MysticVerse Global 2026",
   description:
-    "The MysticVerse Global Excellence Awards recognise the projects, leaders, and platforms shaping the conscious luxury economy — eight honours awarded on the main stage, 11 September 2026, Dubai.",
+    "Meet the honourees of the MysticVerse Global Excellence Awards 2026 — ten honours presented on the main stage on 11 September 2026 at Taj Jumeirah Lakes Towers, Dubai.",
   openGraph: {
-    title: "The MysticVerse Global Excellence Awards",
+    title: "The MysticVerse Global Excellence Awardees 2026",
     description:
-      "Eight honours for the projects, leaders, and platforms shaping the conscious luxury economy. 11 September 2026, Dubai.",
+      "Ten honours for the practitioners, leaders, and platforms shaping conscious living. Presented 11 September 2026, Dubai.",
     type: "website",
   },
 };
@@ -20,8 +19,7 @@ export default function AwardsPage() {
   return (
     <main>
       <AwardsHero />
-      <AwardsCategories />
-      <AwardsJury />
+      <AwardeesShowcase />
     </main>
   );
 }

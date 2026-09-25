@@ -4,6 +4,7 @@ import { AwardSubmissionSchema } from "@/lib/validation";
 import { notifyAfter, rowsToHtml } from "@/lib/email";
 import { after } from "next/server";
 import { sendStep } from "@/lib/nurture";
+import { AWARD_ENTRIES_OPEN } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,16 @@ export const runtime = "nodejs";
   One table, one admin view, filtered by kind.
 */
 export async function POST(req: NextRequest) {
+  // The 2026 awards have been presented — stop accepting entries (and,
+  // for the order route, stop taking payment) even if a cached page
+  // still renders the form.
+  if (!AWARD_ENTRIES_OPEN) {
+    return NextResponse.json(
+      { ok: false, error: "The MysticVerse Global Excellence Awards 2026 have concluded — entries are now closed." },
+      { status: 410 },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();

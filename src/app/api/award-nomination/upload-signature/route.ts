@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import { AwardNominationUploadSignatureSchema } from "@/lib/validation";
+import { AWARD_ENTRIES_OPEN } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -16,6 +17,16 @@ const FOLDER = "mysticverse/nominations";
   pitch deck. This route only ever handles a few hundred bytes of JSON.
 */
 export async function POST(req: NextRequest) {
+  // The 2026 awards have been presented — stop accepting entries (and,
+  // for the order route, stop taking payment) even if a cached page
+  // still renders the form.
+  if (!AWARD_ENTRIES_OPEN) {
+    return NextResponse.json(
+      { ok: false, error: "The MysticVerse Global Excellence Awards 2026 have concluded — entries are now closed." },
+      { status: 410 },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();

@@ -1,0 +1,331 @@
+/* ══════════════════════════════════════════════════════════════
+   AwardeesShowcase — the honourees, two to a row.
+   Each card: an arch-framed portrait (gold gradient keyline),
+   the felicitation title in signature gradient, the name, and
+   what the honour recognises.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0B0B12;
+  padding:
+    clamp(4.5rem, 9vw, 8rem)
+    clamp(1.25rem, 6vw, 6rem)
+    clamp(5rem, 9vw, 8rem);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 30% at 50% 0%, rgba(245, 196, 90, 0.1) 0%, transparent 66%),
+    radial-gradient(46% 34% at 6% 52%, rgba(124, 92, 255, 0.1) 0%, transparent 66%),
+    radial-gradient(46% 34% at 96% 78%, rgba(199, 125, 255, 0.08) 0%, transparent 66%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.head {
+  text-align: center;
+  margin-bottom: clamp(2.75rem, 6vw, 4.5rem);
+}
+
+.overlineWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.overlineRule {
+  display: block;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245, 196, 90, 0.7));
+}
+.overlineRule:last-child { background: linear-gradient(to left, transparent, rgba(245, 196, 90, 0.7)); }
+
+.overline {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F5C45A;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #F4F2F7;
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
+  gap: clamp(1rem, 2.4vw, 1.75rem);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(104px, 16vw, 200px) 1fr;
+  gap: clamp(1rem, 2.4vw, 1.75rem);
+  align-items: center;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border: 1px solid var(--hairline);
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 760ms var(--ease-out-cubic),
+    transform 760ms var(--ease-out-cubic),
+    border-color 380ms var(--ease-out-cubic),
+    box-shadow 380ms var(--ease-out-cubic);
+  transition-delay: calc((var(--i) % 2) * 110ms), calc((var(--i) % 2) * 110ms), 0ms, 0ms;
+}
+
+.card.in { opacity: 1; transform: none; }
+
+.card:hover {
+  border-color: var(--hairline-gold);
+  box-shadow: 0 30px 80px -40px rgba(245, 196, 90, 0.35);
+}
+
+/* Faint editorial numeral behind the copy */
+.index {
+  position: absolute;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  bottom: -0.15em;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(244, 242, 247, 0.035);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Portrait — arch frame with a gold keyline ───────────── */
+.frame {
+  position: relative;
+  padding: 2px;
+  border-radius: 999px 999px 20px 20px;
+  background: var(--gradient-signature);
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 18px 50px -22px rgba(199, 125, 255, 0.55);
+}
+
+.frameInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 999px 999px 18px 18px;
+  background: radial-gradient(90% 70% at 50% 30%, #1E1B2E 0%, #10101A 100%);
+}
+
+.portrait {
+  object-fit: cover;
+  object-position: 50% 20%;
+  transition: transform 900ms var(--ease-out-cubic);
+}
+
+.card:hover .portrait { transform: scale(1.06); }
+
+/* A slow sheen across the portrait on hover */
+.frameInner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.2) 50%, transparent 62%);
+  transform: translateX(-130%);
+  transition: transform 1100ms var(--ease-out-cubic);
+}
+
+.card:hover .frameInner::after { transform: translateX(130%); }
+
+.monogram {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: var(--gradient-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Copy ────────────────────────────────────────────────── */
+.body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  margin-bottom: 0.7rem;
+}
+
+.star { font-size: 0.7rem; }
+
+.award {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.1vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.name {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 500;
+  color: #F4F2F7;
+  padding-top: 0.8rem;
+  margin-bottom: 0.55rem;
+  border-top: 1px solid var(--hairline-gold);
+  min-width: 4rem;
+}
+
+.focus {
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 1vw, 0.875rem);
+  line-height: 1.6;
+  color: #A8A6B4;
+  max-width: 40ch;
+}
+
+/* ── Closing ─────────────────────────────────────────────── */
+.closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: clamp(4rem, 8vw, 6.5rem);
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--hairline-gold);
+}
+
+.closingMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  color: #14100C;
+  background: var(--gradient-signature);
+  margin-bottom: 1.25rem;
+}
+
+.closingTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #F4F2F7;
+  margin-bottom: 0.75rem;
+}
+
+.closingText {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #A8A6B4;
+  max-width: 44ch;
+  margin-bottom: 1.75rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0B0B12;
+  background: var(--gradient-signature);
+  text-decoration: none;
+  box-shadow: 0 12px 40px -14px rgba(199, 125, 255, 0.6);
+  transition: transform 300ms var(--ease-out-cubic), box-shadow 300ms var(--ease-out-cubic);
+}
+.primary:hover { transform: translateY(-2px); box-shadow: 0 18px 50px -14px rgba(199, 125, 255, 0.8); }
+
+.secondary {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: #B8B6C4;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 196, 90, 0.4);
+  text-underline-offset: 4px;
+  transition: color 240ms var(--ease-out-cubic);
+}
+.secondary:hover { color: #F4F2F7; }
+
+.primary:focus-visible, .secondary:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; }
+
+/* ── Small screens: portrait stays beside the copy, just smaller ── */
+@media (max-width: 640px) {
+  .frame { border-radius: 60px 60px 14px 14px; }
+  .frameInner { border-radius: 58px 58px 12px 12px; }
+  .card { border-radius: 20px; }
+}
+
+@media (max-width: 380px) {
+  .card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .frame { width: 132px; }
+  .eyebrow { justify-content: center; }
+  .name { min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { opacity: 1; transform: none; transition: none; }
+  .portrait, .frameInner::after, .primary { transition: none; }
+}
