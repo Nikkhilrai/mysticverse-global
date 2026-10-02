@@ -4,10 +4,10 @@
 
    Source: "AWARDEE – MVG 2026" felicitation list. Portraits are
    resolved from the speaker roster (speakersData.ts) by
-   `speakerSlug`, so a photo only ever lives in one place. Honourees
-   with no portrait on file fall back to a monogram medallion —
-   add `speakerSlug` (or extend this with an `image`) once a photo
-   is supplied.
+   `speakerSlug` where the honouree already has one, so that photo
+   only ever lives in one place; `image` is a direct path for
+   honourees (or platforms/logos) with no speaker entry. No portrait
+   on file at all falls back to a monogram medallion.
    ══════════════════════════════════════════════════════════════ */
 
 import { SPEAKERS } from "@/components/speakers/speakersData";
@@ -23,6 +23,8 @@ export interface Awardee {
   focus: string;
   /** Slug in speakersData.ts — resolves the portrait. */
   speakerSlug?: string;
+  /** Direct image/logo path — takes priority over speakerSlug. */
+  image?: string;
   /** Monogram shown when there is no portrait. */
   initials: string;
 }
@@ -89,6 +91,9 @@ export const AWARDEES: readonly Awardee[] = [
     name: "Chahna Soni",
     award: "Beauty & Aesthetic Wellness Influence of the Year",
     focus: "Beauty · Aesthetic Wellness · Health · Skincare · Conscious Living",
+    // Sourced from her Charlette Magazine profile (see awardeesData.ts
+    // header) — confirm usage rights, or swap for a supplied photo.
+    image: "/images/awards/chahna-soni.jpg",
     initials: "CS",
   },
   {
@@ -96,6 +101,7 @@ export const AWARDEES: readonly Awardee[] = [
     name: "MANOYAA",
     award: "Mind Body Integration Platform of the Year",
     focus: "Mind-Body Wellness · Holistic Healing · Conscious Living",
+    image: "/images/partners/Manoyaa-Alchemy.avif",
     initials: "M",
   },
   {
@@ -107,8 +113,9 @@ export const AWARDEES: readonly Awardee[] = [
   },
 ] as const;
 
-/** The honouree's portrait, taken from the speaker roster (if they have one). */
+/** The honouree's portrait — a direct image/logo, else the speaker roster. */
 export function awardeePortrait(a: Awardee): string | undefined {
+  if (a.image) return a.image;
   if (!a.speakerSlug) return undefined;
   return SPEAKERS.find((s) => s.slug === a.speakerSlug)?.image;
 }
