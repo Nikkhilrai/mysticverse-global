@@ -109,6 +109,7 @@ export const AWARDEES: readonly Awardee[] = [
     name: "Renàtà Nàsalyovà",
     award: "Energy Healing Practitioner of the Year",
     focus: "Energy Healing, Reiki, Seichem, Holistic Practice",
+    image: "/images/awards/renata-nasalyova.jpg",
     initials: "RN",
   },
 ] as const;
