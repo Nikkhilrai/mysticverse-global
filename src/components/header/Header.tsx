@@ -22,17 +22,26 @@ const HEADER_INTRO_KEY = "mvg-header-intro-seen";
   to 404s and mislead visitors.
 
   Future dropdown children:
-  — "The 4 Pillars":   Conscious Luxury Living / Workplace Wellness &
-                        Human Capital / Personal Mastery & Longevity /
-                        Wisdom & Modern Science
   — "Conference":      Agenda / Speakers / Awards / Think Tank
   — "Partner With Us": 4 partner-tier pages (TBD in Phase 4 brief)
+
+  "Why Dubai 2026" and "The 4 Pillars" are nested under "Dubai 2026"
+  (rather than top-level) now that a second edition (Bangkok,
+  Thailand) is in progress — keeps edition-specific pages grouped
+  as more editions are added.
 */
 const NAV_ITEMS = [
   { label: "Home",            href: "/",                  futureDropdown: false },
   { label: "About",           href: "/about",             futureDropdown: false },
-  { label: "Why Dubai 2026",  href: "/why-dubai-2026",  futureDropdown: false },
-  { label: "The 4 Pillars",   href: "/pillars",          futureDropdown: true  },
+  {
+    label: "Dubai 2026",
+    href: "/why-dubai-2026",
+    futureDropdown: false,
+    children: [
+      { label: "Why Dubai 2026", href: "/why-dubai-2026" },
+      { label: "The 4 Pillars", href: "/pillars" },
+    ],
+  },
   // { label: "The Pavilion", href: "/pavilion", futureDropdown: false }, — temporarily unpublished
   {
     label: "Conference",
