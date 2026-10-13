@@ -199,7 +199,6 @@
 
 /* Lede + drop cap */
 .body > :global(p:first-of-type) {
-  font-size: 1.12em;
   color: var(--ink);
 }
 
@@ -276,12 +275,14 @@
 /* ── Photo-story frames ──────────────────────────────────────
    Runs of images placed between paragraphs are grouped at render
    (lib/articleHtml.ts) into <figure class="mv-story" data-count>.
-   The frame breaks out wider than the text column: one image runs
-   wide, two or more sit side by side at a shared 4:5.            */
+   Sized so text and photos share the screen like a magazine story:
+     2–3 photos  → a row at 4:5, the width of the text column
+     1 photo     → a 4:5 portrait floated beside the next paragraph,
+                   hanging just outside the column (desktop)
+     1 photo as the last thing in the article → a short closing
+                   banner instead (nothing follows it to wrap)     */
 .body :global(figure.mv-story) {
-  --story-w: min(calc(100vw - 2.5rem), 1000px);
-  width: var(--story-w);
-  margin: 2.8em calc(50% - var(--story-w) / 2);
+  margin: 2.6em 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(0.6rem, 1.4vw, 1rem);
@@ -294,20 +295,45 @@
   display: block;
   width: 100%;
   height: auto;
-  max-height: 85vh;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
+  object-position: 50% 25%;
   margin: 0;
-  border-radius: clamp(12px, 1.6vw, 20px);
+  border-radius: clamp(12px, 1.6vw, 18px);
   background: #ECE9E2;
   box-shadow:
     0 0 0 1px rgba(20, 20, 31, 0.06),
-    0 40px 80px -48px rgba(20, 20, 31, 0.5);
+    0 34px 70px -44px rgba(20, 20, 31, 0.5);
 }
-.body :global(figure.mv-story:not([data-count="1"]) img) { aspect-ratio: 4 / 5; }
 
-/* Phones: a story stacks, one photo at a time */
+/* Single photo inside the story: float beside the text */
+@media (min-width: 900px) {
+  .body :global(figure.mv-story[data-count="1"]:not(:last-child)) {
+    float: right;
+    width: 300px;
+    margin: 0.35em 0 1.2em 2rem;
+  }
+}
+@media (min-width: 1180px) {
+  .body :global(figure.mv-story[data-count="1"]:not(:last-child)) {
+    width: 340px;
+    margin-right: -120px;
+  }
+}
+
+/* Single photo closing the article: a short wide banner */
+.body :global(figure.mv-story[data-count="1"]:last-child img) {
+  aspect-ratio: 16 / 9;
+  max-height: 62vh;
+}
+
+/* Anything after the body sits below any floated photo */
+.endmark { clear: both; }
+
+/* Phones: one photo per row */
 @media (max-width: 560px) {
   .body :global(figure.mv-story[data-count]) { grid-template-columns: 1fr; }
+  .body :global(figure.mv-story[data-count="1"]:not(:last-child) img) { aspect-ratio: 4 / 5; }
 }
 
 /* Each photo eases in as it scrolls into view — where supported */
