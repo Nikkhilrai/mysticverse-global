@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { prisma } from "@/lib/db";
+import { readingMinutes } from "@/lib/articleHtml";
+import CoverImage from "@/components/journal/CoverImage";
 import styles from "./journal.module.css";
 
 export const dynamic = "force-dynamic";
@@ -27,45 +29,92 @@ export default async function JournalPage() {
     orderBy: { publishedAt: "desc" },
   });
 
+  const [featured, ...rest] = posts;
+
   return (
     <main className={styles.section}>
+      <div className={styles.glow} aria-hidden="true" />
+
       <div className={styles.inner}>
         <header className={styles.head}>
-          <p className={styles.eyebrow}>The Blog</p>
-          <h1 className={styles.h1}>Conscious living, in writing.</h1>
+          <div className={styles.eyebrowWrap}>
+            <span className={styles.eyebrowRule} aria-hidden="true" />
+            <p className={styles.eyebrow}>The Blog</p>
+          </div>
+          <h1 className={styles.h1}>
+            Conscious living,{" "}
+            <span className={`gradientTextInk ${styles.nowrap}`}>in writing.</span>
+          </h1>
           <p className={styles.sub}>
             Essays and dispatches on conscious luxury, wellness real estate,
             longevity, and human flourishing.
           </p>
         </header>
 
-        {posts.length === 0 ? (
+        {!featured ? (
           <p className={styles.empty}>No articles published yet — check back soon.</p>
         ) : (
-          <div className={styles.grid}>
-            {posts.map((p) => (
-              <a key={p.id} href={`/journal/${p.slug}`} className={styles.card}>
-                <div className={styles.cover}>
-                  {p.coverImage ? (
-                    <Image
-                      className={styles.coverImg}
-                      src={p.coverImage}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className={styles.coverFallback} aria-hidden="true" />
-                  )}
-                </div>
-                <div className={styles.body}>
-                  <span className={styles.meta}>{fmt(p.publishedAt)}</span>
-                  <h2 className={styles.cardTitle}>{p.title}</h2>
-                  {p.excerpt && <p className={styles.excerpt}>{p.excerpt}</p>}
-                </div>
-              </a>
-            ))}
-          </div>
+          <>
+            {/* ── Latest article, given the stage ──────────── */}
+            <a href={`/journal/${featured.slug}`} className={styles.featured}>
+              <div className={styles.featuredCover}>
+                {featured.coverImage ? (
+                  <CoverImage
+                    src={featured.coverImage}
+                    alt=""
+                    priority
+                    sizes="(max-width: 900px) 100vw, 640px"
+                    imageClassName={styles.featuredImg}
+                  />
+                ) : (
+                  <div className={styles.coverFallback} aria-hidden="true" />
+                )}
+              </div>
+              <div className={styles.featuredBody}>
+                <span className={styles.badge}>Latest</span>
+                <span className={styles.meta}>
+                  {fmt(featured.publishedAt)} · {readingMinutes(featured.content)} min read
+                </span>
+                <h2 className={styles.featuredTitle}>{featured.title}</h2>
+                {featured.excerpt && <p className={styles.featuredExcerpt}>{featured.excerpt}</p>}
+                <span className={styles.cta}>
+                  Read the article <span aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+
+            {rest.length > 0 && (
+              <div className={styles.grid}>
+                {rest.map((p) => (
+                  <a key={p.id} href={`/journal/${p.slug}`} className={styles.card}>
+                    <div className={styles.cover}>
+                      {p.coverImage ? (
+                        <Image
+                          className={styles.coverImg}
+                          src={p.coverImage}
+                          alt=""
+                          fill
+                          sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className={styles.coverFallback} aria-hidden="true" />
+                      )}
+                    </div>
+                    <div className={styles.body}>
+                      <span className={styles.meta}>
+                        {fmt(p.publishedAt)} · {readingMinutes(p.content)} min read
+                      </span>
+                      <h2 className={styles.cardTitle}>{p.title}</h2>
+                      {p.excerpt && <p className={styles.excerpt}>{p.excerpt}</p>}
+                      <span className={styles.cta}>
+                        Read <span aria-hidden="true">→</span>
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </main>

@@ -3,8 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
+import { normalizeArticleHtml, readingMinutes } from "@/lib/articleHtml";
 import AuthorByline from "@/components/journal/AuthorByline";
 import ShareArticle from "@/components/journal/ShareArticle";
+import ReadingProgress from "@/components/journal/ReadingProgress";
+import CoverImage from "@/components/journal/CoverImage";
 import styles from "./article.module.css";
 
 export const dynamic = "force-dynamic";
@@ -64,72 +67,120 @@ export default async function ArticlePage({
     take: 3,
   });
 
+  const author = post.blogAuthor;
+  const minutes = readingMinutes(post.content);
+
   return (
-    <main className={styles.section}>
-      <div className={styles.inner}>
-        <a href="/journal" className={styles.back}>← Back to Blog</a>
+    <main className={styles.page}>
+      <ReadingProgress targetId="article-body" />
+      <div className={styles.glow} aria-hidden="true" />
 
-        <article className={styles.frame}>
-          <div className={styles.headWrap}>
-            <p className={styles.meta}>
-              {post.blogAuthor ? `By ${post.blogAuthor.name} · ` : ""}
-              {fmt(post.publishedAt)}
+      {/* ── Masthead ───────────────────────────────────────── */}
+      <header className={styles.hero}>
+        <a href="/journal" className={styles.back}>
+          <span aria-hidden="true">←</span> Back to Blog
+        </a>
+
+        <div className={styles.kicker}>
+          <span className={styles.kickerRule} aria-hidden="true" />
+          <span>The Blog</span>
+          <span className={styles.kickerRule} aria-hidden="true" />
+        </div>
+
+        <h1 className={styles.title}>{post.title}</h1>
+
+        {post.excerpt && <p className={styles.dek}>{post.excerpt}</p>}
+
+        <div className={styles.byline}>
+          {author &&
+            (author.image ? (
+              <span className={styles.avatar}>
+                <Image src={author.image} alt="" fill sizes="44px" className={styles.avatarImg} />
+              </span>
+            ) : (
+              <span className={styles.avatarFallback} aria-hidden="true">
+                {author.name.charAt(0).toUpperCase()}
+              </span>
+            ))}
+          <div className={styles.bylineText}>
+            {author && (
+              <p className={styles.bylineName}>
+                {author.name}
+                {author.role && <span className={styles.bylineRole}> · {author.role}</span>}
+              </p>
+            )}
+            <p className={styles.bylineMeta}>
+              <time dateTime={post.publishedAt?.toISOString()}>{fmt(post.publishedAt)}</time>
+              <span className={styles.dot} aria-hidden="true">·</span>
+              {minutes} min read
             </p>
-            <h1 className={styles.title}>{post.title}</h1>
           </div>
+        </div>
+      </header>
 
-          {post.coverImage && (
-            <div className={styles.cover}>
-              <Image
-                className={styles.coverImg}
-                src={post.coverImage}
-                alt={post.title}
-                fill
-                priority
-                sizes="(max-width: 800px) 100vw, 800px"
-              />
-            </div>
-          )}
-
-          <div
-            className={styles.body}
-            dangerouslySetInnerHTML={{ __html: post.content }}
+      {post.coverImage && (
+        <figure className={styles.cover}>
+          <CoverImage
+            src={post.coverImage}
+            alt={post.title}
+            priority
+            sizes="(max-width: 1180px) 100vw, 1120px"
           />
+        </figure>
+      )}
 
-          <ShareArticle url={`${SITE_URL}/journal/${post.slug}`} title={post.title} />
+      {/* ── Body ───────────────────────────────────────────── */}
+      <article id="article-body" className={styles.article}>
+        <div
+          className={styles.body}
+          dangerouslySetInnerHTML={{ __html: normalizeArticleHtml(post.content) }}
+        />
 
-          {post.blogAuthor && <AuthorByline author={post.blogAuthor} />}
-        </article>
+        <p className={styles.endmark} aria-hidden="true">✦ ✦ ✦</p>
 
-        {related.length > 0 && (
-          <section className={styles.related}>
-            <p className={styles.relatedLabel}>Related Articles</p>
-            <div className={styles.relatedGrid}>
-              {related.map((r) => (
-                <a key={r.id} href={`/journal/${r.slug}`} className={styles.relatedCard}>
-                  <div className={styles.relatedCover}>
-                    {r.coverImage ? (
-                      <Image
-                        className={styles.relatedCoverImg}
-                        src={r.coverImage}
-                        alt={r.title}
-                        fill
-                        sizes="(max-width: 720px) 100vw, 33vw"
-                      />
-                    ) : (
-                      <div className={styles.relatedCoverFallback} aria-hidden="true" />
-                    )}
-                  </div>
-                  <div className={styles.relatedBody}>
-                    <p className={styles.relatedMeta}>{fmt(r.publishedAt)}</p>
-                    <h3 className={styles.relatedTitle}>{r.title}</h3>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+        <ShareArticle url={`${SITE_URL}/journal/${post.slug}`} title={post.title} />
+
+        {author && <AuthorByline author={author} />}
+      </article>
+
+      {/* ── Related ────────────────────────────────────────── */}
+      {related.length > 0 && (
+        <section className={styles.related} aria-labelledby="related-heading">
+          <div className={styles.relatedHead}>
+            <span className={styles.kickerRule} aria-hidden="true" />
+            <h2 id="related-heading" className={styles.relatedLabel}>Continue reading</h2>
+            <span className={styles.kickerRule} aria-hidden="true" />
+          </div>
+          <div className={styles.relatedGrid}>
+            {related.map((r) => (
+              <a key={r.id} href={`/journal/${r.slug}`} className={styles.relatedCard}>
+                <div className={styles.relatedCover}>
+                  {r.coverImage ? (
+                    <Image
+                      className={styles.relatedCoverImg}
+                      src={r.coverImage}
+                      alt=""
+                      fill
+                      sizes="(max-width: 720px) 100vw, 360px"
+                    />
+                  ) : (
+                    <div className={styles.relatedCoverFallback} aria-hidden="true" />
+                  )}
+                </div>
+                <div className={styles.relatedBody}>
+                  <p className={styles.relatedMeta}>
+                    {fmt(r.publishedAt)} · {readingMinutes(r.content)} min read
+                  </p>
+                  <h3 className={styles.relatedTitle}>{r.title}</h3>
+                  <span className={styles.relatedCta}>
+                    Read article <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

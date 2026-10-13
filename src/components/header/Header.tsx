@@ -9,8 +9,9 @@ import { PASSES_OPEN } from "@/lib/site";
 /* Pages with a light background right at the top — the header needs
    dark nav text (and no dark scrim) while unscrolled there. Once
    scrolled, the header always gets its solid dark background, so
-   light text is unaffected. */
-const LIGHT_TOP_PAGES = ["/agenda"];
+   light text is unaffected. Matches the path and anything under it
+   (so "/journal" covers every article too). */
+const LIGHT_TOP_PAGES = ["/agenda", "/journal"];
 
 const HEADER_INTRO_KEY = "mvg-header-intro-seen";
 
@@ -71,7 +72,9 @@ const TOPBAR_KEY = "mvg_topbar_dismissed";
 
 export default function Header() {
   const pathname = usePathname();
-  const isLightTopPage = LIGHT_TOP_PAGES.includes(pathname);
+  const isLightTopPage = LIGHT_TOP_PAGES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
   const [scrolled,       setScrolled]       = useState(false);
   const [topBarVisible,  setTopBarVisible]  = useState(true);
   const [topBarExiting,  setTopBarExiting]  = useState(false);
