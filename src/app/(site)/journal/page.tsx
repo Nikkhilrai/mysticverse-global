@@ -3,6 +3,7 @@ import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { readingMinutes } from "@/lib/articleHtml";
 import CoverImage from "@/components/journal/CoverImage";
+import { isPressRelease } from "@/lib/postTags";
 import styles from "./journal.module.css";
 
 export const dynamic = "force-dynamic";
@@ -73,6 +74,7 @@ export default async function JournalPage() {
               <div className={styles.featuredBody}>
                 <span className={styles.badge}>Latest</span>
                 <span className={styles.meta}>
+                  {isPressRelease(featured.tags) && "Press Release · "}
                   {fmt(featured.publishedAt)} · {readingMinutes(featured.content)} min read
                 </span>
                 <h2 className={styles.featuredTitle}>{featured.title}</h2>
@@ -102,6 +104,7 @@ export default async function JournalPage() {
                     </div>
                     <div className={styles.body}>
                       <span className={styles.meta}>
+                        {isPressRelease(p.tags) && "Press Release · "}
                         {fmt(p.publishedAt)} · {readingMinutes(p.content)} min read
                       </span>
                       <h2 className={styles.cardTitle}>{p.title}</h2>

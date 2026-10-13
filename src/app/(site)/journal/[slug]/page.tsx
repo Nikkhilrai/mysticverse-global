@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
 import { normalizeArticleHtml, readingMinutes } from "@/lib/articleHtml";
+import { hashtags, isPressRelease } from "@/lib/postTags";
 import AuthorByline from "@/components/journal/AuthorByline";
 import ShareArticle from "@/components/journal/ShareArticle";
 import ReadingProgress from "@/components/journal/ReadingProgress";
@@ -69,6 +70,8 @@ export default async function ArticlePage({
 
   const author = post.blogAuthor;
   const minutes = readingMinutes(post.content);
+  const isPress = isPressRelease(post.tags);
+  const tagWords = isPress ? hashtags(post.tags) : [];
 
   return (
     <main className={styles.page}>
@@ -83,7 +86,7 @@ export default async function ArticlePage({
 
         <div className={styles.kicker}>
           <span className={styles.kickerRule} aria-hidden="true" />
-          <span>The Blog</span>
+          <span>{isPress ? "Press Release" : "The Blog"}</span>
           <span className={styles.kickerRule} aria-hidden="true" />
         </div>
 
@@ -132,11 +135,19 @@ export default async function ArticlePage({
       {/* ── Body ───────────────────────────────────────────── */}
       <article id="article-body" className={styles.article}>
         <div
-          className={styles.body}
+          className={`${styles.body}${isPress ? ` ${styles.press}` : ""}`}
           dangerouslySetInnerHTML={{ __html: normalizeArticleHtml(post.content) }}
         />
 
         <p className={styles.endmark} aria-hidden="true">✦ ✦ ✦</p>
+
+        {tagWords.length > 0 && (
+          <ul className={styles.hashtags} aria-label="Tags">
+            {tagWords.map((t) => (
+              <li key={t}>#{t}</li>
+            ))}
+          </ul>
+        )}
 
         <ShareArticle url={`${SITE_URL}/journal/${post.slug}`} title={post.title} />
 
