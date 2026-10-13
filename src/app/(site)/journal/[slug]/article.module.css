@@ -273,6 +273,58 @@
   margin: 2em auto;
 }
 
+/* ── Photo-story frames ──────────────────────────────────────
+   Runs of images placed between paragraphs are grouped at render
+   (lib/articleHtml.ts) into <figure class="mv-story" data-count>.
+   The frame breaks out wider than the text column: one image runs
+   wide, two or more sit side by side at a shared 4:5.            */
+.body :global(figure.mv-story) {
+  --story-w: min(calc(100vw - 2.5rem), 1000px);
+  width: var(--story-w);
+  margin: 2.8em calc(50% - var(--story-w) / 2);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+  align-items: start;
+}
+.body :global(figure.mv-story[data-count="2"]) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.body :global(figure.mv-story[data-count="3"]) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.body :global(figure.mv-story img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: cover;
+  margin: 0;
+  border-radius: clamp(12px, 1.6vw, 20px);
+  background: #ECE9E2;
+  box-shadow:
+    0 0 0 1px rgba(20, 20, 31, 0.06),
+    0 40px 80px -48px rgba(20, 20, 31, 0.5);
+}
+.body :global(figure.mv-story:not([data-count="1"]) img) { aspect-ratio: 4 / 5; }
+
+/* Phones: a story stacks, one photo at a time */
+@media (max-width: 560px) {
+  .body :global(figure.mv-story[data-count]) { grid-template-columns: 1fr; }
+}
+
+/* Each photo eases in as it scrolls into view — where supported */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .body :global(figure.mv-story img) {
+      animation: storyIn linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 70%;
+    }
+  }
+}
+@keyframes storyIn {
+  from { opacity: 0; scale: 0.94; }
+  to   { opacity: 1; scale: 1; }
+}
+
 .body :global(hr) {
   border: 0;
   height: 1px;

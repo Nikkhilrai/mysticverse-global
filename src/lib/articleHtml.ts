@@ -14,6 +14,10 @@ const EDGE_SPACE_START = /^(?:&nbsp;|\s)+/i;
 const EDGE_SPACE_END = /(?:&nbsp;|\s)+$/i;
 
 export function normalizeArticleHtml(html: string): string {
+  return groupImages(splitParagraphs(html));
+}
+
+function splitParagraphs(html: string): string {
   return html.replace(
     /<p(\s[^>]*)?>([\s\S]*?)<\/p>/gi,
     (_match, attrs: string | undefined, inner: string) =>
@@ -24,6 +28,25 @@ export function normalizeArticleHtml(html: string): string {
         .map((part) => `<p${attrs ?? ""}>${part}</p>`)
         .join(""),
   );
+}
+
+/*
+  Images placed between paragraphs in the editor are top-level <img>
+  nodes. Each run of consecutive ones is wrapped in one
+  <figure class="mv-story" data-count="N"> so the stylesheet can lay
+  them out as a photo-story frame — a single image runs wide, two or
+  more sit side by side. Only images at block level (after a closing
+  block tag, an <hr>, or the start) are grouped; an image inside a
+  paragraph is left alone.
+*/
+const IMAGE_RUN =
+  /(^|<\/(?:p|h[1-6]|blockquote|ul|ol|figure)>|<hr\s*\/?>)(\s*(?:<img\b[^>]*>\s*)+)/gi;
+
+function groupImages(html: string): string {
+  return html.replace(IMAGE_RUN, (_match, before: string, run: string) => {
+    const images = run.match(/<img\b[^>]*>/gi) ?? [];
+    return `${before}<figure class="mv-story" data-count="${images.length}">${images.join("")}</figure>`;
+  });
 }
 
 const WORDS_PER_MINUTE = 220;
