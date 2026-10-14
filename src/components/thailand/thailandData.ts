@@ -43,3 +43,10 @@ export const THAILAND_HERO = {
   subhead:
     "MysticVerse Global 2.0 brings longevity science, holistic healing and wellness real estate together in Bangkok — two days of discussion, demonstration and experience, in a single curated room built for people who make decisions.",
 } as const;
+
+/** Short pillar names (brief §3 stat strip) — full cards come in §4. */
+export const THAILAND_PILLARS_SHORT = [
+  "Longevity",
+  "Holistic Wellness",
+  "Wellness Real Estate",
+] as const;

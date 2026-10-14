@@ -108,8 +108,8 @@
 
 .anchorLogoWrap {
   position: relative;
-  width: clamp(330px, 46vw, 550px);
-  height: clamp(175px, 24vw, 290px);
+  width: min(100%, clamp(330px, 46vw, 550px));
+  height: clamp(160px, 24vw, 290px);
 }
 
 /* Fills the remainder of the last grid row. Without it the grid's hairline
@@ -121,7 +121,7 @@
 /* ── Partner grid — unified hairline table ───────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background-color: rgba(20, 20, 31, 0.12);
   margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
@@ -129,7 +129,7 @@
 }
 
 @media (min-width: 760px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* ── Cell ────────────────────────────────────────────────── */
@@ -168,8 +168,9 @@
 
 .logoWrap {
   position: relative;
-  width: clamp(210px, 27vw, 300px);
-  height: clamp(120px, 15vw, 170px);
+  /* never wider than its cell — the 210px floor overflowed 2-up phone columns */
+  width: min(100%, clamp(210px, 27vw, 300px));
+  height: clamp(110px, 15vw, 170px);
 }
 
 .logoImg {
