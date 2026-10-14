@@ -50,8 +50,13 @@
     radial-gradient(80% 50% at 20% 100%, rgba(124, 92, 255, 0.35) 0%, transparent 70%);
 }
 
-/* ── Top row ─────────────────────────────────────────────── */
+/* ── Top row (floats over the photo) ─────────────────────── */
 .top {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,15 +80,17 @@
 }
 .chip {
   color: #F5C45A;
-  background: rgba(245, 196, 90, 0.1);
-  border: 1px solid rgba(245, 196, 90, 0.3);
+  background: rgba(8, 7, 31, 0.6);
+  border: 1px solid rgba(245, 196, 90, 0.4);
+  backdrop-filter: blur(8px);
 }
 .days {
-  color: #CFCBE6;
+  color: #F4F2F7;
   letter-spacing: 0.08em;
   font-size: 0.625rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(8, 7, 31, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
 }
 
 .pulse {
@@ -103,12 +110,33 @@
   animation: ping 2.2s var(--ease-out-cubic) infinite;
 }
 
-/* ── Skyline "photo" ─────────────────────────────────────── */
+/* ── Photo ───────────────────────────────────────────────── */
 .art {
   position: relative;
   display: block;
-  height: 128px;
-  margin-top: 0.8rem;
+  flex: none;
+  height: 215px;
+  overflow: hidden;
+  /* Fade the photo itself out, so the card background (and its glow)
+     shows through — no visible seam where the picture ends. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 100%);
+}
+
+.photo {
+  object-fit: cover;
+  object-position: 76% 50%;
+  scale: 1.04;
+  transition: scale 1400ms var(--ease-out-cubic);
+}
+.active .photo { scale: 1.12; transition-duration: 9000ms; }
+.card:hover .photo { scale: 1.16; transition-duration: 900ms; }
+
+/* Darkens the top edge so the chips stay legible over the sky */
+.photoFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(8, 7, 31, 0.55) 0%, rgba(8, 7, 31, 0) 32%);
 }
 
 /* ── Details ─────────────────────────────────────────────── */

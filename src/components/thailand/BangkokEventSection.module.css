@@ -151,6 +151,26 @@
 
 .cardWrap { position: relative; z-index: 2; }
 
+/* CC BY-SA photo credit — small, but real and linked */
+.credit {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.03em;
+  color: #7C7896;
+}
+.credit a {
+  color: #A19DBD;
+  text-decoration: underline;
+  text-decoration-color: rgba(161, 157, 189, 0.4);
+  text-underline-offset: 2px;
+}
+.credit a:hover { color: #F5C45A; }
+
 /* Slow conic aurora behind the card */
 .aurora {
   position: absolute;

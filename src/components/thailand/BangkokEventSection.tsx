@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import BangkokEventCard from "./BangkokEventCard";
-import { THAILAND } from "./thailandData";
+import { THAILAND, THAILAND_PHOTO_CREDIT } from "./thailandData";
 import styles from "./BangkokEventSection.module.css";
 
 /*
@@ -95,6 +95,17 @@ export default function BangkokEventSection() {
           <div className={styles.cardWrap}>
             <BangkokEventCard active={inView} />
           </div>
+
+          <p className={styles.credit}>
+            Photo:{" "}
+            <a href={THAILAND_PHOTO_CREDIT.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {THAILAND_PHOTO_CREDIT.author}
+            </a>
+            {" · "}
+            <a href={THAILAND_PHOTO_CREDIT.licenseUrl} target="_blank" rel="noopener noreferrer">
+              {THAILAND_PHOTO_CREDIT.license}
+            </a>
+          </p>
         </div>
       </div>
     </section>

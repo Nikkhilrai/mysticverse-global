@@ -50,3 +50,22 @@ export const THAILAND_PILLARS_SHORT = [
   "Holistic Wellness",
   "Wellness Real Estate",
 ] as const;
+
+/*
+  Card / page photo — Wat Arun at night over the Chao Phraya, Bangkok.
+  Licence CC BY-SA 4.0 requires a visible credit; keep PHOTO_CREDIT
+  rendered anywhere the photo appears.
+*/
+export const THAILAND_PHOTO = {
+  src: "/images/editions/bangkok-wat-arun.jpg",
+  alt: "Wat Arun, the Temple of Dawn, lit at night across the Chao Phraya river in Bangkok",
+  width: 1400,
+  height: 875,
+} as const;
+
+export const THAILAND_PHOTO_CREDIT = {
+  author: "Preecha.MJ",
+  license: "CC BY-SA 4.0",
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Wat_arun_at_night_in_Bangkok,_Thailand.jpg",
+} as const;

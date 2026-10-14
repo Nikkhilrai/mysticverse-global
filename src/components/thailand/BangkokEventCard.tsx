@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BangkokSkyline from "./BangkokSkyline";
-import { THAILAND } from "./thailandData";
+import Image from "next/image";
+import { THAILAND, THAILAND_PHOTO } from "./thailandData";
 import styles from "./BangkokEventCard.module.css";
 
 /*
   Compact portrait event card for Bangkok 2027 — the same idea as the
-  floating event cards on the LexTalk World homepage. The skyline
-  line art is its "photo".
+  floating event cards on the LexTalk World homepage, with a real
+  photograph of Bangkok (Wat Arun at night) as its picture. The photo
+  is CC BY-SA 4.0: whoever renders this card must also render
+  THAILAND_PHOTO_CREDIT.
 
-  `active` mounts the skyline (so its draw animation plays in front of
-  the visitor, not off-screen) and starts the idle float. The parent
+  `active` starts the idle float and the photo's slow zoom. The parent
   section flips it when it scrolls into view.
 
   Links to /contact until /thailand launches — then change `href`.
@@ -62,7 +63,14 @@ export default function BangkokEventCard({ active = true }: { active?: boolean }
       </span>
 
       <span className={styles.art} aria-hidden="true">
-        {active && <BangkokSkyline />}
+        <Image
+          src={THAILAND_PHOTO.src}
+          alt=""
+          fill
+          sizes="268px"
+          className={styles.photo}
+        />
+        <span className={styles.photoFade} />
       </span>
 
       <span className={styles.info}>
