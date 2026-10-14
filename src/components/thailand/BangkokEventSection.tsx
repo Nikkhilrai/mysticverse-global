@@ -2,17 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import BangkokEventCard from "./BangkokEventCard";
-import { THAILAND, THAILAND_PHOTO_CREDIT } from "./thailandData";
+import { THAILAND } from "./thailandData";
 import styles from "./BangkokEventSection.module.css";
 
 /*
   Homepage section directly below the hero, announcing the Bangkok
   2027 edition while the full /thailand page is built.
 
-  Left: short copy + one CTA. Right: the compact event card floating
-  on a "stage" of orbiting rings and a slow aurora — the same
-  composition as the event cards on the LexTalk World homepage.
-  Everything starts when the section scrolls into view.
+  Left: short copy + one CTA. Right: the compact event card. Plain
+  dark background — no decorative effects. The copy fades up once
+  the section scrolls into view.
 */
 export default function BangkokEventSection() {
   const ref = useRef<HTMLElement>(null);
@@ -40,8 +39,6 @@ export default function BangkokEventSection() {
       className={`${styles.section}${inView ? ` ${styles.in}` : ""}`}
       aria-labelledby="bangkok-next-title"
     >
-      <div className={styles.glow} aria-hidden="true" />
-
       <div className={styles.inner}>
         <div className={styles.copy}>
           <p className={styles.eyebrow}>
@@ -80,32 +77,8 @@ export default function BangkokEventSection() {
           </a>
         </div>
 
-        <div className={styles.stage}>
-          <span className={styles.aurora} aria-hidden="true" />
-          <span className={`${styles.ring} ${styles.ringOuter}`} aria-hidden="true">
-            <span className={styles.orbit} />
-          </span>
-          <span className={`${styles.ring} ${styles.ringInner}`} aria-hidden="true">
-            <span className={`${styles.orbit} ${styles.orbitViolet}`} />
-          </span>
-          <span className={`${styles.particle} ${styles.p1}`} aria-hidden="true" />
-          <span className={`${styles.particle} ${styles.p2}`} aria-hidden="true" />
-          <span className={`${styles.particle} ${styles.p3}`} aria-hidden="true" />
-
-          <div className={styles.cardWrap}>
-            <BangkokEventCard active={inView} />
-          </div>
-
-          <p className={styles.credit}>
-            Photo:{" "}
-            <a href={THAILAND_PHOTO_CREDIT.sourceUrl} target="_blank" rel="noopener noreferrer">
-              {THAILAND_PHOTO_CREDIT.author}
-            </a>
-            {" · "}
-            <a href={THAILAND_PHOTO_CREDIT.licenseUrl} target="_blank" rel="noopener noreferrer">
-              {THAILAND_PHOTO_CREDIT.license}
-            </a>
-          </p>
+        <div className={styles.cardCol}>
+          <BangkokEventCard active={inView} />
         </div>
       </div>
     </section>

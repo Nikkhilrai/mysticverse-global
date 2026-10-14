@@ -53,8 +53,10 @@ export const THAILAND_PILLARS_SHORT = [
 
 /*
   Card / page photo — Wat Arun at night over the Chao Phraya, Bangkok.
-  Licence CC BY-SA 4.0 requires a visible credit; keep PHOTO_CREDIT
-  rendered anywhere the photo appears.
+  Licence is CC BY-SA 4.0, which requires attribution. NOTE: the
+  credit is currently NOT displayed anywhere (removed on request) —
+  either render THAILAND_PHOTO_CREDIT again, or replace the photo
+  with a CC0 / public-domain / owned image.
 */
 export const THAILAND_PHOTO = {
   src: "/images/editions/bangkok-wat-arun.jpg",

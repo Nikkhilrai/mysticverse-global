@@ -9,11 +9,10 @@ import styles from "./BangkokEventCard.module.css";
   Compact portrait event card for Bangkok 2027 — the same idea as the
   floating event cards on the LexTalk World homepage, with a real
   photograph of Bangkok (Wat Arun at night) as its picture. The photo
-  is CC BY-SA 4.0: whoever renders this card must also render
-  THAILAND_PHOTO_CREDIT.
+  is CC BY-SA 4.0 — see the note on THAILAND_PHOTO_CREDIT.
 
-  `active` starts the idle float and the photo's slow zoom. The parent
-  section flips it when it scrolls into view.
+  `active` starts the photo's slow zoom. The parent section flips it
+  when it scrolls into view.
 
   Links to /contact until /thailand launches — then change `href`.
 */
@@ -52,8 +51,6 @@ export default function BangkokEventCard({ active = true }: { active?: boolean }
       className={`${styles.card}${active ? ` ${styles.active}` : ""}`}
       aria-label={`Next edition: ${THAILAND.editionName}, ${THAILAND.city}, ${THAILAND.country}, ${THAILAND.dateLabel}. Register your interest.`}
     >
-      <span className={styles.aurora} aria-hidden="true" />
-
       <span className={styles.top}>
         <span className={styles.chip}>
           <span className={styles.pulse} aria-hidden="true" />
@@ -87,8 +84,6 @@ export default function BangkokEventCard({ active = true }: { active?: boolean }
           Register interest <span className={styles.arrow}>→</span>
         </span>
       </span>
-
-      <span className={styles.shimmer} aria-hidden="true" />
     </a>
   );
 }

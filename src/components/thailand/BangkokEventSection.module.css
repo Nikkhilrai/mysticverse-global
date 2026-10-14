@@ -1,25 +1,12 @@
 /* ══════════════════════════════════════════════════════════════
    Bangkok 2027 — homepage "next stop" section (below the hero).
-   Dark, continuing the hero; copy left, event card right on a stage
-   of slow orbiting rings and a rotating aurora.
+   Plain dark background: copy on the left, event card on the right.
    ══════════════════════════════════════════════════════════════ */
 
 .section {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
   background: #0B0B12;
   padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 6rem);
-}
-
-.glow {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(45% 60% at 78% 50%, rgba(124, 92, 255, 0.18) 0%, transparent 70%),
-    radial-gradient(35% 50% at 10% 20%, rgba(245, 196, 90, 0.08) 0%, transparent 70%);
 }
 
 .inner {
@@ -137,115 +124,25 @@
 .cta:hover .ctaArrow { transform: translateX(4px); }
 .cta:focus-visible { outline: 2px solid #F5C45A; outline-offset: 4px; }
 
-/* ── Stage ───────────────────────────────────────────────── */
-.stage {
-  position: relative;
-  height: 470px;
-  display: grid;
-  place-items: center;
+/* ── Card column ─────────────────────────────────────────── */
+.cardCol {
+  display: flex;
+  justify-content: center;
   opacity: 0;
-  scale: 0.94;
-  transition: opacity 1000ms var(--ease-out-cubic) 150ms, scale 1000ms var(--ease-out-cubic) 150ms;
+  transform: translateY(20px);
+  transition: opacity 900ms var(--ease-out-cubic) 150ms, transform 900ms var(--ease-out-cubic) 150ms;
 }
-.in .stage { opacity: 1; scale: 1; }
-
-.cardWrap { position: relative; z-index: 2; }
-
-/* CC BY-SA photo credit — small, but real and linked */
-.credit {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.625rem;
-  letter-spacing: 0.03em;
-  color: #7C7896;
-}
-.credit a {
-  color: #A19DBD;
-  text-decoration: underline;
-  text-decoration-color: rgba(161, 157, 189, 0.4);
-  text-underline-offset: 2px;
-}
-.credit a:hover { color: #F5C45A; }
-
-/* Slow conic aurora behind the card */
-.aurora {
-  position: absolute;
-  width: min(440px, 92%);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, rgba(245, 196, 90, 0.22), transparent 30%, rgba(124, 92, 255, 0.25) 55%, transparent 80%, rgba(245, 196, 90, 0.22));
-  filter: blur(40px);
-  animation: spin 22s linear infinite;
-}
-
-/* Orbiting rings with a bead riding each */
-.ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(245, 196, 90, 0.18);
-  animation: spin 32s linear infinite;
-}
-.ringOuter { width: min(440px, 96%); aspect-ratio: 1; }
-.ringInner {
-  width: min(350px, 78%);
-  aspect-ratio: 1;
-  border-color: rgba(199, 125, 255, 0.2);
-  animation-duration: 24s;
-  animation-direction: reverse;
-}
-
-.orbit {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  margin: -5px 0 0 -5px;
-  border-radius: 50%;
-  background: #F5C45A;
-  box-shadow: 0 0 14px 3px rgba(245, 196, 90, 0.6);
-}
-.orbitViolet {
-  width: 7px;
-  height: 7px;
-  margin: -3.5px 0 0 -3.5px;
-  background: #A98BFF;
-  box-shadow: 0 0 12px 3px rgba(124, 92, 255, 0.6);
-}
-
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: #F5C45A;
-  box-shadow: 0 0 10px 2px rgba(245, 196, 90, 0.5);
-  animation: bob 4s ease-in-out infinite;
-}
-.p1 { width: 6px; height: 6px; top: 14%; right: 20%; }
-.p2 { width: 4px; height: 4px; top: 34%; left: 12%; animation-duration: 3.2s; animation-delay: 0.6s; }
-.p3 { width: 5px; height: 5px; bottom: 16%; left: 24%; background: #C77DFF; box-shadow: 0 0 10px 2px rgba(199, 125, 255, 0.5); animation-duration: 4.6s; animation-delay: 1.1s; }
-
-@keyframes spin { to { rotate: 360deg; } }
-@keyframes bob {
-  0%, 100% { translate: 0 0; opacity: 0.9; }
-  50%      { translate: 0 -12px; opacity: 0.5; }
-}
+.in .cardCol { opacity: 1; transform: none; }
 
 /* ── Small screens: stack ────────────────────────────────── */
 @media (max-width: 900px) {
   .inner { grid-template-columns: 1fr; }
-  .stage { height: 420px; }
 }
 @media (max-width: 480px) {
   .facts { grid-template-columns: 1fr 1fr; row-gap: 1rem; }
   .facts li:last-child { grid-column: 1 / -1; }
-  .stage { height: 400px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .copy > *, .stage { opacity: 1; transform: none; scale: 1; transition: none; }
-  .aurora, .ring, .particle { animation: none; }
+  .copy > *, .cardCol { opacity: 1; transform: none; transition: none; }
 }

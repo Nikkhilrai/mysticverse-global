@@ -1,8 +1,6 @@
 /* ══════════════════════════════════════════════════════════════
-   Bangkok 2027 — compact portrait event card.
-   Idle float once active, hover lift + scale, shimmer sweep.
-   Float animates `translate`; hover uses `transform` — separate
-   properties, so they compose rather than override each other.
+   Bangkok 2027 — compact portrait event card. Plain: photo, details,
+   a simple hover lift. No glow, float or shimmer.
    ══════════════════════════════════════════════════════════════ */
 
 .card {
@@ -11,44 +9,26 @@
   display: flex;
   flex-direction: column;
   width: 268px;
-  height: 350px;
+  height: 376px;
   border-radius: 26px;
   overflow: hidden;
   text-decoration: none;
   color: #F4F2F7;
   border: 1px solid transparent;
   background:
-    linear-gradient(180deg, #08071F 0%, #14103A 60%, #201651 100%) padding-box,
-    linear-gradient(140deg, rgba(245, 196, 90, 0.85), rgba(199, 125, 255, 0.5) 50%, rgba(124, 92, 255, 0.85)) border-box;
-  box-shadow:
-    0 30px 70px -20px rgba(124, 92, 255, 0.55),
-    0 12px 30px -10px rgba(0, 0, 0, 0.55);
+    linear-gradient(180deg, #0A0922 0%, #14103A 100%) padding-box,
+    linear-gradient(140deg, rgba(245, 196, 90, 0.7), rgba(124, 92, 255, 0.6)) border-box;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7);
   transition:
     transform 450ms var(--ease-out-cubic),
     box-shadow 450ms var(--ease-out-cubic);
 }
 
-.active {
-  animation: float 5.5s ease-in-out 1.2s infinite;
-}
-
 .card:hover {
-  animation-play-state: paused;
-  transform: translateY(-14px) scale(1.04);
-  box-shadow:
-    0 40px 90px -20px rgba(245, 196, 90, 0.5),
-    0 16px 40px -10px rgba(0, 0, 0, 0.6);
+  transform: translateY(-6px);
+  box-shadow: 0 32px 60px -24px rgba(0, 0, 0, 0.8);
 }
 .card:focus-visible { outline: 2px solid #F5C45A; outline-offset: 5px; }
-
-.aurora {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(70% 45% at 70% 12%, rgba(245, 196, 90, 0.22) 0%, transparent 70%),
-    radial-gradient(80% 50% at 20% 100%, rgba(124, 92, 255, 0.35) 0%, transparent 70%);
-}
 
 /* ── Top row (floats over the photo) ─────────────────────── */
 .top {
@@ -115,7 +95,7 @@
   position: relative;
   display: block;
   flex: none;
-  height: 215px;
+  height: 210px;
   overflow: hidden;
   /* Fade the photo itself out, so the card background (and its glow)
      shows through — no visible seam where the picture ends. */
@@ -191,28 +171,12 @@
 .arrow { display: inline-block; transition: transform 300ms var(--ease-out-cubic); }
 .card:hover .arrow { transform: translateX(4px); }
 
-.shimmer {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.16) 50%, transparent 65%);
-  transform: translateX(-120%);
-  transition: transform 900ms var(--ease-out-cubic);
-}
-.card:hover .shimmer { transform: translateX(120%); }
-
-@keyframes float {
-  0%, 100% { translate: 0 0; }
-  50%      { translate: 0 -10px; }
-}
 @keyframes ping {
   from { transform: scale(1); opacity: 0.9; }
   to   { transform: scale(3); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .active, .pulse::after { animation: none; }
+  .pulse::after { animation: none; }
   .card { transition: none; }
-  .shimmer { display: none; }
 }
