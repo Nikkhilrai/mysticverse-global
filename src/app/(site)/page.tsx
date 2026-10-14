@@ -7,6 +7,7 @@ import WhoIsInTheRoom from "@/components/room/WhoIsInTheRoom";
 import ConfirmedPartners from "@/components/partners/ConfirmedPartners";
 import JournalPreview from "@/components/journal/JournalPreview";
 import UpcomingEditions from "@/components/editions/UpcomingEditions";
+import BangkokEventSection from "@/components/thailand/BangkokEventSection";
 
 // The page is otherwise static content, but JournalPreview reads live
 // posts from the database — revalidate periodically so a newly
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
+      <BangkokEventSection />
       <RepositioningStatement />
       <FourPillars />
       {/* <PavilionFeature /> — temporarily unpublished */}

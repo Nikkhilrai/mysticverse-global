@@ -6,12 +6,13 @@ import { THAILAND } from "./thailandData";
 import styles from "./BangkokEventCard.module.css";
 
 /*
-  Compact "next edition" card for the homepage hero — same idea as the
-  floating event cards on the LexTalk World hero.
+  Compact portrait event card for Bangkok 2027 — the same idea as the
+  floating event cards on the LexTalk World homepage. The skyline
+  line art is its "photo".
 
-  ≥1180px: a portrait card floating in the hero's empty right side,
-           with the skyline line art as its picture.
-  <1180px: a slim one-line card under the hero CTAs.
+  `active` mounts the skyline (so its draw animation plays in front of
+  the visitor, not off-screen) and starts the idle float. The parent
+  section flips it when it scrolls into view.
 
   Links to /contact until /thailand launches — then change `href`.
 */
@@ -37,7 +38,7 @@ function PinIcon() {
   );
 }
 
-export default function BangkokEventCard() {
+export default function BangkokEventCard({ active = true }: { active?: boolean }) {
   // Computed after mount so server and client markup always match.
   const [days, setDays] = useState<number | null>(null);
   useEffect(() => {
@@ -47,10 +48,10 @@ export default function BangkokEventCard() {
   return (
     <a
       href="/contact"
-      className={styles.card}
+      className={`${styles.card}${active ? ` ${styles.active}` : ""}`}
       aria-label={`Next edition: ${THAILAND.editionName}, ${THAILAND.city}, ${THAILAND.country}, ${THAILAND.dateLabel}. Register your interest.`}
     >
-      <span className={styles.ring} aria-hidden="true" />
+      <span className={styles.aurora} aria-hidden="true" />
 
       <span className={styles.top}>
         <span className={styles.chip}>
@@ -61,7 +62,7 @@ export default function BangkokEventCard() {
       </span>
 
       <span className={styles.art} aria-hidden="true">
-        <BangkokSkyline />
+        {active && <BangkokSkyline />}
       </span>
 
       <span className={styles.info}>

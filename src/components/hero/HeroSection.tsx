@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { EVENT } from "@/lib/site";
-import BangkokEventCard from "@/components/thailand/BangkokEventCard";
 import styles from "./HeroSection.module.css";
 
 interface HeroSectionProps {
@@ -67,9 +66,6 @@ export default function HeroSection({
               Explore The Programme
             </a>
           </div>
-
-          {/* Next edition — floats on the right on desktop, inline below */}
-          <BangkokEventCard />
 
         </div>
       </div>
