@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import styles from "./ThankYouPopup.module.css";
 
 /*
@@ -33,11 +34,15 @@ export default function ThankYouPopup() {
 
   useEffect(() => setMounted(true), []);
 
+  // A "Dubai has concluded" note doesn't belong on the next edition's page.
+  const pathname = usePathname();
+  const onNextEdition = pathname === "/thailand" || pathname.startsWith("/thailand/");
+
   useEffect(() => {
-    if (!mounted || hasBeenSeen()) return;
+    if (!mounted || onNextEdition || hasBeenSeen()) return;
     const timer = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
     return () => window.clearTimeout(timer);
-  }, [mounted]);
+  }, [mounted, onNextEdition]);
 
   const close = useCallback(() => {
     setOpen(false);
