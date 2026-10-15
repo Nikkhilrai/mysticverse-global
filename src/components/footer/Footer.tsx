@@ -17,6 +17,7 @@ const ABOUT_LINKS = [
   { label: "Blog",               href: "/journal"         },
   { label: "Magazine",           href: "/media/magazine"  },
   { label: "Gallery",            href: "/gallery"         },
+  { label: "Press Release",      href: "/media/press-release" },
 ] as const;
 
 const PROGRAMME_LINKS = [

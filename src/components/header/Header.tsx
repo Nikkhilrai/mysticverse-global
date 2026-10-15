@@ -63,6 +63,7 @@ const NAV_ITEMS = [
       { label: "Blog", href: "/journal" },
       { label: "Magazine", href: "/media/magazine" },
       { label: "Gallery", href: "/gallery" },
+      { label: "Press Release", href: "/media/press-release" },
     ],
   },
   { label: "Contact",         href: "/contact",           futureDropdown: false },
