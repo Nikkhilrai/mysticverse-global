@@ -11,7 +11,7 @@ import { PASSES_OPEN } from "@/lib/site";
    scrolled, the header always gets its solid dark background, so
    light text is unaffected. Matches the path and anything under it
    (so "/journal" covers every article too). */
-const LIGHT_TOP_PAGES = ["/agenda", "/journal"];
+const LIGHT_TOP_PAGES = ["/agenda", "/journal", "/register"];
 
 const HEADER_INTRO_KEY = "mvg-header-intro-seen";
 

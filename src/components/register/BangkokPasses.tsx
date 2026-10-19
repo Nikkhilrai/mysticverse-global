@@ -4,12 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { THAILAND, THAILAND_PRICES } from "@/components/thailand/thailandData";
 import { bangkokPass, salesOpen, type Pass } from "@/lib/passes";
 import PassCheckoutModal from "./PassCheckoutModal";
-import base from "./PassesSection.module.css";
 import styles from "./BangkokPasses.module.css";
 
 /*
-  Bangkok 2027 pass cards for /register — the same card design as the
-  Dubai 2026 passes (PassesSection), with Bangkok's data.
+  Bangkok 2027 pass cards for /register — the Dubai 2026 card layout
+  (PassesSection), on the site's light canvas, with Bangkok's data.
 
   Checkout is the same Razorpay flow as Dubai (PassCheckoutModal →
   /api/passes/order → /verify → PassRegistration, shown in the admin
@@ -51,49 +50,49 @@ export default function BangkokPasses() {
     <section
       ref={ref}
       id="passes"
-      className={`${base.section}${visible ? ` ${base.in}` : ""}`}
+      className={`${styles.section}${visible ? ` ${styles.in}` : ""}`}
       aria-labelledby="passes-heading"
     >
-      <div className={base.glow} aria-hidden="true" />
+      <div className={styles.glow} aria-hidden="true" />
 
-      <div className={`${base.inner} ${styles.inner}`}>
-        <header className={base.head}>
-          <div className={base.overlineWrap}>
-            <span className={base.overlineRule} aria-hidden="true" />
-            <p className={base.overline}>Passes · {THAILAND.editionLabel}</p>
-            <span className={base.overlineRule} aria-hidden="true" />
+      <div className={styles.inner}>
+        <header className={styles.head}>
+          <div className={styles.overlineWrap}>
+            <span className={styles.overlineRule} aria-hidden="true" />
+            <p className={styles.overline}>Passes · {THAILAND.editionLabel}</p>
+            <span className={styles.overlineRule} aria-hidden="true" />
           </div>
-          <h1 id="passes-heading" className={base.heading}>
+          <h1 id="passes-heading" className={styles.heading}>
             Choose your pass.
           </h1>
-          <p className={base.deck}>
+          <p className={styles.deck}>
             {THAILAND.editionName} — {THAILAND.city}, {THAILAND.dateLabel}. Every
             price published, per delegate, in USD.
           </p>
         </header>
 
         {/* ── Core passes ─────────────────────────────── */}
-        <div className={`${base.grid} ${styles.grid3}`}>
+        <div className={styles.grid}>
           {core.map((pass, i) => (
             <article
               key={pass.id}
-              className={`${base.card}${pass.featured ? ` ${base.featured}` : ""}`}
+              className={`${styles.card}${pass.featured ? ` ${styles.featured}` : ""}`}
               style={{ "--i": i } as React.CSSProperties}
             >
-              {pass.featured && <span className={base.badge}>Both days</span>}
+              {pass.featured && <span className={styles.badge}>Both days</span>}
 
-              <div className={base.cardHead}>
-                <h2 className={`${base.name} ${styles.name}`}>{pass.name}</h2>
-                {pass.tagline && <p className={base.tagline}>{pass.tagline}</p>}
+              <div className={styles.cardHead}>
+                <h2 className={styles.name}>{pass.name}</h2>
+                {pass.tagline && <p className={styles.tagline}>{pass.tagline}</p>}
               </div>
 
-              <div className={base.priceBlock}>
-                <div className={base.priceRow}>
-                  <span className={base.price}>{usd(pass.price)}</span>
+              <div className={styles.priceBlock}>
+                <div className={styles.priceRow}>
+                  <span className={styles.price}>{usd(pass.price)}</span>
                 </div>
-                <div className={base.priceMetaRow}>
-                  <span className={base.priceMeta}>per delegate</span>
-                  {pass.tag && <span className={base.discountTag}>{pass.tag}</span>}
+                <div className={styles.priceMetaRow}>
+                  <span className={styles.priceMeta}>per delegate</span>
+                  {pass.tag && <span className={styles.discountTag}>{pass.tag}</span>}
                 </div>
                 {"standardPrice" in pass && (
                   <span className={styles.standard}>
@@ -103,13 +102,13 @@ export default function BangkokPasses() {
                 )}
               </div>
 
-              <ul className={base.features}>
+              <ul className={styles.features}>
                 {pass.features?.map((f, fi) => (
                   <li
                     key={f}
-                    className={`${base.feature}${fi === 0 ? ` ${base.featureInherit}` : ""}`}
+                    className={`${styles.feature}${fi === 0 ? ` ${styles.featureInherit}` : ""}`}
                   >
-                    <span className={base.check} aria-hidden="true">{fi === 0 ? "★" : "✓"}</span>
+                    <span className={styles.check} aria-hidden="true">{fi === 0 ? "★" : "✓"}</span>
                     <span>{f}</span>
                   </li>
                 ))}
@@ -118,21 +117,21 @@ export default function BangkokPasses() {
               {OPEN ? (
                 <button
                   type="button"
-                  className={`${base.cta}${pass.featured ? ` ${base.ctaFeatured}` : ""}`}
+                  className={`${styles.cta}${pass.featured ? ` ${styles.ctaFeatured}` : ""}`}
                   data-track="register"
                   onClick={() => setActive(bangkokPass(pass.id) ?? null)}
                 >
                   Book this pass
-                  <span className={base.arrow} aria-hidden="true">→</span>
+                  <span className={styles.arrow} aria-hidden="true">→</span>
                 </button>
               ) : (
                 <a
                   href={interestHref}
-                  className={`${base.cta}${pass.featured ? ` ${base.ctaFeatured}` : ""}`}
+                  className={`${styles.cta}${pass.featured ? ` ${styles.ctaFeatured}` : ""}`}
                   data-track="register"
                 >
                   Register interest
-                  <span className={base.arrow} aria-hidden="true">→</span>
+                  <span className={styles.arrow} aria-hidden="true">→</span>
                 </a>
               )}
             </article>
@@ -146,7 +145,7 @@ export default function BangkokPasses() {
             {more.map((pass, i) => (
               <article
                 key={pass.id}
-                className={`${base.card} ${styles.small}`}
+                className={`${styles.card} ${styles.small}`}
                 style={{ "--i": i + core.length } as React.CSSProperties}
               >
                 <h3 className={styles.smallName}>{pass.name}</h3>
@@ -162,11 +161,11 @@ export default function BangkokPasses() {
                     data-track="register"
                     onClick={() => setActive(bangkokPass(pass.id) ?? null)}
                   >
-                    Book this pass <span className={base.arrow} aria-hidden="true">→</span>
+                    Book this pass <span className={styles.arrow} aria-hidden="true">→</span>
                   </button>
                 ) : (
                   <a href={interestHref} className={styles.smallCta} data-track="register">
-                    Register interest <span className={base.arrow} aria-hidden="true">→</span>
+                    Register interest <span className={styles.arrow} aria-hidden="true">→</span>
                   </a>
                 )}
               </article>
@@ -174,7 +173,7 @@ export default function BangkokPasses() {
           </div>
         </div>
 
-        <p className={base.note}>
+        <p className={styles.note}>
           {footnote}{" "}
           {OPEN ? "Secure checkout by Razorpay." : "Registration opens shortly — register your interest now."}
           <br />
