@@ -47,7 +47,7 @@ export const PASSES_OPEN = false;
   While false, the cards invite interest instead and the API refuses
   Bangkok orders.
 */
-export const BANGKOK_PASSES_OPEN = false;
+export const BANGKOK_PASSES_OPEN = true;
 
 /*
   Excellence Awards entries — the paid nomination form ($499/category
