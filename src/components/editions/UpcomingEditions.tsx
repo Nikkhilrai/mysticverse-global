@@ -30,7 +30,7 @@ const EDITIONS = [
     meta: "1–2 July 2027 · Bangkok, Thailand",
     copy: "The series continues into Asia — two days in Bangkok across longevity, holistic wellness and wellness real estate.",
     image: null,
-    action: { label: "Get in Touch", href: "/contact" },
+    action: { label: "Explore Bangkok 2027", href: "/thailand" },
   },
   {
     year: "2028",

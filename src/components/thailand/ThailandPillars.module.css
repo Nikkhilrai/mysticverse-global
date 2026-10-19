@@ -1,0 +1,268 @@
+/* ══════════════════════════════════════════════════════════════
+   Thailand §3 — The three pillars.
+   Light canvas, one shade deeper than §2 so the sections read apart.
+   White cards, each keyed to its ring colour from §2.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  --ink: #14141F;
+  --ink-soft: #2D2B36;
+  --muted: #5A5866;
+  --gold: #B7862B;
+  --line: rgba(20, 20, 31, 0.1);
+  position: relative;
+  background: #EFEDE8;
+  color: var(--ink);
+  padding: clamp(5rem, 10vw, 8rem) clamp(1.25rem, 6vw, 6rem);
+  scroll-margin-top: 72px;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  align-items: end;
+  gap: 1.5rem clamp(2rem, 6vw, 5rem);
+  margin-bottom: clamp(2.75rem, 5vw, 4rem);
+}
+.head > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 900ms var(--ease-out-cubic), transform 900ms var(--ease-out-cubic);
+}
+.in .head > * { opacity: 1; transform: none; }
+.in .head > :nth-child(2) { transition-delay: 150ms; }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.rule {
+  width: clamp(1.75rem, 4vw, 2.75rem);
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), rgba(183, 134, 43, 0));
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.4vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.copy {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.975rem, 1.2vw, 1.0625rem);
+  line-height: 1.8;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2vw, 1.5rem);
+  row-gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  --c: #B7862B;
+  --c-soft: rgba(183, 134, 43, 0.1);
+  position: relative;
+  /* Subgrid: top row, title, lede, topics and "Home to" line up across
+     all three cards, whatever each one's text length. */
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  padding: clamp(1.6rem, 2.6vw, 2.2rem);
+  border-radius: 22px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 50px -36px rgba(20, 20, 31, 0.35);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 900ms var(--ease-out-cubic),
+    transform 900ms var(--ease-out-cubic),
+    box-shadow 500ms var(--ease-out-cubic),
+    border-color 500ms var(--ease-out-cubic),
+    translate 500ms var(--ease-out-cubic);
+  /* Only the entrance is staggered; hover responds immediately. */
+  transition-delay: calc(200ms + var(--i) * 140ms), calc(200ms + var(--i) * 140ms), 0ms, 0ms, 0ms;
+}
+.gold    { --c: #B7862B; --c-soft: rgba(183, 134, 43, 0.1); }
+.violet  { --c: #5B3FD9; --c-soft: rgba(91, 63, 217, 0.08); }
+.fuchsia { --c: #A855D8; --c-soft: rgba(168, 85, 216, 0.09); }
+
+.in .card { opacity: 1; transform: none; }
+
+/* Accent bar along the top — grows in, then widens on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: var(--c);
+  transition: width 1100ms var(--ease-out-cubic);
+  transition-delay: calc(500ms + var(--i) * 140ms);
+}
+.in .card::before { width: 34%; }
+.in .card:hover::before { width: 100%; transition-delay: 0ms; }
+
+/* Soft colour wash in the top corner */
+.card::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 80%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--c-soft) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.in .card:hover {
+  translate: 0 -6px;
+  border-color: color-mix(in srgb, var(--c) 35%, transparent);
+  box-shadow: 0 34px 60px -34px rgba(20, 20, 31, 0.45);
+}
+
+.cardTop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.num {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--c);
+}
+
+.icon {
+  width: 52px;
+  height: 52px;
+}
+.iconLine {
+  stroke: var(--c);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1600ms var(--ease-out-cubic);
+  transition-delay: calc(550ms + var(--i) * 160ms);
+}
+.in .iconLine { stroke-dashoffset: 0; }
+
+.cardTitle {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.lede {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-content: flex-start;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+.topics li {
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  background: var(--c-soft);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.homeLabel {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.zones {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.zone { color: var(--c); }
+.amp { color: var(--muted); font-weight: 400; }
+.zoneNote {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ── Responsive: cards stack ─────────────────────────────── */
+@media (max-width: 960px) {
+  .head { grid-template-columns: 1fr; align-items: start; }
+  .grid { grid-template-columns: 1fr; row-gap: 1rem; max-width: 640px; margin: 0 auto; }
+  .cardTop { margin-bottom: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head > *, .card { opacity: 1; transform: none; transition: none; }
+  .card::before { width: 34%; transition: none; }
+  .iconLine { stroke-dashoffset: 0; transition: none; }
+}

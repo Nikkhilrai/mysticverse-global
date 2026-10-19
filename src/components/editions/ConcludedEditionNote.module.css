@@ -1,0 +1,67 @@
+/* Bottom-pinned "concluded edition" pill for the Dubai 2026 pages. */
+
+.note {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.55rem 0.6rem 0.55rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 196, 90, 0.35);
+  background: rgba(11, 11, 18, 0.88);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  font-family: var(--font-body);
+  color: #F4F2F7;
+  animation: noteIn 700ms var(--ease-out-cubic) 1.2s both;
+}
+
+.badge {
+  flex: none;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(245, 196, 90, 0.14);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5C45A;
+  white-space: nowrap;
+}
+
+.text {
+  font-size: 0.8125rem;
+  color: #B8B6CC;
+  white-space: nowrap;
+}
+
+.link {
+  flex: none;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  background: var(--gradient-signature);
+  color: #14100C;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.link:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; }
+
+@keyframes noteIn {
+  from { opacity: 0; transform: translate(-50%, 16px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 760px) {
+  .text { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note { animation: none; }
+}

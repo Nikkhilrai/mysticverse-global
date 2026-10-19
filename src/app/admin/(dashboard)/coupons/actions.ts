@@ -4,6 +4,15 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { assertPermission } from "@/lib/auth-server";
 import { normalizeCouponCode } from "@/lib/coupons";
+import { ALL_PASS_IDS } from "@/lib/passes";
+
+/** Keep only real pass ids — never persist an unknown or empty list. */
+function cleanApplicablePasses(raw: string | null): string | null {
+  if (!raw) return null;
+  const known = new Set<string>(ALL_PASS_IDS);
+  const ids = raw.split(",").map((s) => s.trim()).filter((s) => known.has(s));
+  return ids.length ? ids.join(",") : null;
+}
 
 export interface CouponInput {
   id?: string;
@@ -13,7 +22,7 @@ export interface CouponInput {
   validFrom: string; // "YYYY-MM-DD"
   validUntil: string; // "YYYY-MM-DD"
   maxUses: number | null;
-  applicablePasses: string | null; // "seeker,mystic" or null
+  applicablePasses: string | null; // comma-joined pass ids, e.g. "bkk-day-one,bkk-full-summit"
   isActive: boolean;
   isFeatured: boolean;
 }
@@ -70,7 +79,7 @@ export async function saveCoupon(input: CouponInput): Promise<CouponLite> {
     validFrom,
     validUntil,
     maxUses,
-    applicablePasses: input.applicablePasses,
+    applicablePasses: cleanApplicablePasses(input.applicablePasses),
     isActive: input.isActive,
     isFeatured: input.isFeatured,
   };

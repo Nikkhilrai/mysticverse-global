@@ -3,6 +3,7 @@ import { requirePermission } from "@/lib/auth-server";
 import styles from "@/components/admin/panel.module.css";
 import SubmissionTable from "@/components/admin/SubmissionTable";
 import { setPassStatus, deletePass } from "./actions";
+import { EDITION_LABEL, editionOfPassName, type Edition } from "@/lib/passes";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,7 @@ function fmt(d: Date) {
 }
 
 function money(minor: number, currency: string) {
-  return `${currency} ${(minor / 100).toLocaleString("en-AE", {
+  return `${currency} ${(minor / 100).toLocaleString("en-US", {
     minimumFractionDigits: 0,
   })}`;
 }
@@ -28,16 +29,26 @@ export default async function PassesPage() {
     orderBy: { createdAt: "desc" },
   });
 
+  // Revenue per edition, each in its own currency (Dubai AED, Bangkok
+  // USD) — never summed across currencies. One row can be a team
+  // booking, so seats — not row count — is the real figure.
   const paid = list.filter((r) => r.paymentStatus === "PAID");
-  const paidTotal = paid.reduce((sum, r) => sum + r.amount, 0);
-  // One row can be a team booking, so seats — not row count — is the real figure.
-  const paidSeats = paid.reduce((sum, r) => sum + r.seats, 0);
+  const byEdition = new Map<Edition, { seats: number; totals: Map<string, number> }>();
+  for (const r of paid) {
+    const ed = editionOfPassName(r.passType);
+    const e = byEdition.get(ed) ?? { seats: 0, totals: new Map() };
+    e.seats += r.seats;
+    e.totals.set(r.currency, (e.totals.get(r.currency) ?? 0) + r.amount);
+    byEdition.set(ed, e);
+  }
+  const editionOrder: Edition[] = ["bangkok-2027", "dubai-2026"];
 
   const rows = list.map((r) => ({
     id: r.id,
     status: r.status,
     name: r.name,
     email: r.email,
+    event: EDITION_LABEL[editionOfPassName(r.passType)],
     pass: r.passType,
     seats: r.seats > 1 ? `${r.seats} seats` : "1",
     amount: money(r.amount, r.currency),
@@ -60,8 +71,22 @@ export default async function PassesPage() {
         <h1 className={styles.h1}>Pass registrations</h1>
         <p className={styles.sub}>
           Delegate pass leads and payments from the Register and Corporate pages.
-          Paid revenue to date: <strong>{money(paidTotal, "AED")}</strong> across{" "}
-          <strong>{paidSeats}</strong> seat{paidSeats === 1 ? "" : "s"}.
+        </p>
+        <p className={styles.sub}>
+          {editionOrder.map((ed) => {
+            const e = byEdition.get(ed);
+            return (
+              <span key={ed} style={{ display: "block" }}>
+                {EDITION_LABEL[ed]} — paid:{" "}
+                <strong>
+                  {e && e.totals.size
+                    ? [...e.totals].map(([cur, amt]) => money(amt, cur)).join(" + ")
+                    : "—"}
+                </strong>{" "}
+                across <strong>{e?.seats ?? 0}</strong> seat{e?.seats === 1 ? "" : "s"}.
+              </span>
+            );
+          })}
         </p>
       </header>
 
@@ -70,6 +95,7 @@ export default async function PassesPage() {
         columns={[
           { key: "name", label: "Name" },
           { key: "email", label: "Email" },
+          { key: "event", label: "Event" },
           { key: "pass", label: "Pass" },
           { key: "seats", label: "Seats" },
           { key: "amount", label: "Amount" },

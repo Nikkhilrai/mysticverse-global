@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { Pass } from "@/lib/passes";
+import { EDITION_CHECKOUT, passDisplayName, type Pass } from "@/lib/passes";
 import styles from "./PassCheckoutModal.module.css";
 import { getUtm } from "@/lib/utm";
-import { calcDiscountedAmountMinor, formatAedMinor } from "@/lib/coupons";
+import { calcDiscountedAmountMinor, formatMinor } from "@/lib/coupons";
 
 const RAZORPAY_SRC = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -141,7 +141,13 @@ export default function PassCheckoutModal({
   const discountedAmountMinor = pass && couponApplied
     ? calcDiscountedAmountMinor(pass.amountMinor, couponApplied.discountPct)
     : (pass?.amountMinor ?? 0);
-  const payLabel = pass ? (couponApplied ? formatAedMinor(discountedAmountMinor) : pass.priceLabel) : "";
+  const payLabel = pass ? (couponApplied ? formatMinor(discountedAmountMinor, pass.currency) : pass.priceLabel) : "";
+  // Edition-specific wording (Dubai 2026 vs Bangkok 2027).
+  const ev = pass ? EDITION_CHECKOUT[pass.edition] : null;
+  const displayName = pass ? passDisplayName(pass) : "";
+  const priceMeta = pass
+    ? `${(pass.seats ?? 1) > 1 ? `${pass.seats} delegates` : "per delegate"}${ev?.inclTaxes ? " · incl. taxes" : ""}`
+    : "";
 
   // Scroll lock, focus management, Esc + focus trap.
   useEffect(() => {
@@ -254,8 +260,8 @@ export default function PassCheckoutModal({
       key: data.keyId as string,
       amount: data.amount as number,
       currency: data.currency as string,
-      name: "MysticVerse Global 2026",
-      description: `${data.passName as string} · 11 September, Dubai`,
+      name: ev?.brand ?? "MysticVerse Global",
+      description: `${displayName} · ${ev?.when ?? ""}`,
       order_id: data.orderId as string,
       prefill,
       theme: { color: "#7C5CFF" },
@@ -314,8 +320,8 @@ export default function PassCheckoutModal({
             <span className={styles.successMark} aria-hidden="true">✓</span>
             <h2 className={styles.successTitle}>You&apos;re in.</h2>
             <p className={styles.successText}>
-              Your {pass.name} is confirmed. A receipt and your event details are
-              on their way to your inbox. We can&apos;t wait to see you in Dubai.
+              Your {displayName} is confirmed. A receipt and your event details are
+              on their way to your inbox. We can&apos;t wait to see you in {ev?.city}.
             </p>
             <button type="button" className={styles.successBtn} onClick={onClose}>
               Done
@@ -326,7 +332,7 @@ export default function PassCheckoutModal({
             <span className={styles.successMark} aria-hidden="true">✓</span>
             <h2 className={styles.successTitle}>Details received.</h2>
             <p className={styles.successText}>
-              Thank you — we&apos;ve saved your interest in the {pass.name}. Our
+              Thank you — we&apos;ve saved your interest in the {displayName}. Our
               team will reach out shortly to complete your booking and payment.
             </p>
             <button type="button" className={styles.successBtn} onClick={onClose}>
@@ -336,14 +342,14 @@ export default function PassCheckoutModal({
         ) : (
           <>
             <div className={styles.head}>
-              <p className={styles.eyebrow}>Checkout · {pass.name}</p>
+              <p className={styles.eyebrow}>Checkout · {ev?.brand}</p>
               <h2 id="pass-checkout-title" className={styles.title}>
-                Reserve your {pass.name}
+                Reserve your {displayName}
               </h2>
               <div className={styles.priceRow}>
                 <span className={styles.price}>{payLabel}</span>
                 {couponApplied && <s className={styles.priceWas}>{pass.priceLabel}</s>}
-                <span className={styles.priceMeta}>per delegate · incl. taxes</span>
+                <span className={styles.priceMeta}>{priceMeta}</span>
               </div>
             </div>
 

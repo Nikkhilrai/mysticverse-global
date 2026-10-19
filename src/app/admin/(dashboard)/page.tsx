@@ -50,9 +50,14 @@ export default async function DashboardHome() {
   ] = await Promise.all([
     showPasses ? prisma.passRegistration.count() : Promise.resolve(0),
     showPasses ? prisma.passRegistration.count({ where: { paymentStatus: "PAID" } }) : Promise.resolve(0),
+    // Per currency — Dubai sold in AED, Bangkok in USD; never summed together.
     showPasses
-      ? prisma.passRegistration.aggregate({ _sum: { amount: true }, where: { paymentStatus: "PAID" } })
-      : Promise.resolve({ _sum: { amount: null as number | null } }),
+      ? prisma.passRegistration.groupBy({
+          by: ["currency"],
+          _sum: { amount: true },
+          where: { paymentStatus: "PAID" },
+        })
+      : Promise.resolve([] as { currency: string; _sum: { amount: number | null } }[]),
     showContact ? prisma.contactSubmission.count() : Promise.resolve(0),
     showContact ? prisma.contactSubmission.count({ where: { status: "NEW" } }) : Promise.resolve(0),
     showInterest ? prisma.interestSubmission.count() : Promise.resolve(0),
@@ -75,7 +80,11 @@ export default async function DashboardHome() {
     showBrief ? prisma.pavilionBriefRequest.findMany({ orderBy: { createdAt: "desc" }, take: 5 }) : Promise.resolve([]),
   ]);
 
-  const paidRevenue = passesRevenueAgg._sum.amount ?? 0;
+  const paidRevenueLabel =
+    passesRevenueAgg
+      .filter((g) => (g._sum.amount ?? 0) > 0)
+      .map((g) => `${g.currency} ${((g._sum.amount ?? 0) / 100).toLocaleString("en-US")}`)
+      .join(" + ") || "no payments yet";
 
   const recent = [
     ...recentDecks.map((d) => ({
@@ -151,7 +160,7 @@ export default async function DashboardHome() {
               {passesPaid > 0 && <span className={styles.newBadge}>{passesPaid} paid</span>}
             </div>
             <span className={styles.statLabel}>
-              Pass registrations · AED {(paidRevenue / 100).toLocaleString("en-AE")}
+              Pass registrations · {paidRevenueLabel}
             </span>
           </a>
         )}

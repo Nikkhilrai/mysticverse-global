@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { MAX_CATEGORIES_PER_NOMINATION } from "@/lib/awardCategories";
+import { ALL_PASS_IDS } from "@/lib/passes";
 
 /* Optional free-text field: trims, caps length, treats "" as undefined. */
 const optionalText = (max: number) =>
@@ -113,7 +114,7 @@ export const AwardSubmissionSchema = z.object({
 export type AwardSubmissionInput = z.infer<typeof AwardSubmissionSchema>;
 
 export const PassOrderSchema = z.object({
-  passId: z.enum(["seeker", "mystic"]),
+  passId: z.enum(ALL_PASS_IDS),
   name: z.string().trim().min(1, "Name is required").max(120),
   email: z.string().trim().min(1, "Email is required").max(200).pipe(z.email()),
   phone: optionalText(40),
@@ -154,7 +155,7 @@ export type CorporateOrderInput = z.infer<typeof CorporateOrderSchema>;
 
 export const CouponValidateSchema = z.object({
   code: z.string().trim().min(1, "Enter a coupon code").max(30),
-  passId: z.enum(["seeker", "mystic"]),
+  passId: z.enum(ALL_PASS_IDS),
 });
 
 const NOMINATION_TYPES = [

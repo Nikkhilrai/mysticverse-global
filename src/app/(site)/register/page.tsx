@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
-import PassesSection from "@/components/register/PassesSection";
-import InterestForm from "@/components/register/InterestForm";
+import BangkokPasses from "@/components/register/BangkokPasses";
+
+/*
+  /register now carries the next edition — MysticVerse Global 2.0,
+  Bangkok, 1–2 July 2027 — as pass cards (interest only; no checkout
+  until the refund and transfer policy is written).
+
+  The concluded Dubai 2026 sections (PassesSection, closed; and
+  InterestForm, closed) are no longer rendered here but are kept in
+  the codebase, gated by PASSES_OPEN / INTEREST_OPEN.
+*/
 
 /* Kept on a revalidate window rather than fully static so pass pricing
    changes go live without a redeploy. */
@@ -8,12 +17,12 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/register" },
-  title: "Register & Passes | MysticVerse Global 2026",
+  title: { absolute: "Register & Passes | MysticVerse Global — Bangkok 2027" },
   description:
-    "Book your pass for MysticVerse Global 2026 — Seeker Pass (AED 699, was AED 999) or Mystic Pass (AED 1399, was AED 1999). Secure checkout for 11 September 2026, Dubai. Or register your interest and our team will be in touch.",
+    "Passes for MysticVerse Global 2.0 in Bangkok, 1–2 July 2027 — Day 1 from USD 199, Day 2 USD 179, Full Summit early bird USD 299. Every price published. Register your interest.",
   openGraph: {
-    title: "Register & Passes — MysticVerse Global 2026",
-    description: "Book your pass in minutes. 11 September 2026, Dubai.",
+    title: "Register & Passes — MysticVerse Global 2.0, Bangkok",
+    description: "1–2 July 2027, Bangkok. Every price published.",
     type: "website",
   },
 };
@@ -21,8 +30,7 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <main>
-      <PassesSection />
-      <InterestForm />
+      <BangkokPasses />
     </main>
   );
 }

@@ -1,5 +1,7 @@
 import { sendMail, escapeHtml } from "@/lib/email";
 import { SITE_URL, EVENT } from "@/lib/site";
+import { editionOfPassName, type Edition } from "@/lib/passes";
+import { THAILAND } from "@/components/thailand/thailandData";
 
 /*
   Customer-facing pass confirmation — sent on confirmed registration
@@ -23,6 +25,33 @@ const EVENT_DATE_LABEL = new Date(EVENT.startDate).toLocaleDateString("en-GB", {
   year: "numeric",
 });
 
+/*
+  Event details per edition — the receipt is built from whichever
+  edition the pass belongs to (told apart by the persisted pass name).
+  Bangkok has no contracted venue yet (brief §11 #1), so it names the
+  city only; its primary link goes to the /thailand page, not the
+  Dubai agenda.
+*/
+const EDITION_DETAILS: Record<
+  Edition,
+  { brand: string; date: string; place: string; linkLabel: string; linkHref: string }
+> = {
+  "dubai-2026": {
+    brand: "MysticVerse Global 2026",
+    date: EVENT_DATE_LABEL,
+    place: `${EVENT.venueName}, ${EVENT.addressLocality}`,
+    linkLabel: "See the Agenda",
+    linkHref: `${SITE_URL}/agenda`,
+  },
+  "bangkok-2027": {
+    brand: `${THAILAND.editionName} · ${THAILAND.city}`,
+    date: THAILAND.dateLabel,
+    place: `${THAILAND.city}, ${THAILAND.country} — venue to be announced`,
+    linkLabel: "About the Summit",
+    linkHref: `${SITE_URL}/thailand`,
+  },
+};
+
 export function passReference(registrationId: string): string {
   return `MVG-${registrationId.slice(-8).toUpperCase()}`;
 }
@@ -35,11 +64,12 @@ export async function sendPassConfirmationEmail(params: {
   currency: string;
   registrationId: string;
 }): Promise<{ ok: boolean; error?: string }> {
+  const ev = EDITION_DETAILS[editionOfPassName(params.passType)];
   const firstName = escapeHtml(params.name.trim().split(/\s+/)[0] || params.name);
   const reference = passReference(params.registrationId);
   const amountLabel =
     params.amountMinor > 0
-      ? `${params.currency} ${(params.amountMinor / 100).toLocaleString("en-AE")}`
+      ? `${params.currency} ${(params.amountMinor / 100).toLocaleString("en-US")}`
       : "Complimentary";
 
   const html = `<!DOCTYPE html>
@@ -52,9 +82,9 @@ export async function sendPassConfirmationEmail(params: {
 
       <!-- Header -->
       <tr><td style="background:#0B0B12;border-radius:12px 12px 0 0;padding:36px 40px;text-align:center;">
-        <p style="margin:0 0 4px;color:#F5C45A;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">MysticVerse Global 2026</p>
+        <p style="margin:0 0 4px;color:#F5C45A;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">${escapeHtml(ev.brand)}</p>
         <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:700;">You&rsquo;re Confirmed ✓</h1>
-        <p style="margin:10px 0 0;color:#A8A6B4;font-size:13px;">${EVENT_DATE_LABEL} &middot; ${escapeHtml(EVENT.venueName)}, ${escapeHtml(EVENT.addressLocality)}</p>
+        <p style="margin:10px 0 0;color:#A8A6B4;font-size:13px;">${escapeHtml(ev.date)} &middot; ${escapeHtml(ev.place)}</p>
       </td></tr>
 
       <!-- Gold/violet gradient bar -->
@@ -65,7 +95,7 @@ export async function sendPassConfirmationEmail(params: {
 
         <p style="margin:0 0 8px;color:#14141F;font-size:17px;font-weight:600;">Hi ${firstName},</p>
         <p style="margin:0 0 24px;color:#5A5866;font-size:15px;line-height:1.8;">
-          You&rsquo;re confirmed for <strong style="color:#14141F;">${escapeHtml(params.passType)}</strong> at <strong style="color:#14141F;">MysticVerse Global 2026</strong>.
+          You&rsquo;re confirmed for <strong style="color:#14141F;">${escapeHtml(params.passType)}</strong> at <strong style="color:#14141F;">${escapeHtml(ev.brand)}</strong>.
         </p>
 
         <!-- Registration details -->
@@ -75,11 +105,11 @@ export async function sendPassConfirmationEmail(params: {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="padding:7px 0;color:#8A8896;font-size:13px;width:140px;border-bottom:1px solid #EFEDE8;">Date</td>
-                <td style="padding:7px 0;color:#14141F;font-size:13px;font-weight:600;border-bottom:1px solid #EFEDE8;text-align:right;">${EVENT_DATE_LABEL}</td>
+                <td style="padding:7px 0;color:#14141F;font-size:13px;font-weight:600;border-bottom:1px solid #EFEDE8;text-align:right;">${escapeHtml(ev.date)}</td>
               </tr>
               <tr>
                 <td style="padding:7px 0;color:#8A8896;font-size:13px;border-bottom:1px solid #EFEDE8;">Venue</td>
-                <td style="padding:7px 0;color:#14141F;font-size:13px;font-weight:600;border-bottom:1px solid #EFEDE8;text-align:right;">${escapeHtml(EVENT.venueName)}, ${escapeHtml(EVENT.addressLocality)}</td>
+                <td style="padding:7px 0;color:#14141F;font-size:13px;font-weight:600;border-bottom:1px solid #EFEDE8;text-align:right;">${escapeHtml(ev.place)}</td>
               </tr>
               <tr>
                 <td style="padding:7px 0;color:#8A8896;font-size:13px;border-bottom:1px solid #EFEDE8;">Pass Type</td>
@@ -105,10 +135,10 @@ export async function sendPassConfirmationEmail(params: {
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="padding:0 8px 0 0;" width="50%">
-              <a href="${SITE_URL}/agenda"
+              <a href="${ev.linkHref}"
                  target="_blank"
                  style="display:block;text-align:center;background:#0B0B12;color:#ffffff;padding:13px 16px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13px;">
-                See the Agenda
+                ${ev.linkLabel}
               </a>
             </td>
             <td style="padding:0 0 0 8px;" width="50%">
@@ -136,7 +166,7 @@ export async function sendPassConfirmationEmail(params: {
 
   return sendMail({
     to: params.email,
-    subject: `You're confirmed — MysticVerse Global 2026 (${reference})`,
+    subject: `You're confirmed — ${ev.brand} (${reference})`,
     html,
   });
 }

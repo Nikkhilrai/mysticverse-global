@@ -39,6 +39,17 @@ export const INTEREST_OPEN = false;
 export const PASSES_OPEN = false;
 
 /*
+  Bangkok 2027 pass sales (MysticVerse Global 2.0, 1–2 July 2027) —
+  separate from PASSES_OPEN so the concluded Dubai checkout stays
+  closed. Gates the Bangkok checkout buttons on /register and, server-
+  side, /api/passes/order for Bangkok pass ids. Razorpay is live-keyed:
+  set this to `true` only when you are ready to take real USD payments.
+  While false, the cards invite interest instead and the API refuses
+  Bangkok orders.
+*/
+export const BANGKOK_PASSES_OPEN = false;
+
+/*
   Excellence Awards entries — the paid nomination form ($499/category
   via live-keyed Razorpay), its document-upload signer, and the
   jury-partner / nominate lead form. The 2026 honours were presented

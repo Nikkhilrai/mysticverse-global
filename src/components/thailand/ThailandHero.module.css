@@ -1,14 +1,10 @@
 /* ══════════════════════════════════════════════════════════════
    Thailand hero — "One room. Three industries. One conversation."
-   Bangkok after dark: indigo sky → river black, a slow temple-gold
-   moon, faint stars, and the gold line-art skyline along the bottom.
+   A real photograph of Bangkok at night (the Chao Phraya and the
+   Bang Rak skyline) under a dark treatment, per brief §2.
    ══════════════════════════════════════════════════════════════ */
 
 .hero {
-  /* Skyline band height. 25vw matches the drawing's 4:1 shape, so on
-     wide screens nothing is cropped and the tallest tower always tops
-     out ~31% down the band; narrow screens crop the sides instead. */
-  --skyline-h: clamp(180px, 25vw, 360px);
   position: relative;
   min-height: 100svh;
   overflow: hidden;
@@ -19,71 +15,66 @@
   color: #F4F2F7;
 }
 
-/* ── Sky ─────────────────────────────────────────────────── */
-.sky {
+/* ── Photo ───────────────────────────────────────────────── */
+.photoWrap {
   position: absolute;
   inset: 0;
-  z-index: -3;
-  background:
-    radial-gradient(70% 55% at 50% 100%, rgba(124, 92, 255, 0.22) 0%, transparent 70%),
-    radial-gradient(50% 40% at 15% 85%, rgba(245, 196, 90, 0.10) 0%, transparent 70%),
-    linear-gradient(180deg, #050516 0%, #0C0A2C 48%, #1A1240 72%, #07061A 100%);
-}
-
-.stars {
-  position: absolute;
-  inset: 0 0 40% 0;
   z-index: -2;
-  opacity: 0.7;
-  background-image:
-    radial-gradient(1px 1px at 8% 18%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 21% 36%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 33% 12%, #F5C45A 50%, transparent 51%),
-    radial-gradient(1px 1px at 46% 28%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 58% 9%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 67% 33%, #E3B3FF 50%, transparent 51%),
-    radial-gradient(1px 1px at 79% 15%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 91% 30%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 14% 52%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 86% 55%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 40% 48%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 96% 8%, #F5C45A 50%, transparent 51%);
-  animation: twinkle 7s ease-in-out infinite;
+  overflow: hidden;
+}
+.photo {
+  object-fit: cover;
+  object-position: 50% 62%;
+  animation: photoIn 2.4s var(--ease-out-cubic) both;
+}
+@keyframes photoIn {
+  from { opacity: 0; transform: scale(1.12); }
+  to   { opacity: 1; transform: scale(1.03); }
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.7; }
-  50%      { opacity: 0.35; }
-}
-
-.moon {
+/* Dark treatment: heavier at the top (under the nav) and the bottom
+   (where the photo meets the light section below), with a soft pool
+   behind the copy. */
+.shade {
   position: absolute;
+  inset: 0;
   z-index: -1;
-  top: 17%;
-  right: 13%;
-  width: clamp(56px, 6vw, 92px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 36%, #FFF6DD 0%, #FBE2A2 38%, #E9B95C 100%);
+  background:
+    radial-gradient(60% 50% at 50% 50%, rgba(6, 6, 26, 0.55) 0%, rgba(6, 6, 26, 0) 75%),
+    linear-gradient(180deg, rgba(6, 6, 26, 0.78) 0%, rgba(6, 6, 26, 0.42) 38%, rgba(6, 6, 26, 0.5) 70%, rgba(7, 6, 26, 0.92) 100%);
+}
+
+/* ── Rising lanterns ─────────────────────────────────────── */
+.lanterns {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.lantern {
+  position: absolute;
+  bottom: -6%;
+  border-radius: 45% 45% 40% 40%;
+  background: radial-gradient(circle at 50% 40%, #FFF3D1 0%, #F5C45A 45%, rgba(224, 162, 60, 0.6) 100%);
   box-shadow:
-    0 0 40px 8px rgba(251, 226, 162, 0.35),
-    0 0 140px 40px rgba(245, 196, 90, 0.16);
+    0 0 10px 2px rgba(245, 196, 90, 0.55),
+    0 0 26px 6px rgba(245, 160, 60, 0.25);
   opacity: 0;
-  animation:
-    moonIn 2.4s var(--ease-out-cubic) 0.2s forwards,
-    moonBreathe 9s ease-in-out 2.6s infinite;
+  animation-name: lanternRise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+@keyframes lanternRise {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  8%   { opacity: 0.85; }
+  50%  { transform: translate(var(--sway), -55vh) scale(0.85); }
+  85%  { opacity: 0.55; }
+  100% { transform: translate(0, -110vh) scale(0.6); opacity: 0; }
 }
 
-@keyframes moonIn {
-  from { opacity: 0; transform: translateY(24px) scale(0.92); }
-  to   { opacity: 0.92; transform: none; }
-}
-@keyframes moonBreathe {
-  0%, 100% { opacity: 0.92; }
-  50%      { opacity: 0.78; }
-}
-
-/* ── Content ─────────────────────────────────────────────── */
+/* ── Content ────────────────────────────────────────────── */
 .content {
   position: relative;
   z-index: 2;
@@ -99,7 +90,39 @@
   padding:
     clamp(6rem, 13vh, 8.5rem)
     clamp(1.25rem, 5vw, 3rem)
-    calc(var(--skyline-h) * 0.74);
+    clamp(6rem, 14vh, 9rem);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.1rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 196, 90, 0.4);
+  background: rgba(11, 11, 18, 0.45);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F4F2F7;
+  opacity: 0;
+  animation: fadeRise 0.8s var(--ease-out-cubic) 0.05s forwards;
+}
+.kickerDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #F5C45A;
+  box-shadow: 0 0 0 0 rgba(245, 196, 90, 0.6);
+  animation: kickerPing 2.2s ease-out infinite;
+}
+@keyframes kickerPing {
+  0%   { box-shadow: 0 0 0 0 rgba(245, 196, 90, 0.6); }
+  100% { box-shadow: 0 0 0 8px rgba(245, 196, 90, 0); }
 }
 
 .eyebrow {
@@ -131,6 +154,7 @@
   line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 0 0 clamp(1.5rem, 3vw, 2rem);
+  text-shadow: 0 4px 40px rgba(6, 6, 26, 0.6);
 }
 
 .line {
@@ -153,8 +177,9 @@
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.35vw, 1.1875rem);
   line-height: 1.7;
-  color: #C9C7D8;
+  color: #DCDAE8;
   max-width: 64ch;
+  text-shadow: 0 2px 20px rgba(6, 6, 26, 0.7);
   text-wrap: pretty;
   margin: 0 0 clamp(2rem, 4vw, 2.75rem);
   opacity: 0;
@@ -233,22 +258,11 @@
   outline-offset: 4px;
 }
 
-/* ── Skyline ─────────────────────────────────────────────── */
-.skyline {
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--skyline-h);
-  pointer-events: none;
-}
-
 /* Gentle parallax as the hero scrolls away — where supported */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    .skyline {
-      animation: skylineDrift linear both;
+    .photoWrap {
+      animation: photoDrift linear both;
       animation-timeline: scroll(root);
       animation-range: 0 100vh;
     }
@@ -259,7 +273,7 @@
     }
   }
 }
-@keyframes skylineDrift { to { transform: translateY(14%); } }
+@keyframes photoDrift   { to { transform: translateY(12%); } }
 @keyframes contentLift  { to { transform: translateY(-8%); opacity: 0.2; } }
 
 /* ── Scroll cue ──────────────────────────────────────────── */
@@ -301,12 +315,18 @@
 @media (max-width: 600px) {
   .ctaRow { flex-direction: column; width: 100%; }
   .ctaPrimary, .ctaGhost { justify-content: center; width: min(100%, 320px); }
-  .moon { top: 12.5%; right: 7%; width: 40px; }
+  .photo { object-position: 30% 70%; }
+  .shade {
+    background:
+      radial-gradient(80% 45% at 50% 48%, rgba(6, 6, 26, 0.45) 0%, rgba(6, 6, 26, 0) 80%),
+      linear-gradient(180deg, rgba(6, 6, 26, 0.7) 0%, rgba(6, 6, 26, 0.3) 40%, rgba(6, 6, 26, 0.35) 72%, rgba(7, 6, 26, 0.92) 100%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .eyebrow, .subhead, .ctaRow, .scrollCue, .moon { animation: none; opacity: 1; }
-  .moon { opacity: 0.55; }
+  .eyebrow, .subhead, .ctaRow, .scrollCue, .photo, .kicker { animation: none; opacity: 1; }
+  .kickerDot { animation: none; }
+  .lanterns { display: none; }
   .lineInner { animation: none; transform: none; }
-  .stars, .scrollLine { animation: none; }
+  .scrollLine { animation: none; }
 }

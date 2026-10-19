@@ -1,0 +1,84 @@
+/* ══════════════════════════════════════════════════════════════
+   Thailand stat strip — shared by §2 and §5. Light-surface styling;
+   the host section sets the top margin via `className`.
+   ══════════════════════════════════════════════════════════════ */
+
+.stats {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(183, 134, 43, 0.35);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1rem, 2.4vw, 2rem) 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 800ms var(--ease-out-cubic), transform 800ms var(--ease-out-cubic);
+  transition-delay: calc(var(--i) * 110ms);
+}
+.stat:first-child { padding-left: 0; }
+.stat + .stat { border-left: 1px solid rgba(20, 20, 31, 0.1); }
+.in .stat { opacity: 1; transform: none; }
+
+.statValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.statUnit {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8A5A19;
+}
+.statLabel {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #5A5866;
+  max-width: 26ch;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(n + 3) { margin-top: 1.75rem; }
+}
+
+@media (max-width: 480px) {
+  .stats { grid-template-columns: 1fr; }
+  .stat { padding-left: 0; padding-right: 0; }
+  .stat + .stat { border-left: 0; border-top: 1px solid rgba(20, 20, 31, 0.1); margin-top: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat { opacity: 1; transform: none; transition: none; }
+}

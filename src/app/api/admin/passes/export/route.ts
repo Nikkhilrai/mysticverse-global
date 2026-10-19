@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth-server";
 import { can } from "@/lib/permissions";
 import { toCsv } from "@/lib/csv";
+import { EDITION_LABEL, editionOfPassName } from "@/lib/passes";
 
 export const runtime = "nodejs";
 
@@ -24,6 +25,7 @@ export async function GET() {
       "Phone",
       "Country",
       "Organisation",
+      "Event",
       "Pass",
       "Seats",
       "Amount",
@@ -41,6 +43,7 @@ export async function GET() {
       r.phone,
       r.country,
       r.company,
+      EDITION_LABEL[editionOfPassName(r.passType)],
       r.passType,
       r.seats,
       (r.amount / 100).toString(),

@@ -9,6 +9,18 @@ import {
   type CouponInput,
 } from "@/app/admin/(dashboard)/coupons/actions";
 import styles from "./CouponManager.module.css";
+import { BANGKOK_PASSES, EDITION_LABEL, PASSES, passDisplayName, type PassId } from "@/lib/passes";
+
+/* Pass checkboxes, grouped by edition. Dubai 2026 has concluded, so new
+   coupons default to the Bangkok passes. An empty applicablePasses now
+   means "Dubai passes only" (see isCouponApplicableToPass), so the form
+   always saves an explicit list. */
+const PASS_GROUPS = [
+  { label: EDITION_LABEL["bangkok-2027"], passes: BANGKOK_PASSES },
+  { label: `${EDITION_LABEL["dubai-2026"]} (concluded)`, passes: PASSES },
+];
+const DUBAI_IDS = PASSES.map((p) => p.id);
+const BANGKOK_IDS = BANGKOK_PASSES.map((p) => p.id);
 
 type FormState = {
   code: string;
@@ -17,8 +29,7 @@ type FormState = {
   validFrom: string;
   validUntil: string;
   maxUses: string;
-  seeker: boolean;
-  mystic: boolean;
+  passes: PassId[];
   isActive: boolean;
   isFeatured: boolean;
 };
@@ -41,8 +52,7 @@ const EMPTY: FormState = {
   validFrom: todayStr(),
   validUntil: inMonthStr(),
   maxUses: "",
-  seeker: true,
-  mystic: true,
+  passes: BANGKOK_IDS,
   isActive: true,
   isFeatured: false,
 };
@@ -71,8 +81,8 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
       validFrom: toDateInput(c.validFrom),
       validUntil: toDateInput(c.validUntil),
       maxUses: c.maxUses !== null ? String(c.maxUses) : "",
-      seeker: applicable.length === 0 || applicable.includes("seeker"),
-      mystic: applicable.length === 0 || applicable.includes("mystic"),
+      // Legacy empty list = every Dubai pass.
+      passes: applicable.length === 0 ? DUBAI_IDS : (applicable as PassId[]),
       isActive: c.isActive,
       isFeatured: c.isFeatured,
     });
@@ -89,10 +99,10 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
     setError(null);
     setSaving(true);
     try {
-      const passes: string[] = [];
-      if (form.seeker) passes.push("seeker");
-      if (form.mystic) passes.push("mystic");
-      const applicablePasses = passes.length === 0 || passes.length === 2 ? null : passes.join(",");
+      if (form.passes.length === 0) {
+        throw new Error("Select at least one pass this coupon applies to.");
+      }
+      const applicablePasses = form.passes.join(",");
 
       const input: CouponInput = {
         id: editingId ?? undefined,
@@ -203,17 +213,31 @@ export default function CouponManager({ initialCoupons }: { initialCoupons: Coup
         <input id="cp-max" className={styles.input} type="number" min={1} value={form.maxUses} onChange={(e) => setForm({ ...form, maxUses: e.target.value })} placeholder="Unlimited" />
 
         <label className={styles.label}>Applicable passes</label>
-        <div className={styles.passGrid}>
-          <label className={styles.passCheck}>
-            <input type="checkbox" checked={form.seeker} onChange={(e) => setForm({ ...form, seeker: e.target.checked })} />
-            Seeker Pass
-          </label>
-          <label className={styles.passCheck}>
-            <input type="checkbox" checked={form.mystic} onChange={(e) => setForm({ ...form, mystic: e.target.checked })} />
-            Mystic Pass
-          </label>
-        </div>
-        <p className={styles.hint}>Leave both checked for "any pass."</p>
+        {PASS_GROUPS.map((g) => (
+          <div key={g.label}>
+            <p className={styles.hint}>{g.label}</p>
+            <div className={styles.passGrid}>
+              {g.passes.map((p) => (
+                <label key={p.id} className={styles.passCheck}>
+                  <input
+                    type="checkbox"
+                    checked={form.passes.includes(p.id)}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        passes: e.target.checked
+                          ? [...form.passes, p.id]
+                          : form.passes.filter((x) => x !== p.id),
+                      })
+                    }
+                  />
+                  {passDisplayName(p)}
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p className={styles.hint}>A coupon only works on the passes ticked here.</p>
 
         <label className={styles.toggleRow}>
           <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />

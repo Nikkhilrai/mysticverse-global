@@ -13,6 +13,7 @@ const STATIC_ROUTES: Array<{
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
 }> = [
   { path: "", priority: 1.0, changeFrequency: "weekly" },
+  { path: "/thailand", priority: 1.0, changeFrequency: "weekly" },
   { path: "/register", priority: 0.9, changeFrequency: "weekly" },
   { path: "/sponsor", priority: 0.9, changeFrequency: "weekly" },
   { path: "/agenda", priority: 0.8, changeFrequency: "weekly" },

@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { prisma } from "@/lib/db";
 import { PassOrderSchema } from "@/lib/validation";
-import { getPassById } from "@/lib/passes";
+import { getPassById, salesOpen, EDITION_LABEL } from "@/lib/passes";
 import { createOrder, razorpayConfigured, razorpayKeyId } from "@/lib/razorpay";
 import { notifyAfter, rowsToHtml } from "@/lib/email";
 import { sendPassConfirmationEmail } from "@/lib/pass-email";
 import { normalizeCouponCode, checkCouponEligibility, calcDiscountedAmountMinor } from "@/lib/coupons";
 import { redeemCouponUse } from "@/lib/coupon-store";
-import { PASSES_OPEN } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -19,15 +18,6 @@ export const runtime = "nodejs";
   server-side from it) — the client never sends a price.
 */
 export async function POST(req: NextRequest) {
-  // The conference has concluded — stop taking payment even if a
-  // cached page still renders the live checkout form.
-  if (!PASSES_OPEN) {
-    return NextResponse.json(
-      { ok: false, error: "MysticVerse Global 2026 has concluded — pass sales are now closed." },
-      { status: 410 },
-    );
-  }
-
   let body: Record<string, unknown>;
   try {
     body = await req.json();
@@ -52,6 +42,22 @@ export async function POST(req: NextRequest) {
   const pass = getPassById(d.passId);
   if (!pass) {
     return NextResponse.json({ ok: false, error: "Unknown pass." }, { status: 422 });
+  }
+
+  // Each edition has its own sales switch (PASSES_OPEN for the concluded
+  // Dubai 2026, BANGKOK_PASSES_OPEN for Bangkok 2027) — refuse payment
+  // even if a cached page still renders a live checkout button.
+  if (!salesOpen(pass.edition)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          pass.edition === "dubai-2026"
+            ? "MysticVerse Global 2026 has concluded — pass sales are now closed."
+            : `Pass sales for ${EDITION_LABEL[pass.edition]} are not open yet.`,
+      },
+      { status: 410 },
+    );
   }
 
   // Re-validate the coupon server-side regardless of what the client's
@@ -92,6 +98,7 @@ export async function POST(req: NextRequest) {
         country: d.country ?? null,
         company: d.company ?? null,
         passType: pass.name,
+        seats: pass.seats ?? 1,
         amount: finalAmountMinor,
         currency: pass.currency,
         couponId,
@@ -117,6 +124,8 @@ export async function POST(req: NextRequest) {
     `New pass lead — ${pass.name} (${pass.priceLabel})`,
     rowsToHtml("New Pass Registration (lead)", [
       ["Pass", pass.name],
+      ["Event", EDITION_LABEL[pass.edition]],
+      ["Seats", String(pass.seats ?? 1)],
       ["Amount", pass.priceLabel],
       ["Coupon", couponCode ? `${couponCode} (${couponDiscountPct}% off)` : "—"],
       ["Name", d.name],

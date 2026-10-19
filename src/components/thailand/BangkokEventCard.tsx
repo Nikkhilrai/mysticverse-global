@@ -14,7 +14,7 @@ import styles from "./BangkokEventCard.module.css";
   `active` starts the photo's slow zoom. The parent section flips it
   when it scrolls into view.
 
-  Links to /contact until /thailand launches — then change `href`.
+  Links to the /thailand page.
 */
 
 /* Doors open 1 July 2027, 08:00 Bangkok time (UTC+7). */
@@ -47,9 +47,9 @@ export default function BangkokEventCard({ active = true }: { active?: boolean }
 
   return (
     <a
-      href="/contact"
+      href="/thailand"
       className={`${styles.card}${active ? ` ${styles.active}` : ""}`}
-      aria-label={`Next edition: ${THAILAND.editionName}, ${THAILAND.city}, ${THAILAND.country}, ${THAILAND.dateLabel}. Register your interest.`}
+      aria-label={`Next edition: ${THAILAND.editionName}, ${THAILAND.city}, ${THAILAND.country}, ${THAILAND.dateLabel}. Explore the summit.`}
     >
       <span className={styles.top}>
         <span className={styles.chip}>
@@ -81,7 +81,7 @@ export default function BangkokEventCard({ active = true }: { active?: boolean }
           {THAILAND.country} · {THAILAND.editionName}
         </span>
         <span className={styles.cta}>
-          Register interest <span className={styles.arrow}>→</span>
+          Explore the summit <span className={styles.arrow}>→</span>
         </span>
       </span>
     </a>

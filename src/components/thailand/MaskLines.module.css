@@ -1,0 +1,22 @@
+/* Line-by-line mask reveal for section headlines. */
+
+.wrap { display: block; }
+
+.line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders (g, y) inside the mask */
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
+}
+
+.inner {
+  display: inline-block;
+  transform: translateY(108%);
+  transition: transform 1000ms var(--ease-out-cubic);
+}
+.in .inner { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .inner { transform: none; transition: none; }
+}

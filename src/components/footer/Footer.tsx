@@ -12,7 +12,8 @@ import styles from "./Footer.module.css";
 
 const ABOUT_LINKS = [
   { label: "About MysticVerse",  href: "/about"          },
-  { label: "Why Dubai 2026",     href: "/why-dubai-2026"  },
+  { label: "Thailand 2027",      href: "/thailand"        },
+  { label: "Why Dubai 2026",     href: "/why-dubai-2026"  }, // concluded edition — out of the main nav, kept for reference
   { label: "Advisory Board",     href: "/advisory"        },
   { label: "Blog",               href: "/journal"         },
   { label: "Magazine",           href: "/media/magazine"  },

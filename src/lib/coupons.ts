@@ -21,11 +21,24 @@ export function calcDiscountedAmountMinor(baseAmountMinor: number, discountPct: 
 }
 
 export function formatAedMinor(minor: number): string {
-  return `AED ${(minor / 100).toLocaleString("en-AE", { minimumFractionDigits: 0 })}`;
+  return formatMinor(minor, "AED");
 }
 
+/** "USD 299" / "AED 699" from minor units (cents / fils). */
+export function formatMinor(minor: number, currency: string): string {
+  return `${currency} ${(minor / 100).toLocaleString("en-US", { minimumFractionDigits: 0 })}`;
+}
+
+/*
+  A coupon with no passes listed historically meant "all passes" — when
+  only the two Dubai passes existed. To stop an old Dubai code (incl. a
+  100%-off one) from unlocking Bangkok passes, an empty list now means
+  "all Dubai 2026 passes" only; a Bangkok pass (id "bkk-…") must be
+  named explicitly in applicablePasses.
+*/
 export function isCouponApplicableToPass(applicablePasses: string | null, passId: string): boolean {
-  if (!applicablePasses || !applicablePasses.trim()) return true;
+  const isBangkok = passId.toLowerCase().startsWith("bkk-");
+  if (!applicablePasses || !applicablePasses.trim()) return !isBangkok;
   return applicablePasses
     .split(",")
     .map((s) => s.trim().toLowerCase())

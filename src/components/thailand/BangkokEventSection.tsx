@@ -71,8 +71,8 @@ export default function BangkokEventSection() {
             </li>
           </ul>
 
-          <a href="/contact" className={styles.cta}>
-            Register your interest
+          <a href="/thailand" className={styles.cta}>
+            Explore the summit
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </a>
         </div>

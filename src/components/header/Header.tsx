@@ -26,23 +26,16 @@ const HEADER_INTRO_KEY = "mvg-header-intro-seen";
   — "Conference":      Agenda / Speakers / Awards / Think Tank
   — "Partner With Us": 4 partner-tier pages (TBD in Phase 4 brief)
 
-  "Why Dubai 2026" and "The 4 Pillars" are nested under "Dubai 2026"
-  (rather than top-level) now that a second edition (Bangkok,
-  Thailand) is in progress — keeps edition-specific pages grouped
-  as more editions are added.
+  Bangkok launch (brief §9 #4–5): "Thailand 2027" is the first nav
+  item. The concluded Dubai 2026 pages (Why Dubai 2026, The 4 Pillars)
+  are out of the primary nav but stay live at their routes for
+  reference and press — reachable from the footer, and labelled as the
+  concluded edition by ConcludedEditionNote.
 */
 const NAV_ITEMS = [
+  { label: "Thailand 2027",   href: "/thailand",          futureDropdown: false },
   { label: "Home",            href: "/",                  futureDropdown: false },
   { label: "About",           href: "/about",             futureDropdown: false },
-  {
-    label: "Dubai 2026",
-    href: "/why-dubai-2026",
-    futureDropdown: false,
-    children: [
-      { label: "Why Dubai 2026", href: "/why-dubai-2026" },
-      { label: "The 4 Pillars", href: "/pillars" },
-    ],
-  },
   // { label: "The Pavilion", href: "/pavilion", futureDropdown: false }, — temporarily unpublished
   {
     label: "Conference",

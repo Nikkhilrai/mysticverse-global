@@ -36,7 +36,10 @@ export default function ThankYouPopup() {
 
   // A "Dubai has concluded" note doesn't belong on the next edition's page.
   const pathname = usePathname();
-  const onNextEdition = pathname === "/thailand" || pathname.startsWith("/thailand/");
+  // The "Dubai has concluded" popup is skipped where the page is about
+  // the next edition: /thailand, and /register (now Bangkok passes).
+  const onNextEdition =
+    pathname === "/thailand" || pathname.startsWith("/thailand/") || pathname === "/register";
 
   useEffect(() => {
     if (!mounted || onNextEdition || hasBeenSeen()) return;

@@ -4,6 +4,7 @@ import WhyDubaiReasons from "@/components/why-dubai/WhyDubaiReasons";
 import WhyDubaiSeptember from "@/components/why-dubai/WhyDubaiSeptember";
 import WhyDubaiMarket from "@/components/why-dubai/WhyDubaiMarket";
 import WhyDubaiPractical from "@/components/why-dubai/WhyDubaiPractical";
+import ConcludedEditionNote from "@/components/editions/ConcludedEditionNote";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/why-dubai-2026" },
@@ -26,6 +27,8 @@ export default function WhyDubaiPage() {
       <WhyDubaiSeptember />
       <WhyDubaiMarket />
       <WhyDubaiPractical />
+      {/* Concluded edition — out of the primary nav (brief §9 #5). */}
+      <ConcludedEditionNote />
     </main>
   );
 }

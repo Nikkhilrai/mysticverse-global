@@ -23,6 +23,17 @@ export default function ContactSection() {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  // /contact?topic=speaker (the Bangkok page's "Propose a session"): there
+  // is no Speaker enquiry type yet (it needs a DB enum migration), so
+  // file it under Other and pre-fill the message so it's recognisable.
+  const [messageDefault, setMessageDefault] = useState("");
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("topic") === "speaker") {
+      setInterest("Other");
+      setMessageDefault("Session proposal — MysticVerse Global 2.0, Bangkok:\n\n");
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -199,7 +210,7 @@ export default function ContactSection() {
 
                   <div className={styles.field}>
                     <label className={styles.label} htmlFor="message">Message</label>
-                    <textarea className={styles.textarea} id="message" name="message" rows={4} required placeholder="Tell us a little about what you have in mind…" />
+                    <textarea key={messageDefault} className={styles.textarea} id="message" name="message" rows={4} required defaultValue={messageDefault} placeholder="Tell us a little about what you have in mind…" />
                   </div>
 
                   {error && (

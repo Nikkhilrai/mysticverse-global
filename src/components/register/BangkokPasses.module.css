@@ -1,0 +1,123 @@
+/* ══════════════════════════════════════════════════════════════
+   BangkokPasses — extras on top of PassesSection.module.css (the
+   shared Dubai card design): a three-up core row, a "standard price"
+   line, and compact cards for the specialist passes.
+   ══════════════════════════════════════════════════════════════ */
+
+.inner { max-width: 1160px; }
+
+.inner .grid3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Room for the featured card's badge, which sits above its edge */
+  padding-top: 0.75rem;
+}
+
+.inner .name {
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* Subgrid: head, price, features and button line up across the three
+   cards whatever each tagline's length. */
+.inner .grid3 > article {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+
+.standard {
+  margin-top: 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: #8C8A98;
+}
+.standard em { font-family: var(--font-display); color: #B7B4C4; }
+
+/* ── More ways in ────────────────────────────────────────── */
+.more { margin-top: clamp(2.75rem, 5vw, 3.75rem); }
+
+.moreTitle {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #F5C45A;
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.15rem);
+}
+
+.inner .small {
+  gap: 0.35rem;
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+}
+.smallName {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #F4F2F7;
+}
+.smallMeta {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: #8C8A98;
+}
+.smallPrice {
+  margin-top: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #F5C45A;
+}
+.smallTbc {
+  margin-bottom: 1.1rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: #8C8A98;
+}
+.smallCta {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  text-align: left;
+  cursor: pointer;
+  padding: 0.9rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #F4F2F7;
+  text-decoration: none;
+  transition: color 250ms;
+}
+.smallCta:hover { color: #F5C45A; }
+.smallCta:focus-visible { outline: 2px solid #F5C45A; outline-offset: 3px; border-radius: 4px; }
+
+.principle {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: #B7B4C4;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .inner .grid3 { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; row-gap: 1.25rem; }
+  .moreGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .moreGrid { grid-template-columns: 1fr; }
+}

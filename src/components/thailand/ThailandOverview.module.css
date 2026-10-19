@@ -1,0 +1,187 @@
+/* ══════════════════════════════════════════════════════════════
+   Thailand §2 — What this is.
+   Light canvas (the site's gallery white, as on the blog and press
+   release): copy beside three converging pillar rings, and a
+   four-item stat strip.
+   ══════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --ink: #14141F;
+  --ink-soft: #2D2B36;
+  --muted: #5A5866;
+  --gold: #B7862B;
+  --gold-deep: #8A5A19;
+  --line: rgba(20, 20, 31, 0.1);
+  background:
+    radial-gradient(45% 45% at 78% 40%, rgba(168, 85, 216, 0.07) 0%, transparent 70%),
+    radial-gradient(40% 40% at 70% 20%, rgba(245, 196, 90, 0.12) 0%, transparent 70%),
+    #F6F5F2;
+  color: var(--ink);
+  padding: clamp(5rem, 10vw, 8rem) clamp(1.25rem, 6vw, 6rem) clamp(4.5rem, 8vw, 6.5rem);
+  scroll-margin-top: 72px;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+/* ── Copy (staggered reveal) ─────────────────────────────── */
+.copy > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 900ms var(--ease-out-cubic), transform 900ms var(--ease-out-cubic);
+}
+.in .copy > * { opacity: 1; transform: none; }
+.in .copy > :nth-child(2) { transition-delay: 100ms; }
+.in .copy > :nth-child(3) { transition-delay: 220ms; }
+.in .copy > :nth-child(4) { transition-delay: 340ms; }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.rule {
+  width: clamp(1.75rem, 4vw, 2.75rem);
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), rgba(183, 134, 43, 0));
+}
+
+.title {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.4vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.975rem, 1.15vw, 1.0625rem);
+  line-height: 1.8;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* ── Convergence diagram ─────────────────────────────────── */
+.visual {
+  display: flex;
+  justify-content: center;
+}
+.venn {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  overflow: visible;
+}
+
+.ring {
+  --c: #B7862B;
+  transform: translate(var(--fx), var(--fy));
+  opacity: 0;
+  transition:
+    transform 1600ms var(--ease-out-cubic),
+    opacity 900ms var(--ease-out-cubic);
+  transition-delay: calc(200ms + var(--i) * 120ms);
+}
+.gold    { --c: #B7862B; }
+.violet  { --c: #5B3FD9; }
+.fuchsia { --c: #A855D8; }
+.in .ring { transform: none; opacity: 1; }
+
+.ringFill {
+  fill: var(--c);
+  fill-opacity: 0.07;
+  mix-blend-mode: multiply;
+}
+.ringLine {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 1.5;
+  stroke-opacity: 0.9;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1800ms var(--ease-out-cubic);
+  transition-delay: calc(200ms + var(--i) * 120ms);
+}
+.in .ringLine { stroke-dashoffset: 0; }
+
+.ringLabel {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--c);
+}
+
+.core {
+  opacity: 0;
+  transform-origin: 200px 200px;
+  transform: scale(0.6);
+  transition: opacity 900ms var(--ease-out-cubic) 1400ms, transform 900ms var(--ease-out-cubic) 1400ms;
+}
+.in .core { opacity: 1; transform: none; }
+.coreDot {
+  fill: #B7862B;
+  transform-origin: 200px 200px;
+  animation: corePulse 2.8s ease-in-out infinite;
+}
+.coreLabel {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  fill: var(--ink);
+}
+
+/* ── Stat strip (shared component; spacing set here) ────── */
+.section .stats {
+  margin-top: clamp(4rem, 8vw, 6rem);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .inner { grid-template-columns: 1fr; }
+  .venn { max-width: 380px; }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy > *, .ring, .ringLine, .core {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+  .coreDot { animation: none; }
+}
